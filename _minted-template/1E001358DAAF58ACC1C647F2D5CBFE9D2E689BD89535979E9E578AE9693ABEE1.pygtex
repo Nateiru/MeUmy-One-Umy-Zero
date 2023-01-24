@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}pragma GCC target (\PYGZdq{}popcnt\PYGZdq{})          }\PYG{c+c1}{// 这条GCC指令可以让\PYGZus{}\PYGZus{}builtin\PYGZus{}popcount被编译器识别为一条指令。}
+
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}ffs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)}               \PYG{c+c1}{// 返回 x 的二进制末尾最后一个 1 的位置}
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}clz}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)}      \PYG{c+c1}{// 返回 x 的二进制的前导 0 的个数。当 x 为 0 时，结果未定义。}
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}ctz}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)}      \PYG{c+c1}{// 返回 x 的二进制末尾连续 0 的个数。当 x 为 0 时，结果未定义。}
+
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}clrsb}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)}             \PYG{c+c1}{// 当 x 的符号位为 0 时返回 x 的二进制的前导 0 的个数减一}
+                                       \PYG{c+c1}{// 否则返回 x 的二进制的前导 1 的个数减一}
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}popcount}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{c+c1}{// 返回 x 的二进制中 1 的个数。}
+\PYG{k+kt}{int} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}parity}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)}   \PYG{c+c1}{// 判断 x 的二进制中 1 的个数的奇偶性。}
+\end{Verbatim}

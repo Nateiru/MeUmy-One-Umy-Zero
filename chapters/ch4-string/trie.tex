@@ -1,0 +1,123 @@
+\section{字典树}
+\subsection{普通Trie}
+\begin{minted}{c++}
+struct Trie {
+    int ch[maxn][30];
+    bool has[maxn], vis[maxn];
+    int cnt;
+    void init() {
+        memset(ch, 0, sizeof ch);
+        memset(has, 0, sizeof has);
+        memset(vis, 0, sizeof vis);
+        cnt = 1;
+    }
+    void insert(char *s, int n) {
+        int u = 0;
+        for (int i = 0; s[i]; i++) {
+            int c = s[i] - 'a';
+            if (!ch[u][c]) ch[u][c] = ++cnt;
+            u = ch[u][c];
+        }
+        has[u] = 1;
+    }
+    int query(char *s, int n) {
+        int u = 0;
+        for (int i = 0; i < n; i++) {
+            int c = s[i] - 'a';
+            if (!ch[u][c]) return -1;
+            u = ch[u][c];
+        }
+        if (!has[u]) return -1;
+        if (!vis[u]) {
+            vis[u] = 1;
+            return 0;
+        } else
+            return 1;
+    }
+};
+\end{minted}
+对于 0-1 字典树：
+\begin{itemize}
+\item 找异或最大值:当前位是 1 就走 0，是 0 就走 1,；走不通再走另一个；
+\item 找与/或的最大值：以与运算为例，如果当前位是 1，那么肯定优先走 1；如果当前位是 0，那么当前位 和 0 或 1 运算的结果都是 0，我们无法确定走哪条支路才是最优解。于是我们可以将两条路合并成一条，把 1 的树自底向上合并到 0 的树
+\end{itemize}
+
+\subsection{压位Trie}
+\begin{minted}{c++}
+namespace BITWISE{
+    inline int clz(unsigned long long x){return __builtin_clzll(x);}//这个函数是查询开头几个零
+    inline int ctz(unsigned long long x){return __builtin_ctzll(x);}//这个函数是查询末尾几个零
+} // namespace BITWISE
+
+using namespace BITWISE;
+
+typedef unsigned long long ull;
+const int g = 6;
+const int mod = (1 << g) - 1;
+ull BUFF[1 << 25], *BT = BUFF + sizeof(BUFF) / sizeof(ull);//预先开好内存池
+inline ull *alloc(int sz){return BT -= sz;}//动态分配空间
+struct Trie{
+    int dep;ull *a[5];//动态数组
+    Trie(int sz){//初始化
+        dep = 1;
+        for(;;++ dep){
+            int cnt = (sz + (1ull << g * dep) - 1) >> g * dep;//表示这一层有多少个点
+            a[dep - 1] = alloc(cnt);
+            if(cnt == 1) return ;
+        }
+        //注意这里层数越小越深，这样方便我们位运算
+    }
+    inline void ins(int x){
+        for (int i = 0;i < dep;++ i){//自下而上遍历的
+            ull p = 1ull << (x >> i * g & mod); //判断我们这个 x 在当前这一层要走哪一条边，并且直接左移好方便压位的处理
+            if(a[i][x >> (i + 1) * g] & p) return ;//剪枝，上面有就可以弹出了
+            a[i][x >> (i + 1) * g] |= p;
+        }
+    }
+    inline void del(int x){
+        for (int i = 0;i < dep;++ i)
+            if(a[i][x >> (i + 1) * g] &= ~(1ull << (x >> i * g & mod))) return ;//删除一个位置，同样是删完还有就不删了的剪枝
+    }
+    inline int succ(int x){
+        for (int i = 0;i < dep;++ i){
+            int cur = (x >> i * g) & mod;ull v = a[i][x >> (i + 1) * g];//当前是哪一条边，由于这里只需要知道是哪一条边所以我们不需要左移
+            if(v >> cur > 1){//如果存在前驱，也可以写成 v >> (cur + 1)，后者更好理解但前者似乎更快
+                int res = x >> (i + 1) * g << (i + 1) * g;
+                res += (ctz(v >> (cur + 1)) + cur + 1) << i * g;//先把这一层的贡献加上，注意是不完整的
+                for (int j = i - 1;~j;-- j) res += ctz(a[j][res >> (j + 1) * g]) << j * g;//剩下每一层都是完整的
+                return res;//直接返回
+            }
+        }
+        return 0;//否则返回零
+    }
+    inline int pre(int x){//与上面同理，不赘述
+        for (int i = 0;i < dep;++ i){
+            int cur = (x >> i * g) & mod;ull v = a[i][x >> (i + 1) * g];
+            if(v & ((1ull << cur) - 1)){
+                int res = x >> (i + 1) * g << (i + 1) * g;
+                res += (mod - clz(v & ((1ull << cur) - 1))) << i * g;
+                for (int j = i - 1;~j;-- j) res += (mod - clz(a[j][res >> (j + 1) * g])) << j * g;
+                return res;
+            }
+        }
+        return 0;
+    }
+
+};
+Trie s(1 << 30);
+
+void work(){
+    /**
+    1.插入 x 数(若已有 x 则不进行此操作);
+    2.删除 x 数(若 x 不存在则不进行此操作);
+    3.求 x 的前趋(前趋定义为 小于 x,且最大的数,若不存在则答案为 0);
+    4.求 x 的后继(后继定义为 大于 x,且最小的数,若不存在则答案为 0);
+    **/
+    int op, x, ans;
+
+      if(op == 0) s.ins(x);
+    else if(op == 1) s.del(x);
+    else if(op == 2) ans = s.pre(x);
+    else ans = s.succ(x);
+}
+\end{minted}

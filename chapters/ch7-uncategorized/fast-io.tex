@@ -1,0 +1,133 @@
+\section{FastIO}
+
+\begin{minted}{c++}
+#pragma GCC optimize(2)
+#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast")
+// 整数读入 (int, ll)
+template<class T> void read(T &x) {
+    T a = 0, f = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9')
+        f = ch == '-' ? -1 : f, ch = getchar();
+    while (ch >= '0' && ch <= '9')
+        a = a * 10 + ch - '0', ch = getchar();
+    x = a * f;
+}
+// 浮点数读入
+inline double read() {
+    double x = 0, y = 1.0;
+    int f = 0;
+    char ch = getchar();
+    while (!isdigit(ch))
+        f |= ch == '-', ch = getchar();
+    while (isdigit(ch))
+        x = x * 10 + (ch ^ 48), ch = getchar();
+    ch = getchar();
+    while (isdigit(ch))
+        x += (y /= 10) * (ch ^ 48), ch = getchar();
+    return f ? -x : x;
+}
+//=============================究极快读
+#include<bits/stdc++.h>
+using namespace std;
+namespace nqio {
+    const unsigned R = 4e5, W = 4e5;
+    char *a, *b, i[R], o[W], *c = o, *d = o + W, h[40], *p = h, y;
+    bool s;
+    struct q {
+        void r(char &x) { x = a == b && (b = (a = i) + fread(i, 1, R, stdin), a == b) ? -1 : *a++;}
+        void f() { fwrite(o, 1, c - o, stdout);c = o;}
+        ~q() { f();}
+        void w(char x) { *c = x; if (++c == d) f(); }
+        q &operator>>(char &x) { do r(x); while (x <= 32); return*this;}
+        q &operator>>(char *x) { do r(*x);while (*x <= 32); while (*x > 32) r(*++x); *x = 0; return*this;}
+        
+        template<typename t>
+        q &operator>>(t &x) {
+            for (r(y), s = 0; !isdigit(y); r(y)) s |= y == 45;
+            if (s) for (x = 0; isdigit(y); r(y)) x = x * 10 - (y ^ 48);
+            else   for (x = 0; isdigit(y); r(y)) x = x * 10 + (y ^ 48);
+            return*this;
+        }
+        q &operator<<(char x) { w(x); return*this; }
+        q &operator<<(char *x) { while (*x) w(*x++); return*this; }
+        q &operator<<(const char *x) { while (*x) w(*x++); return*this; }
+        
+        template<typename t>
+        q &operator<<(t x) {
+            if (!x) w(48);
+            else if (x < 0) for (w(45); x; x /= 10) * p++ = 48 | -(x % 10);
+            else for (; x; x /= 10) * p++ = 48 | x % 10;
+            while (p != h) w(*--p);
+            return*this;
+        }
+    } qio;
+} using nqio::qio;
+
+int main()
+{
+    __int128 a,b;
+    qio >> a >> b;
+    qio << a + b<< '\n';
+    return 0;
+}
+\end{minted}
+\section{\_\_int128 输出函数}
+\begin{minted}{c++}
+void output(__int128 x) {
+    if (!x)
+        return;
+    if (x < 0)
+        putchar('-'), x = -x;
+    output(x / 10);
+    putchar(x % 10 + '0');
+}
+\end{minted}
+
+\section{开栈}
+\par \noindent Tips: 并不是在所有的地方都能用。一定要最后写一句 exit(0); 退出程序。
+\begin{minted}{c++}
+//64−bit
+int size = 1 << 20;     //256M
+char *p = (char *)malloc(size) + size;
+__asm__("movq %0, %%rsp\n" :: "r"(p));
+
+//32−bit
+int size = 1 << 20;     //256M
+char *p = (char *)malloc(size) + size;
+__asm__("movl %0, %%esp\n":: "r"(p));
+
+// 内存屏障
+asm volatile("" ::: "memory");
+__asm__ __volatile__ ("" ::: "memory");
+\end{minted}
+\section{随机}
+\begin{itemize}
+\item 不要使⽤ rand()。
+
+\item chrono::steady\_clock::now().time\_since\_epoch().count() 可⽤于计时。
+
+\item 64位可以使⽤ mt19937\_64。
+\end{itemize}
+\begin{minted}{c++}
+int main() {
+    
+    const int N=1000010;
+    mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+    
+    vector<int> permutation(N);
+    
+    for (int i = 0; i < N; i++) permutation[i] = i;
+    
+    shuffle(permutation.begin(), permutation.end(), rng);
+    
+    for (int i = 0; i < N; i++) permutation[i] = i;
+    
+    for (int i = 1; i < N; i++) swap(permutation[i], permutation[uniform_int_distribution<int>(0, i)(rng)]);
+}
+//============ 真实随机数
+mt19937 mt(time(0));
+auto rd = bind(uniform_real_distribution<double>(0, 1), mt);
+auto rd2 = bind(uniform_int_distribution<int>(1, 6), mt);
+\end{minted}

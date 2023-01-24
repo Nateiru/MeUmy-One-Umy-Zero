@@ -1,0 +1,29 @@
+\section{差分约束}
+
+\par \noindent 求解差分约束系统，有 $m$ 条约束条件，每条都为形如 $x_a-x_b\geq c_k$，$x_a-x_b\leq c_k$ 或 $x_a=x_b$ 的形式，判断该差分约束系统有没有解。
+~\\
+\par \noindent 
+\par \noindent 跑判断负环，如果不存在负环，输出 `Yes`，否则输出 `No`。
+~\\
+\par \noindent 如果${x_1,x_2,...,x_n}$是该差分约束系统的一组解，那么对于任意常数 $d$, ${x_1+d,x_2+d,...,x_n+d}$显然也是该差分约束系统的一组解，因为这样做差后 $d$ 会被消掉。
+~\\
+\par \noindent \textbf{步骤：} 
+
+\begin{enumerate}
+\item 先将每个不等式$x_a - x_b \leq c$，转换成一条从 $x_b$ 走到 $x_a$，长度为 $c$ 的边。
+\item 找到一个超级源点，使得该源点一定可以走到所以边
+\item 从源点求一遍单源最短路
+\end{enumerate}
+
+\par \noindent \textbf{结果1：}如果存在负环，则原不等式组一定无解
+\par \noindent \textbf{结果2：}如果没有负环,则 $dist[i]$ 就是原不等式组的一个可行解
+~\\
+\par \noindent \textbf{最大值和最小值结论：}
+
+\begin{itemize}
+\item 如果求的是最小值,则应该求最长路
+
+\item 如果求的是最大值,则应该求最短路
+\end{itemize}
+
+\par \noindent 比如求\textbf{最小解}，只需要求\textbf{最长路}就行了。最长路满足三角形不等式$dist[u]≥dist[v]+w_{v,u}$

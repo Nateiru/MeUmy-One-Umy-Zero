@@ -1,0 +1,64 @@
+\section{整体二分}
+\par \noindent 可以使用整体二分解决的题目需要满足以下性质：
+
+\begin{enumerate}
+\item 询问的答案具有\textbf{可二分性}
+\item 修改对判定答案的贡献互相独立 ，修改之间互不影响效果
+\item 修改如果对判定答案有贡献，则贡献为一确定的与判定标准无关的值
+\item 贡献满足交换律，结合律，具有可加性
+\item 题目允许使用\textbf{离线算法}
+\end{enumerate}
+
+\par \noindent 与CDQ分治类似，将询问和修改都看成“操作”。我们首先把所有操作\textbf{按时间顺序}存入数组中，然后开始分治，定义函数：
+\begin{tcolorbox}
+\par solve(vl, vr, ql, qr) = 在值域[vl,vr]上二分处理[ql,qr]这些操作
+\end{tcolorbox}
+\par \noindent 在每一层分治中，利用数据结构（常见的是树状数组）统计当前查询的答案和 mid = (vl+vr)/2 之间的关系。根据查询出来的答案和 mid 间的关系（ \textbf{<=mid} 或者 \textbf{>mid} ）将当前处理的操作序列分为 lq 和 rq 两份，并分别递归处理（注意修改和询问都要递归）。
+~\\
+\par \noindent 边界：当 vl==vr 时，找到答案，记录答案并返回即可。
+~\\
+\par \noindent 需要注意的是，在整体二分过程中，solve(vl, vr, ql, qr)只处理答案在[vl, vr]内的询问，最终答案范围不在 [vl, vr] 的询问会在其他solve函数中处理。solve函数其实就是在【值域线段树】上同步实现所有二分操作的过程。
+\begin{minted}{c++}
+// 带修改的区间第k大
+struct Node {
+    int op,x,y,k; // 将 x 修改为 y 或者询问 [x,y] 第 k 大
+    int id;
+}q[N],rq[N],lq[N];
+// 当前的值域范围为 [vl,vr], 处理的操作的区间为 [ql,qr]
+void solve(int vl, int vr, int ql, int qr) {
+    if (ql > qr) return;
+
+    if (vl == vr) {
+        for (int i = ql; i <= qr; i++)
+            if (q[i].op == 2)
+                ans[q[i].id] = vl;
+        return;
+    }
+    int mid = vl + vr >> 1;
+    int l = 0, r = 0;
+
+    for (int i = ql; i <= qr; i++) {
+        if (q[i].op == 1) {     //修改
+            if (q[i].y <= mid)
+                lq[++l] = q[i];
+            else
+                change(q[i].x, q[i].k), rq[++r] = q[i];
+        } else {                //询问
+            int tmp = query(q[i].y) - query(q[i].x - 1);
+            if (q[i].k <= tmp)  // 第 k 大在[mid+1, vr]区间
+                rq[++r] = q[i];
+            else                // 第 k 大在[vl,mid]区间
+                q[i].k -= tmp, lq[++l] = q[i];
+        }
+    }
+    // 撤销当前操作
+    for (int i = ql; i <= qr; i++)
+        if (q[i].op == 1 && q[i].y > mid)
+            change(q[i].x, -q[i].k);
+
+    for (int i = 1; i <= l; i++) q[ql + i - 1] = lq[i];
+    for (int i = 1; i <= r; i++) q[ql + l + i - 1] = rq[i];
+
+    solve(vl, mid, ql, ql + l - 1), solve(mid + 1, vr, ql + l, qr);
+}
+\end{minted}

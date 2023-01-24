@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{// low[u] 从u子树中的结点出发，走一条B边或者C边可以到达的v的dfn最小值，并且要求v还要能够到达u（等价于v在栈里）}
+\PYG{k}{namespace} \PYG{n}{SCC} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{low}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{c}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}    \PYG{c+c1}{// c[i] 表示节点 i 所属的 scc 编号}
+    \PYG{k+kt}{int} \PYG{n}{scccnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{timestamp}\PYG{p}{;}
+    \PYG{k+kt}{bool} \PYG{n}{instack}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{scc}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{n}{stack}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{s}\PYG{p}{;}
+    \PYG{k+kt}{void} \PYG{n+nf}{tarjan}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{o}{++}\PYG{n}{timestamp}\PYG{p}{;}
+        \PYG{n}{s}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{u}\PYG{p}{),} \PYG{n}{instack}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{h}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{n}{i} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ne}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{dfn}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])} \PYG{c+c1}{// T边 祖先\PYGZhy{}\PYGZgt{}孩子}
+                \PYG{n}{tarjan}\PYG{p}{(}\PYG{n}{v}\PYG{p}{),} \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],} \PYG{n}{low}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]);} \PYG{c+c1}{//B边 孩子\PYGZhy{}\PYGZgt{}祖先}
+            \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n}{instack}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])}
+                \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{dfn}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{==} \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{o}{++}\PYG{n}{scccnt}\PYG{p}{;}
+            \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{;}
+            \PYG{k}{do} \PYG{p}{\PYGZob{}}  \PYG{c+c1}{//退栈把整个强连通分量都弹出来}
+                \PYG{n}{y} \PYG{o}{=} \PYG{n}{s}\PYG{p}{.}\PYG{n}{top}\PYG{p}{(),} \PYG{n}{s}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+                \PYG{n}{c}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{n}{scccnt}\PYG{p}{,} \PYG{n}{instack}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+                \PYG{n}{scc}\PYG{p}{[}\PYG{n}{scccnt}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);} \PYG{c+c1}{// 哪些点缩成编号是 scccnt}
+                \PYG{c+c1}{// for(auto x : G[y]) dp[c[y]] = dp[c[x]] 反拓扑序}
+            \PYG{p}{\PYGZcb{}} \PYG{k}{while} \PYG{p}{(}\PYG{n}{y} \PYG{o}{!=} \PYG{n}{u}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 缩点}
+    \PYG{k+kt}{void} \PYG{n+nf}{shrink}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{u} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{u}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{h}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{n}{i} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ne}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{c}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{==} \PYG{n}{c}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])} \PYG{k}{continue}\PYG{p}{;} \PYG{c+c1}{// 处在同一个联通块}
+                \PYG{c+c1}{// add\PYGZus{}scc\PYGZus{}edge(c[x], c[y]);}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

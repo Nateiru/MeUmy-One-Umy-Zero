@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{//64−bit}
+\PYG{k+kt}{int} \PYG{n}{size} \PYG{o}{=} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{20}\PYG{p}{;}     \PYG{c+c1}{//256M}
+\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{p} \PYG{o}{=} \PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{p}{)}\PYG{n}{malloc}\PYG{p}{(}\PYG{n}{size}\PYG{p}{)} \PYG{o}{+} \PYG{n}{size}\PYG{p}{;}
+\PYG{n}{\PYGZus{}\PYGZus{}asm\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}movq \PYGZpc{}0, \PYGZpc{}\PYGZpc{}rsp}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}} \PYG{o}{::} \PYG{l+s}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{(}\PYG{n}{p}\PYG{p}{));}
+
+\PYG{c+c1}{//32−bit}
+\PYG{k+kt}{int} \PYG{n}{size} \PYG{o}{=} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{20}\PYG{p}{;}     \PYG{c+c1}{//256M}
+\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{p} \PYG{o}{=} \PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{p}{)}\PYG{n}{malloc}\PYG{p}{(}\PYG{n}{size}\PYG{p}{)} \PYG{o}{+} \PYG{n}{size}\PYG{p}{;}
+\PYG{n}{\PYGZus{}\PYGZus{}asm\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}movl \PYGZpc{}0, \PYGZpc{}\PYGZpc{}esp}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{o}{::} \PYG{l+s}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{(}\PYG{n}{p}\PYG{p}{));}
+
+\PYG{c+c1}{// 内存屏障}
+\PYG{k}{asm} \PYG{n+nf}{volatile}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{o}{:::} \PYG{l+s}{\PYGZdq{}memory\PYGZdq{}}\PYG{p}{);}
+\PYG{n}{\PYGZus{}\PYGZus{}asm\PYGZus{}\PYGZus{}} \PYG{n+nf}{\PYGZus{}\PYGZus{}volatile\PYGZus{}\PYGZus{}} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{o}{:::} \PYG{l+s}{\PYGZdq{}memory\PYGZdq{}}\PYG{p}{);}
+\end{Verbatim}

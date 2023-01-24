@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{DynamicSegTree} \PYG{p}{\PYGZob{}}
+    \PYG{k}{struct} \PYG{n}{Node} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{v}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{n}{t}\PYG{p}{[}\PYG{n}{maxn}\PYG{o}{*}\PYG{l+m+mi}{40}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{cnt}\PYG{p}{;}
+    \PYG{c+c1}{// 修改操作，若 u 不存在，则首先动态开点；否则直接更新}
+    \PYG{k+kt}{void} \PYG{n+nf}{update}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{pos}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n}{u}\PYG{p}{)} \PYG{n}{u} \PYG{o}{=} \PYG{o}{++}\PYG{n}{cnt}\PYG{p}{;}
+        \PYG{c+c1}{// ....}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 查询操作区间 [L, R] ，若 u 不存在直接返回空值（可能是 0 或者反向最值）}
+    \PYG{k+kt}{int} \PYG{n+nf}{query}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{L}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{R}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n}{u}\PYG{p}{)}
+            \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{c+c1}{// .....}
+    \PYG{p}{\PYGZcb{}}
+
+\PYG{p}{\PYGZcb{}}\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{DynamicSegTree}\PYG{p}{;}
+\end{Verbatim}

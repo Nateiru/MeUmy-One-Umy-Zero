@@ -1,0 +1,131 @@
+\section{点分治}
+\textbf{问题场景}
+~\\
+\par \noindent 点分治是大规模处理树上路径问题的工具。大意是找到一个点，递归统计其所有子树的答案，然后利用容斥原理或其它方式合并答案，最后得到整棵树的答案。
+~\\
+\par \noindent \textbf{树重心性质}（加粗的两句话互为充要条件，常用来找重心）
+
+\begin{enumerate}
+\item \textbf{对于一棵树 n 个节点的无根树，找到一个点，使得把树变成以该点为根的有根树时，最大子树的结点数最小。}
+\item \textbf{对于一个大小为 n 的树，删去重心及与它关联的边后，分裂出的所有子树的大小均不超过 n/2。对于包含至少一个结点的树，它的重心只可能有 1 或 2 个。}
+\item 树中所有点到某个点的距离和中，到重心的距离和是最小的，如果有两个重心，他们的距离和一样。
+\item 把两棵树通过一条边相连，新的树的重心在原来两棵树重心的连线上。
+\item 一棵树添加或者删除一个叶节点，树的重心最多只移动一条边的位置。
+\item 一棵树最多有两个重心，且相邻。
+\end{enumerate}
+~\\
+
+\textbf{点分治步骤}
+~\\
+\begin{enumerate}
+\item 找到整棵树的重心点 $rt$，由 $rt$ 向下递归求解。
+\item 统计以 $rt$ 为根的子树的答案 $ans_{rt}^\prime$，并使用容斥原理、染色法等去除不合法的答案，得到 $rt$ 的最终答案 $ans_{rt}$
+\item 对 $rt$ 的子树 $ch_i$ 求解，同样先找到以 $ch_i$ 为根的子树的重心 $r^\prime$，然后从重心 $r^\prime$ 向下递归求解，回到步骤 (1).
+\end{enumerate}
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 10010;
+int h[N], e[2 * N], ne[2 * N], w[2 * N], idx;
+int n, K;
+void add(int a, int b, int c) {
+    e[idx] = b, ne[idx] = h[a], w[idx] = c, h[a] = idx++;
+}
+int rt, sz[N];
+bool del[N]; // 该点是否被删掉
+void dfs_rt(int u, int fa, int tot) {
+    sz[u] = 1;
+    int mx = 0;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa || del[v])
+            continue;
+        dfs_rt(v, u, tot);
+        sz[u] += sz[v];
+        mx = max(mx, sz[v]);
+    }
+    mx = max(mx, tot - sz[u]);
+    if (2 * mx <= tot)
+        rt = u;
+}
+void dfs_sz(int u, int fa) {
+    sz[u] = 1;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa || del[v])
+            continue;
+        dfs_sz(v, u);
+        sz[u] += sz[v];
+    }
+}
+int bit[5000010];
+int lowbit(int x) {return x & -x;}
+void update(int k, int x) {
+    if (!k) return bit[k] += x, void;
+    for (; k <= K; k += lowbit(k)) bit[k] += x;
+}
+int query(int k) {
+    if (k < 0) return 0;
+    int ret = bit[0];
+    for (; k; k -= lowbit(k))ret += bit[k];return ret;
+}
+int cnt, d[N];
+void dfs_dist(int u, int fa, int dist) {
+    d[++cnt] = dist;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa || del[v]) continue;
+        dfs_dist(v, u, dist + w[i]);
+    }
+}
+void dfs_clear(int u, int fa, int dist) {
+    update(dist, -1);
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa || del[v]) ontinue;
+        dfs_clear(v, u, dist + w[i]);
+    }
+}
+int work(int u, int tot) {
+    int ans = 0;
+    dfs_rt(u, 0, tot);
+    u = rt;
+    dfs_sz(u, 0);
+    del[u] = 1;
+    update(0, 1); // 根节点距离是0
+
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (del[v]) continue;
+        cnt = 0;
+        dfs_dist(v, u, w[i]);
+        for (int k = 1; k <= cnt; k++) ans += query(K - d[k]);
+        for (int k = 1; k <= cnt; k++) update(d[k], 1);
+    }
+    dfs_clear(u, 0, 0);
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (del[v])
+            continue;
+        ans += work(v, sz[v]);
+    }
+    return ans;
+}
+int main() {
+    memset(h, -1, sizeof h);
+    idx = 0;
+    memset(del, 0, sizeof del);
+
+    for (int i = 1; i < n; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        ++a, ++b;
+        add(a, b, c);
+        add(b, a, c);
+    }
+
+    cout << work(1, n) << '\n';
+}
+\end{minted}

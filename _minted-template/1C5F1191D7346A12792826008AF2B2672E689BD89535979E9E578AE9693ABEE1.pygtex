@@ -1,0 +1,83 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mf}{4e4} \PYG{o}{+} \PYG{l+m+mi}{7}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{V} \PYG{o}{=} \PYG{l+m+mf}{1e3} \PYG{o}{+} \PYG{l+m+mi}{7}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{base} \PYG{o}{=} \PYG{l+m+mf}{1e7} \PYG{o}{+} \PYG{l+m+mi}{19}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{mod} \PYG{o}{=} \PYG{l+m+mf}{1e9} \PYG{o}{+} \PYG{l+m+mi}{7}\PYG{p}{;}
+
+\PYG{k}{struct} \PYG{n}{exhibits} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{q}\PYG{p}{,} \PYG{n}{k}\PYG{p}{;}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{seg}\PYG{p}{[}\PYG{n}{N}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{2}\PYG{p}{];}
+\PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{DP}\PYG{p}{[}\PYG{n}{V}\PYG{p}{];}
+
+\PYG{k+kt}{void} \PYG{n+nf}{ins} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{L}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{R}\PYG{p}{,} \PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{v}\PYG{p}{)} \PYG{p}{\PYGZob{}}  \PYG{c+c1}{// 离线处理加/删除物品操作}
+
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{L} \PYG{o}{\PYGZlt{}=} \PYG{n}{l} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{r} \PYG{o}{\PYGZlt{}=} \PYG{n}{R}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{seg}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+        \PYG{k}{return} \PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{n}{l} \PYG{o}{+} \PYG{n}{r} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{L} \PYG{o}{\PYGZlt{}=} \PYG{n}{mid}\PYG{p}{)}
+        \PYG{n}{ins}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{mid}\PYG{p}{,} \PYG{n}{L}\PYG{p}{,} \PYG{n}{R}\PYG{p}{,} \PYG{n}{v}\PYG{p}{);}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{mid} \PYG{o}{\PYGZlt{}} \PYG{n}{R}\PYG{p}{)}
+        \PYG{n}{ins}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{|}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{mid}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{L}\PYG{p}{,} \PYG{n}{R}\PYG{p}{,} \PYG{n}{v}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{solve} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{o}{*} \PYG{n}{dp}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{// 线段树分治 + dp}
+
+    \PYG{k}{for}\PYG{p}{(}\PYG{k}{auto} \PYG{n}{it} \PYG{o}{=} \PYG{n}{seg}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{begin}\PYG{p}{();} \PYG{n}{it} \PYG{o}{!=} \PYG{n}{seg}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{end}\PYG{p}{();} \PYG{n}{it}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{k}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n}{it}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{second}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j} \PYG{o}{\PYGZhy{}} \PYG{n}{it}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{second}\PYG{p}{]} \PYG{o}{+} \PYG{n}{it}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{first}\PYG{p}{);}
+
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{l} \PYG{o}{==} \PYG{n}{r}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{k}\PYG{p}{;} \PYG{n}{i}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{n}{ans} \PYG{o}{=} \PYG{p}{(}\PYG{n}{ans} \PYG{o}{*} \PYG{n}{base} \PYG{o}{+} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+        \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}lld}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{ans}\PYG{p}{);}
+        \PYG{k}{return} \PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{n}{l} \PYG{o}{+} \PYG{n}{r} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{f}\PYG{p}{[}\PYG{n}{V}\PYG{p}{];}
+    \PYG{n}{memcpy}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{n}{dp}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{f}\PYG{p}{));}
+    \PYG{n}{solve}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{mid}\PYG{p}{,} \PYG{n}{f}\PYG{p}{);}
+    \PYG{n}{memcpy}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{n}{dp}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{f}\PYG{p}{));}
+    \PYG{n}{solve}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{|}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{mid}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{f}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main} \PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{tim} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{k}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{c+c1}{// 原物品存在的时间是[1, m],其中m代表询问的数量（暂时未知，计作\PYGZhy{}1）}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{v} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{w}\PYG{p}{;}
+        \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{,} \PYG{n}{tim}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{};}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{op}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{,} \PYG{n}{x}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{q}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{op}\PYG{p}{;}
+        \PYG{c+c1}{// 添加物品，物品消失时间未知}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{v} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{w}\PYG{p}{;}
+            \PYG{n}{exb}\PYG{p}{[}\PYG{o}{++}\PYG{n}{n}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{,} \PYG{n}{tim}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{};}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{x}\PYG{p}{;}
+            \PYG{n}{exb}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{r} \PYG{o}{=} \PYG{n}{tim} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}  \PYG{c+c1}{// 删除物品，物品不复存在}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{else} \PYG{n}{tim}\PYG{o}{++}\PYG{p}{;}  \PYG{c+c1}{// 询问操作}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{tim}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r} \PYG{o}{=} \PYG{p}{(}\PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r} \PYG{o}{==} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{o}{?} \PYG{n+nl}{tim} \PYG{p}{:} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r}\PYG{p}{);} \PYG{c+c1}{// 消失时间仍为止 那么就是最终时间}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{l} \PYG{o}{\PYGZlt{}=} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r}\PYG{p}{)}
+            \PYG{n}{ins}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{tim}\PYG{p}{,} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{l}\PYG{p}{,} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r}\PYG{p}{,} \PYG{n}{make\PYGZus{}pair}\PYG{p}{(}\PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{,} \PYG{n}{exb}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{w}\PYG{p}{));}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{solve}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{tim}\PYG{p}{,} \PYG{n}{DP}\PYG{p}{);}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,514 @@
+\section{分治}
+\subsection{三分法}
+\noindent \par 三分查找是在二分查找分出了两个区间（左区间，右区间）的情况下，再对左区间或右区间进行一次二分，以快速确定最值。三分法要求序列是一个有凹凸性的函数。步骤如下：
+
+\begin{itemize}
+    \item 取得区间的中间值 $mid = \lfloor \frac{(left + right)}{2} \rfloor$
+    \item 取右区间的中间值 $rmid = \lfloor \frac{(mid + right)}{2} \rfloor$
+    \item 判断 $a[rmid]$ 和 $a[mid]$ 的关系，若 $a[mid]$ 比 $a[rmid]$ 更接近最值，舍弃右区间搜索左区间；否则搜索左区间。
+\end{itemize}
+
+\begin{minted}{c++}
+int minimun_int(int L, int R) { //三分求 f 函数的最小值（定义域为整数）
+    while (R > L) {
+        int m1 = (2 * L + R) / 3;
+        int m2 = (2 * R + L + 2) / 3;
+        if (f(m1) < f(m2))  // f(m1) > f(m2) 求最大值
+            R = m2 - 1;
+        else
+            L = m1 + 1;
+    }
+    return L; //f(L) 为最小值
+}
+double maximum_double(double L, double R) { //三分求 f 函数的最大值（定义域为实数）
+    while (R - L > eps) { // for i in range(100):
+        double m1 = (2 * L + R) / 3;
+        double m2 = (2 * R + L) / 3;
+        if (f(m1) > f(m2))  // f(m1) > f(m2) 求最小值
+            R = m2;
+        else
+            L = m1;
+    }
+    return L; //f(L) 为最大值
+}
+\end{minted}
+
+\subsection{归并排序}
+\begin{minted}{c++}
+int n, a[100010], tmp[100010];
+void merge_sort(int a[], int l, int r) {
+    if (l >= r) return;
+
+    int mid = l + r >> 1;
+    merge_sort(a, l, mid), merge_sort(a, mid + 1, r);
+    int i = l, j = mid + 1, k = 0;
+
+    while (i <= mid && j <= r) {
+        if (a[i] <= a[j])
+            tmp[k++] = a[i++];
+        else
+            tmp[k++] = a[j++];
+    }
+
+    while (i <= mid) tmp[k++] = a[i++];
+    while (j <= r)   tmp[k++] = a[j++];
+
+    for (i = l, k = 0; i <= r; i++, k++) a[i] = tmp[k];
+}
+\end{minted}
+
+\subsection{平面最近点对}
+\begin{minted}{c++}
+struct Point {
+    int x,y;
+    bool type; // 两种类型的平面最近点对
+    bool operator <(const Point &o) const {
+        return x<o.x;
+    }
+}point[N],tmp[N];
+int n;
+double dis(Point a,Point b) {
+    // if(a.type==b.type) return INF;
+    double dx=a.x-b.x,dy=a.y-b.y;
+    return sqrt(dx*dx+dy*dy);
+}
+double solve(int l,int r)
+{
+    if(l==r) return INF;
+    int mid=l+r>>1;
+    double flag=point[mid].x;
+    // 分治计算出上述未被更新的 ans
+    double ans=min(solve(l,mid),solve(mid+1,r));
+    // 先将 points 中的 [l, mid] 和 [mid + 1, r] 两段进行按 y 轴坐标进行按序归并
+    // 注意这里一定要归并，后面对于每个点我们才能快速找出对应的（至多） 6 个点，以保证总时间复杂度是 O(n log n)
+
+    inplace_merge(point+l,point+mid+1,point+r+1,[](const Point&a,const Point&b){return a.y<b.y;});
+    // 找到所有在 [mid_x - ans, mid_x + ans] 中的点，存入 tmp
+    int k=0;
+    for(int i=l;i<=r;i++)
+        if(point[i].x>=flag-ans&&point[i].x<=flag+ans)
+            tmp[k++]=point[i];
+    // 下面第二层循环中，有 tmp[i].y - tmp[j].y <= ans 这个判断，才能保证我们对于每个点最多只考虑六个点
+    for(int i=0;i<k;i++)
+        for(int j=i-1;j>=0&&tmp[i].y-tmp[j].y<ans;j--)
+            ans=min(ans,dis(tmp[i],tmp[j]));
+
+    return ans;
+}
+\end{minted}
+
+
+\subsection{CDQ 分治求三维偏序}
+\begin{minted}{c++}
+// update 和 query 是单点修改区间查询的数据结构
+struct Node {
+    int a, b, c;
+    int cnt, ans;
+    bool operator<(const Node &o)const  {
+        return a < o.a || a == o.a && b < o.b || a == o.a && b == o.b && c < o.c;
+    }
+    bool operator==(const Node &o)const {
+        return a == o.a && b == o.b && c == o.c;
+    }
+} q[N];
+void cdq(int l, int r) {
+    if (l >= r) return;
+
+    int mid = l + r >> 1;
+    cdq(l, mid), cdq(mid + 1, r);
+
+    int i = l;
+    for (int j = mid + 1; j <= r; j++) {
+        while (i <= mid && q[i].b <= q[j].b)
+            update(q[i].c, q[i].cnt), i++; 
+        q[j].ans += query(q[j].c);
+    }
+
+    while (i > l) --i, update(q[i].c, -q[i].cnt);
+
+    inplace_merge(q + l, q + mid + 1, q + r + 1, [](const Node & x, const Node & y) {
+        return x.b < y.b;
+    });
+}
+\end{minted}
+\subsection{四维偏序}
+\begin{tcolorbox}
+\par \noindent 在一个三维空间当中，每次进行一个操作，添加一个点或者统计空间中的某一个\textbf{长方体}范围内的所有点
+\end{tcolorbox}
+
+\par \noindent 三维空间中我们用两个点即可确定一个长方体。
+~\\
+\par \noindent 首先效仿平面二维数点的方法，根据容斥原理可以把询问拆分成8个以原点$O(0,0,0)$为一个顶点长方体的内部点的数量，像这样的长方体可以用一个坐标$(x,y,z)$表示
+~\\
+\par \noindent 假设当前有一个点在$t_0$时刻插入位置为$(x_0,y_0,z_0)$，如果这个点在$t$时刻一个以原点为一个端点的长方体$(x,y,z)$内部条件：
+$$
+t_0<t,x_0\leq x,y_0\leq y,z_0\leq z
+$$
+\par \noindent 由上面条件不难看出是一个4维偏序问题。
+~\\
+\par \noindent cdq分治套cdq分治+树状数组解决。
+\begin{minted}{c++}
+#include<cstring>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+constexpr int N=50010;
+struct Node
+{
+    int op;
+    int x,y,z;
+    int sign,id;
+    int part;
+}q[8*N];
+int n,nn,cnt;
+int b[2*N],c[N],ans[N];
+int bit[2*N];
+int lowbit(int x){return x&-x;}
+void update(int k,int x){for(;k<=nn;k+=lowbit(k)) bit[k]+=x;}
+int query(int k){int res=0;for(;k;k-=lowbit(k)) res+=bit[k];return res;}
+
+void cdq(int l,int r)
+{
+    if(l>=r) return;
+    int mid=l+r>>1;
+    cdq(l,mid),cdq(mid+1,r);
+    int i=l;
+    for(int j=mid+1;j<=r;j++)
+    {
+        while(i<=mid&&q[i].y<=q[j].y)
+        {
+            if(q[i].op==0&&q[i].part==0) update(q[i].z,1);
+            i++;
+        }
+        if(q[j].op==1&&q[j].part==1) ans[q[j].id]+=q[j].sign*query(q[j].z);
+    }
+    while(i>l) 
+    {
+        i--;
+        if(q[i].op==0&&q[i].part==0) update(q[i].z,-1);
+    }
+    inplace_merge(q+l,q+mid+1,q+r+1,[](const Node&a,const Node&b){return a.y<b.y;});
+    
+}
+void solve(int l,int r)
+{
+    if(l>=r) return;
+    int mid=l+r>>1;
+    solve(l,mid),solve(mid+1,r);
+    
+    for(int i=l;i<=mid;i++) q[i].part=0;
+    for(int i=mid+1;i<=r;i++) q[i].part=1;
+    stable_sort(q+l,q+r+1,[](const Node&a,const Node&b){return a.x<b.x;});
+    cdq(l,r);
+}
+int main()
+{
+    ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    int T; cin>>T;
+    while(T--)
+    {
+        cin>>n;
+        cnt=nn=0;
+        for(int i=1;i<=n;i++) ans[i]=0,c[i]=0;
+        for(int i=1;i<=n;i++)
+        {
+            int op;
+            cin>>op;
+            if(op==1)
+            {
+                int x,y,z;
+                cin>>x>>y>>z;
+                q[++cnt]={0,x,y,z};
+                b[++nn]=z;
+            }
+            else
+            {
+                c[i]=1;
+                int x1,y1,z1,x2,y2,z2;
+                cin>>x1>>y1>>z1>>x2>>y2>>z2;
+                q[++cnt]={1,x2,y2,z2,1,i};
+                q[++cnt]={1,x1-1,y2,z2,-1,i};
+                q[++cnt]={1,x2,y1-1,z2,-1,i};
+                q[++cnt]={1,x2,y2,z1-1,-1,i};
+                q[++cnt]={1,x1-1,y1-1,z2,1,i};
+                q[++cnt]={1,x1-1,y2,z1-1,1,i};
+                q[++cnt]={1,x2,y1-1,z1-1,1,i};
+                q[++cnt]={1,x1-1,y1-1,z1-1,-1,i};
+                b[++nn]=z1-1;
+                b[++nn]=z2;
+            }
+        }
+        sort(b+1,b+1+nn);
+        nn=unique(b+1,b+1+nn)-b-1;
+        for(int i=1;i<=cnt;i++) q[i].z=lower_bound(b+1,b+1+nn,q[i].z)-b;
+        solve(1,cnt);
+        for(int i=1;i<=n;i++)
+            if(c[i]) cout<<ans[i]<<'\n';
+    }
+    return 0;
+}
+
+\end{minted}
+
+\subsection{线段树分治}
+
+\par \noindent 在做CDQ的时候，将询问和操作通通视为元素，在归并过程中统计左边的操作对右边的询问的贡献。
+~\\
+\par \noindent 而在线段树分治中，询问被固定了。按\textbf{时间轴}确定好询问的序列以后，我们还需要所有的\textbf{操作都会影响一个时间区间}。而这个区间，毫无疑问正好对应着询问的一段区间。
+~\\
+\par \noindent 于是，我们可以将每一个操作丢到若干询问里做区间修改了，而线段树可以高效地维护。我们开一个叶子节点下标为询问排列的线段树，作为分治过程的底层结构。
+\begin{tcolorbox}
+\par 给定一个 $n$ 个结点的树，每条边有一个颜色，记 $f(x,y)$表示结点 $x$ 到 $y$ 的路径上只出现了一次的颜色的数量，求 $\sum\limits_{x < y}f(x, y)$ 。数据保证 $n \le 5 \times 10^5$ 。
+
+\par \noindent 由于我们是求所有 $f(x,y)$的总和，根据经验我们将问题转化为对每个颜色 $w$ 计算有多少路径经过恰好一条颜色为 $w$ 的边。这样每种颜色是独立的，可以分开计算。具体的：在考虑 $w$ 颜色时断开所有 颜色是 $w$ 的边，然后统计一下每一条颜色是 $w$ 边所连接两个连通块的贡献。
+
+\end{tcolorbox}
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+const int N  = 500005;
+
+int n, fa[N], sz[N];
+inline int find(int x){while(x != fa[x])x = fa[x]; return x;}
+vector<pair<int,int>>t[N << 2], c[N];
+ll ans;
+void ins(int u, int l, int r, int L, int R, pair<int,int> w) {
+    if (l >= L && r <= R)
+        return t[u].push_back(w), void(); // 一些修改
+    int mid = l + r >> 1;
+    if (L <= mid) ins(u << 1, l, mid, L, R, w);
+    if (R > mid) ins(u << 1 | 1, mid + 1, r, L, R, w);
+
+}
+void solve(int o, int l, int r) {
+    vector<int> dl; // 撤销操作
+    for (auto v : t[o])
+    {
+        int p = find(v.first), q = find(v.second);
+        if (p == q) continue;
+        if (sz[p] > sz[q])
+            swap(p, q);
+        dl.push_back(p), sz[q] += sz[p], fa[p] = q;
+    }
+    if (l == r)
+        for (auto v : c[l]) // 考虑所颜色是 l 的边的连接的两个连通块
+            ans += 1ll * sz[find(v.first)] * sz[find(v.second)];
+    else
+    {
+        int mid = (l + r) >> 1;
+        solve(o << 1, l, mid), solve(o << 1 | 1, mid + 1, r);
+    }
+    // 撤销 此处可以用全局的stack代替 省空间防止爆战
+    reverse(dl.begin(), dl.end());
+    for (auto v : dl)
+        sz[fa[v]] -= sz[v], fa[v] = v;
+}
+int main() {
+    cin >> n;
+    for (int i = 1; i < n; i++) {
+        int x, y, z; cin >> x >> y >>z;
+        c[z].push_back({x, y});
+        // 在考虑 z 颜色时断开所有 颜色是 z 的边
+        if(z > 1) ins(1, 1, n, 1, z - 1, {x, y});
+        if(z < n) ins(1, 1, n, z + 1, n, {x, y});
+    }
+    for (int i = 1; i <= n; i++) fa[i] = i, sz[i] = 1;
+    solve(1, 1, n);
+    
+    cout << ans << '\n';
+    return 0;
+}
+\end{minted}
+
+\begin{tcolorbox}
+\par \noindent 维护一个物品的集合，物品有重量和价值，刚开始有 $n$ 个物品，有 $q$ 个询问:
+\begin{enumerate}
+\item 揷入一个新物品
+
+\item 删除一个物品
+
+\item 询问 $\sum_{1 \leq x \leq k} s(x) a^{x-1} \bmod b$ ，其中 $s(x)$ 为重量不超过 $x$ 的物品的最大价值， $a=10^7+$ $19, b=10^9+7, k$ 由询问给出。
+\end{enumerate}
+\par \noindent 其中，$n \leq 5 \times 10^3, 1 \leq k \leq 10^3, 1 \leq v \leq 10^6, q \leq 3 \times 10^4$ ，至多揷入 $C=10^4$ 件物品。
+\end{tcolorbox}
+\par \noindent 动态维护集合的背包，支持插入和删除。物品在时间区间上有贡献，所以用线段树分治来避免合并，将某时刻的贡献和转化为分治结构路径上元素的贡献和。
+~\\
+\par \noindent 每个贡献被切分成 $\log$ 个结点，采用类似标记永久化的思想把贡献元素都存在线段树的结点上。每个结点的所有元素进行了一次插入，所有左侧结点的背包还进行了一次复制。元素共进行了 $\log$ 次插入（在每个结点）。总的复制次数不多于总的插入次数。
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 4e4 + 7;
+const int V = 1e3 + 7;
+const int base = 1e7 + 19;
+const int mod = 1e9 + 7;
+
+struct exhibits {
+    int v, w, l, r;
+} exb[N];
+int n, q, k;
+vector<pair<int,int>> seg[N<<2];
+long long DP[V];
+
+void ins (int u, int l, int r, int L, int R, pair<int,int> v) {  // 离线处理加/删除物品操作
+
+    if(L <= l && r <= R) {
+        seg[u].push_back(v);
+        return ;
+    }
+    int mid = l + r >> 1;
+    if(L <= mid) 
+        ins(u<<1, l, mid, L, R, v);
+    if(mid < R) 
+        ins(u<<1|1, mid+1, r, L, R, v);
+}
+
+void solve (int u, int l, int r, long long * dp) { // 线段树分治 + dp
+
+    for(auto it = seg[u].begin(); it != seg[u].end(); it++)
+        for(int j = k; j >= it->second; j--) 
+            dp[j] = max(dp[j], dp[j - it->second] + it->first);
+            
+    if(l == r) {
+        long long ans = 0;
+        for(int i = k; i; i--) ans = (ans * base + dp[i]) % mod;
+        printf("%lld\n",ans);
+        return ;
+    }
+    int mid = l + r >> 1;
+    long long f[V];
+    memcpy(f, dp, sizeof(f));
+    solve(u<<1, l, mid, f);
+    memcpy(f, dp, sizeof(f));
+    solve(u<<1|1, mid+1, r, f);
+}
+
+int main ()
+{
+    int tim = 1;
+    cin >> n >> k;
+    for(int i = 1, v, w; i <= n; i++) {  
+        // 原物品存在的时间是[1, m],其中m代表询问的数量（暂时未知，计作-1）
+        cin >> v >> w;
+        exb[i] = {v, w, tim, -1};
+    }
+    cin >> q;
+    
+    for(int i = 1, op, v, w, x; i <= q; i++) {
+        cin >> op; 
+        // 添加物品，物品消失时间未知
+        if(op == 1) {  
+            cin >> v >> w;
+            exb[++n] = {v, w, tim, -1};  
+        }  
+        else if(op == 2) {
+            cin >> x;
+            exb[x].r = tim - 1;  // 删除物品，物品不复存在
+        }
+        else tim++;  // 询问操作
+    }
+    tim--;
+    for(int i = 1; i <= n; i++) {
+        exb[i].r = (exb[i].r == -1 ? tim : exb[i].r); // 消失时间仍为止 那么就是最终时间
+        if(exb[i].l <= exb[i].r) 
+            ins(1, 1, tim, exb[i].l, exb[i].r, make_pair(exb[i].v, exb[i].w));
+    }
+    solve(1, 1, tim, DP);
+    return 0;
+}
+\end{minted}
+\subsection{猫树分治}
+\par \noindent 考虑某种奇怪的\textbf{序列}静态问题,我们并不会做。但是,如果所有询问的区间有交集,那么我们就能通过下列算法得出答案。
+~\\
+\par \noindent 选取所有询问都包含的某个位置,分别向左向右预处理某些东西。
+~\\
+\par \noindent 对于询问的回答,只需要在左端点取信息,在右端点取信息,再组合即可。这要求(答案/状态)能够合并。
+~\\
+\par \noindent \textbf{步骤：}
+
+\par 考虑一堆询问区间和对应的状态区间 $[L,R]$，取状态区间的中点$mid=\lfloor\frac{L+R}{2}\rfloor$,从分别 mid向左右预处理某些信息。遍历所有询问,如果跨过 $(mid,mid+1)$ ，则合并左右端点信息来回答。如果询问在 $[L,mid]$ 中,则下放到左儿子。如果在 $[mid+1,R]$ 中,则下放到右儿子。
+~\\
+\begin{tcolorbox}
+\par \noindent P6240 好吃的题目
+\par \noindent 有一条小吃街，从左到右依次排列着 $n$个商店，从 1 开始标号。第 $i$个商店会只出售一种小吃，热量为 $h_i$,美味度为 $w_i$。现在有 $m$ 个吃货要来逛街，第 $i$ 个吃货会在 $[l_i,r_i]$ 的商店内寻找小吃，而且为了防止太胖，最多能摄入 $t_i$ 的热量。小吃吃多了会腻，所以同一个商店的小吃只能吃一次。现在每个吃货想知道自己最多能得到多少美味度。
+\end{tcolorbox}
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+const int N = 40010;
+int n, m, q, v[N], w[N], b[200010];
+ll f[N][205], ans[200010];
+struct Node {
+    int l, r, t, id;
+};
+void solve(int l, int r, vector<Node> &vec) {
+    if (l == r) {
+        for (Node a : vec) ans[a.id] = (v[l] <= a.t ? w[l] : 0);
+        return;
+    }
+    vector<Node> vl, vr;
+    int mid = l + r >> 1, idx = 0;
+    for (int i = 0; i < vec.size(); i++) {
+        if (vec[i].r <= mid) vl.push_back(vec[i]);
+        else if (vec[i].l > mid) vr.push_back(vec[i]);
+        else
+            b[++idx] = i; // 跨过 mid 的区间
+    }
+    // 初始化
+    for (int i = l; i <= r; i++) {
+        for (int j = 0; j <= m; j++)
+            f[i][j] = -1;
+        if (i == mid || i == mid + 1)
+            for (int j = 0; j <= m; j++)
+                f[i][j] = (j >= v[i] ? w[i] : 0);
+    }
+    // 向左预处理背包
+    for (int i = mid - 1; i >= l; i--)
+        for (int j = 0; j <= m; j++) {
+            f[i][j] = f[i + 1][j];
+            if (j >= v[i])
+                f[i][j] = max(f[i][j], f[i + 1][j - v[i]] + w[i]);
+        }
+    // 向右边预处理背包
+    for (int i = mid + 2; i <= r; i++)
+        for (int j = 0; j <= m; j++) {
+            f[i][j] = f[i - 1][j];
+            if (j >= v[i])
+                f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);
+        }
+    // 合并左右背包的答案作为询问的答案
+    for (int i = 1; i <= idx; i++) {
+        int l = vec[b[i]].l, r = vec[b[i]].r, t = vec[b[i]].t;
+        ll res = -1;
+        for (int j = 0; j <= t; j++) res = max(res, f[l][j] + f[r][t - j]);
+        ans[vec[b[i]].id] = res;
+    }
+
+    if (vl.size()) solve(l, mid, vl);
+    if (vr.size()) solve(mid + 1, r, vr);
+}
+int main() {
+    cin >> n >> q;
+
+    for (int i = 1; i <= n; i++) cin >> v[i];
+    for (int i = 1; i <= n; i++) cin >> w[i];
+
+    vector<Node> vec;
+
+    for (int i = 1; i <= q; i++) {
+        int l, r, t;
+        cin >> l >> r >> t;
+        m = max(m, t);
+        vec.push_back((Node) {l, r, t, i});
+    }
+    solve(1, n, vec);
+    for (int i = 1; i <= q; i++) cout << ans[i] << '\n';
+    return 0;
+}
+\end{minted}
+

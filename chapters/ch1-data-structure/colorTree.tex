@@ -1,0 +1,81 @@
+\section{放弃珂朵莉树}
+\par \noindent 放弃珂朵莉树： (CF1638E，学习自jiangly) 维护同色段，可以直接用线段树，也可以用 std::map<int, Info>，其中 key 为段的左端点，左闭右开这样 next 就是右端点，value 为段的信息，这种方式非常好写。每次进行区间染色 $[l,r)$ 的时候，先把 $l,r$ 两点加入map，然后就可以直接循环删除中间的，然后处理修改。
+\begin{tcolorbox}
+\par \noindent 给定一个长度为 $n$ 的序列，初始时所有元素的值为 0 ，颜色为 1。你需要实现以下三种操作：
+\begin{itemize}
+\item Color $l$ $r$ $c$ ：把 $[l,r]$这段的元素颜色改为 $c$
+\item Add $c$ $x$：把所有颜色为 $c$ 的元素值都加 $x$
+\item Query $i$：输出元素 $i$ 的值
+\end{itemize}
+\end{tcolorbox}
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+const int N = 1000010;
+int n, m;
+// map<key,value>  key  表示区间左端点
+//                 next 表示区间右端点 [it, next(it))
+map<int, int> s;
+
+map<int, int>::iterator split(int x) {
+    auto it = prev(s.upper_bound(x));
+
+    if (it->first == x)
+        return it;
+
+    return s.emplace(x, it->second).first;
+}
+// 区间修改单点查询树状数组
+namespace Fenwick{
+    ll t[N];
+    void add(int k, ll x) { for (; k <= n; k += (k & -k)) t[k] += x;}
+    ll sum(int k) { ll v = 0; for (; k; k -= (k & -k)) v += t[k]; return v;}
+    void update(int l, int r, ll x) { add(l, x); add(r, -x); }
+}using namespace Fenwick;
+
+ll tag[N]; // tag[i]颜色是i的懒标记
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    cin >> n >> m;
+    // 初始只有一个区间 [1, n+1) 颜色是 1 维护的每一段区间颜色都是相同的
+    s[1] = 1;
+    s[n + 1] = 0;
+
+    char op[10];
+    while (m--) {
+        cin >> op;
+
+        if (*op == 'C') {
+            int l, r, c;
+            cin >> l >> r >> c;
+            r++;// 找到 [l, r + 1) 区间
+            map<int, int>::iterator it = split(l);
+            map<int, int>::iterator ti = split(r);
+            
+            // 边打标机边合并(erase)区间 最终得到 [l, r + 1)
+            for (; it != ti; it = s.erase(it)) 
+                update(it->first, next(it)->first, tag[it->second] - tag[c]);
+            
+            s[l] = c; 
+        } else if (*op == 'A') {
+            int c, x;
+            cin >> c >> x;
+            tag[c] += x;
+        } else {
+            int i;
+            cin >> i;
+            map<int, int>::iterator it = split(i);
+            cout << sum(i) + tag[it->second] << '\n';
+        }
+    }
+
+    return 0;
+}
+\end{minted}

@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+
+    \PYG{c+c1}{// ............. 无源汇上下界可行流建图}
+    \PYG{n}{din}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{t}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{l+m+mf}{1e9}\PYG{p}{);}
+
+    \PYG{n}{res} \PYG{o}{=} \PYG{n}{din}\PYG{p}{.}\PYG{n}{maxflow}\PYG{p}{(}\PYG{n}{S}\PYG{p}{,} \PYG{n}{T}\PYG{p}{);}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{res} \PYG{o}{!=} \PYG{n}{sum}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}No Solution}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+        \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{auto} \PYG{o}{\PYGZam{}}\PYG{p}{[}\PYG{n}{v}\PYG{p}{,} \PYG{n}{cap}\PYG{p}{,} \PYG{n}{inv}\PYG{p}{]} \PYG{o}{=} \PYG{n}{din}\PYG{p}{.}\PYG{n}{G}\PYG{p}{[}\PYG{n}{s}\PYG{p}{].}\PYG{n}{back}\PYG{p}{();}
+    \PYG{n}{res} \PYG{o}{=} \PYG{n}{cap}\PYG{p}{;}
+    \PYG{n}{din}\PYG{p}{.}\PYG{n}{erase}\PYG{p}{(}\PYG{n}{din}\PYG{p}{.}\PYG{n}{G}\PYG{p}{[}\PYG{n}{v}\PYG{p}{][}\PYG{n}{inv}\PYG{p}{]);} \PYG{c+c1}{//删去 t\PYGZhy{}\PYGZgt{}s 容量是1e9这条边}
+
+    \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{res} \PYG{o}{\PYGZhy{}} \PYG{n}{din}\PYG{p}{.}\PYG{n}{maxflow}\PYG{p}{(}\PYG{n}{t}\PYG{p}{,} \PYG{n}{s}\PYG{p}{);} \PYG{c+c1}{// f(s\PYGZhy{}\PYGZgt{}t) = \PYGZhy{} f(t\PYGZhy{}\PYGZgt{}s)}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

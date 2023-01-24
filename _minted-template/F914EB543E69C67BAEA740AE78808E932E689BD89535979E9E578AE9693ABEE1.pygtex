@@ -1,0 +1,73 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}pragma GCC optimize(2)}
+\PYG{c+cp}{\PYGZsh{}pragma GCC optimize(3)}
+\PYG{c+cp}{\PYGZsh{}pragma GCC optimize(\PYGZdq{}Ofast\PYGZdq{})}
+\PYG{c+c1}{// 整数读入 (int, ll)}
+\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{class} \PYG{n+nc}{T}\PYG{o}{\PYGZgt{}} \PYG{k+kt}{void} \PYG{n}{read}\PYG{p}{(}\PYG{n}{T} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{T} \PYG{n}{a} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{f} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k+kt}{char} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{ch} \PYG{o}{\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}} \PYG{o}{||} \PYG{n}{ch} \PYG{o}{\PYGZgt{}} \PYG{l+s+sc}{\PYGZsq{}9\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{f} \PYG{o}{=} \PYG{n}{ch} \PYG{o}{==} \PYG{l+s+sc}{\PYGZsq{}\PYGZhy{}\PYGZsq{}} \PYG{o}{?} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{o}{:} \PYG{n}{f}\PYG{p}{,} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{ch} \PYG{o}{\PYGZgt{}=} \PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{ch} \PYG{o}{\PYGZlt{}=} \PYG{l+s+sc}{\PYGZsq{}9\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{a} \PYG{o}{=} \PYG{n}{a} \PYG{o}{*} \PYG{l+m+mi}{10} \PYG{o}{+} \PYG{n}{ch} \PYG{o}{\PYGZhy{}} \PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{,} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{n}{x} \PYG{o}{=} \PYG{n}{a} \PYG{o}{*} \PYG{n}{f}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 浮点数读入}
+\PYG{k+kr}{inline} \PYG{k+kt}{double} \PYG{n}{read}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{double} \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mf}{1.0}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{f} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k+kt}{char} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{o}{!}\PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{))}
+        \PYG{n}{f} \PYG{o}{|=} \PYG{n}{ch} \PYG{o}{==} \PYG{l+s+sc}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{))}
+        \PYG{n}{x} \PYG{o}{=} \PYG{n}{x} \PYG{o}{*} \PYG{l+m+mi}{10} \PYG{o}{+} \PYG{p}{(}\PYG{n}{ch} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{48}\PYG{p}{),} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{))}
+        \PYG{n}{x} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{y} \PYG{o}{/=} \PYG{l+m+mi}{10}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{n}{ch} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{48}\PYG{p}{),} \PYG{n}{ch} \PYG{o}{=} \PYG{n}{getchar}\PYG{p}{();}
+    \PYG{k}{return} \PYG{n}{f} \PYG{o}{?} \PYG{o}{\PYGZhy{}}\PYG{n+nl}{x} \PYG{p}{:} \PYG{n}{x}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{//=============================究极快读}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{namespace} \PYG{n}{nqio} \PYG{p}{\PYGZob{}}
+    \PYG{k}{const} \PYG{k+kt}{unsigned} \PYG{n}{R} \PYG{o}{=} \PYG{l+m+mf}{4e5}\PYG{p}{,} \PYG{n}{W} \PYG{o}{=} \PYG{l+m+mf}{4e5}\PYG{p}{;}
+    \PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{a}\PYG{p}{,} \PYG{o}{*}\PYG{n}{b}\PYG{p}{,} \PYG{n}{i}\PYG{p}{[}\PYG{n}{R}\PYG{p}{],} \PYG{n}{o}\PYG{p}{[}\PYG{n}{W}\PYG{p}{],} \PYG{o}{*}\PYG{n}{c} \PYG{o}{=} \PYG{n}{o}\PYG{p}{,} \PYG{o}{*}\PYG{n}{d} \PYG{o}{=} \PYG{n}{o} \PYG{o}{+} \PYG{n}{W}\PYG{p}{,} \PYG{n}{h}\PYG{p}{[}\PYG{l+m+mi}{40}\PYG{p}{],} \PYG{o}{*}\PYG{n}{p} \PYG{o}{=} \PYG{n}{h}\PYG{p}{,} \PYG{n}{y}\PYG{p}{;}
+    \PYG{k+kt}{bool} \PYG{n}{s}\PYG{p}{;}
+    \PYG{k}{struct} \PYG{n}{q} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{void} \PYG{n}{r}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{n}{x} \PYG{o}{=} \PYG{n}{a} \PYG{o}{==} \PYG{n}{b} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{p}{(}\PYG{n}{b} \PYG{o}{=} \PYG{p}{(}\PYG{n}{a} \PYG{o}{=} \PYG{n}{i}\PYG{p}{)} \PYG{o}{+} \PYG{n}{fread}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{R}\PYG{p}{,} \PYG{n}{stdin}\PYG{p}{),} \PYG{n}{a} \PYG{o}{==} \PYG{n}{b}\PYG{p}{)} \PYG{o}{?} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{o}{:} \PYG{o}{*}\PYG{n}{a}\PYG{o}{++}\PYG{p}{;\PYGZcb{}}
+        \PYG{k+kt}{void} \PYG{n}{f}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{n}{fwrite}\PYG{p}{(}\PYG{n}{o}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{c} \PYG{o}{\PYGZhy{}} \PYG{n}{o}\PYG{p}{,} \PYG{n}{stdout}\PYG{p}{);}\PYG{n}{c} \PYG{o}{=} \PYG{n}{o}\PYG{p}{;\PYGZcb{}}
+        \PYG{o}{\PYGZti{}}\PYG{n}{q}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{n}{f}\PYG{p}{();\PYGZcb{}}
+        \PYG{k+kt}{void} \PYG{n}{w}\PYG{p}{(}\PYG{k+kt}{char} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{o}{*}\PYG{n}{c} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;} \PYG{k}{if} \PYG{p}{(}\PYG{o}{++}\PYG{n}{c} \PYG{o}{==} \PYG{n}{d}\PYG{p}{)} \PYG{n}{f}\PYG{p}{();} \PYG{p}{\PYGZcb{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{k}{do} \PYG{n}{r}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);} \PYG{k}{while} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{32}\PYG{p}{);} \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;\PYGZcb{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{k}{do} \PYG{n}{r}\PYG{p}{(}\PYG{o}{*}\PYG{n}{x}\PYG{p}{);}\PYG{k}{while} \PYG{p}{(}\PYG{o}{*}\PYG{n}{x} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{32}\PYG{p}{);} \PYG{k}{while} \PYG{p}{(}\PYG{o}{*}\PYG{n}{x} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{32}\PYG{p}{)} \PYG{n}{r}\PYG{p}{(}\PYG{o}{*++}\PYG{n}{x}\PYG{p}{);} \PYG{o}{*}\PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;\PYGZcb{}}
+
+        \PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{typename} \PYG{n}{t}\PYG{o}{\PYGZgt{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{p}{(}\PYG{n}{t} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{r}\PYG{p}{(}\PYG{n}{y}\PYG{p}{),} \PYG{n}{s} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{o}{!}\PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);} \PYG{n}{r}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))} \PYG{n}{s} \PYG{o}{|=} \PYG{n}{y} \PYG{o}{==} \PYG{l+m+mi}{45}\PYG{p}{;}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{s}\PYG{p}{)} \PYG{k}{for} \PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);} \PYG{n}{r}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))} \PYG{n}{x} \PYG{o}{=} \PYG{n}{x} \PYG{o}{*} \PYG{l+m+mi}{10} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n}{y} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{48}\PYG{p}{);}
+            \PYG{k}{else}   \PYG{k}{for} \PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{isdigit}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);} \PYG{n}{r}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))} \PYG{n}{x} \PYG{o}{=} \PYG{n}{x} \PYG{o}{*} \PYG{l+m+mi}{10} \PYG{o}{+} \PYG{p}{(}\PYG{n}{y} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{48}\PYG{p}{);}
+            \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{k+kt}{char} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{n}{w}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);} \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{k}{while} \PYG{p}{(}\PYG{o}{*}\PYG{n}{x}\PYG{p}{)} \PYG{n}{w}\PYG{p}{(}\PYG{o}{*}\PYG{n}{x}\PYG{o}{++}\PYG{p}{);} \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{k}{const} \PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{k}{while} \PYG{p}{(}\PYG{o}{*}\PYG{n}{x}\PYG{p}{)} \PYG{n}{w}\PYG{p}{(}\PYG{o}{*}\PYG{n}{x}\PYG{o}{++}\PYG{p}{);} \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+
+        \PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{typename} \PYG{n}{t}\PYG{o}{\PYGZgt{}}
+        \PYG{n}{q} \PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{n}{t} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{x}\PYG{p}{)} \PYG{n}{w}\PYG{p}{(}\PYG{l+m+mi}{48}\PYG{p}{);}
+            \PYG{k}{else} \PYG{n+nf}{if} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{for} \PYG{p}{(}\PYG{n}{w}\PYG{p}{(}\PYG{l+m+mi}{45}\PYG{p}{);} \PYG{n}{x}\PYG{p}{;} \PYG{n}{x} \PYG{o}{/=} \PYG{l+m+mi}{10}\PYG{p}{)} \PYG{o}{*} \PYG{n}{p}\PYG{o}{++} \PYG{o}{=} \PYG{l+m+mi}{48} \PYG{o}{|} \PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{10}\PYG{p}{);}
+            \PYG{k}{else} \PYG{k}{for} \PYG{p}{(;} \PYG{n}{x}\PYG{p}{;} \PYG{n}{x} \PYG{o}{/=} \PYG{l+m+mi}{10}\PYG{p}{)} \PYG{o}{*} \PYG{n}{p}\PYG{o}{++} \PYG{o}{=} \PYG{l+m+mi}{48} \PYG{o}{|} \PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{10}\PYG{p}{;}
+            \PYG{k}{while} \PYG{p}{(}\PYG{n}{p} \PYG{o}{!=} \PYG{n}{h}\PYG{p}{)} \PYG{n}{w}\PYG{p}{(}\PYG{o}{*\PYGZhy{}\PYGZhy{}}\PYG{n}{p}\PYG{p}{);}
+            \PYG{k}{return}\PYG{o}{*}\PYG{k}{this}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}} \PYG{n}{qio}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}} \PYG{k}{using} \PYG{n}{nqio}\PYG{o}{::}\PYG{n}{qio}\PYG{p}{;}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+    \PYG{n}{\PYGZus{}\PYGZus{}int128} \PYG{n}{a}\PYG{p}{,}\PYG{n}{b}\PYG{p}{;}
+    \PYG{n}{qio} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{a} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{b}\PYG{p}{;}
+    \PYG{n}{qio} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{a} \PYG{o}{+} \PYG{n}{b}\PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}\PYGZbs{}n\PYGZsq{}}\PYG{p}{;}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{uf} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{undo}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{top}\PYG{p}{;}
+    \PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{n}{memset}\PYG{p}{(}\PYG{n}{fa}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{fa}\PYG{p}{);} \PYG{n}{memset}\PYG{p}{(}\PYG{n}{sz}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{sz}\PYG{p}{);} \PYG{n}{top} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n+nf}{find}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{k}{while} \PYG{p}{(}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{x} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{];} \PYG{k}{return} \PYG{n}{x}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{bool} \PYG{n+nf}{join}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{x} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);} \PYG{n}{y} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{x} \PYG{o}{==} \PYG{n}{y}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{sz}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{y}\PYG{p}{])} \PYG{n}{swap}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+        \PYG{n}{undo}\PYG{p}{[}\PYG{n}{top}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;}
+        \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+        \PYG{n}{sz}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n+nf}{checkpoint}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{k}{return} \PYG{n}{top}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{rewind}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{top} \PYG{o}{\PYGZgt{}} \PYG{n}{t}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{x} \PYG{o}{=} \PYG{n}{undo}\PYG{p}{[}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{n}{top}\PYG{p}{];}
+            \PYG{n}{sz}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]]} \PYG{o}{\PYGZhy{}=} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

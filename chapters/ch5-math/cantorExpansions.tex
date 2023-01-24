@@ -1,0 +1,39 @@
+\section{康托展开}
+\par \noindent 康托展开可以用来求一个 $1\sim n$ 的任意排列的字典序排名。
+~\\
+\par \noindent 其实康托展开的原理很简单。设有排列 $p=a_1a_2…a_n$ ，那么对任意字典序比 $p$ 小的排列，一定存在 $i$ ，使得其前 $i−1 (1\leq i<n)$ 位与 $p$ 对应位相同，第 $i$ 位比 $p_i$ 小，后续位随意。于是对于任意 i ，满足条件的排列数就是从后 $n−i+1$ 位中选一个比 $a_i$ 小的数、并将剩下 $n−i$ 个数任意排列的方案数，即为 $A_i\cdot(n−i)!$ （ $A_i$ 表示 $a_i$ 后面比 $a_i$ 小的数的个数）。遍历 $i$ 即得总方案数$\sum_{i=1}^{n−1}A_i\cdot(n−i)!$ ，再加 $1$ 即为排名。
+~\\
+\par \noindent 其中问题转化成如何求 $A_i$，树状数组显然可以 $O(n\log n)$ 解决此问题。 
+\par \noindent \rule[-10pt]{17.5cm}{0.05em}
+~\\
+\par \noindent 与康托展开相对应的是\textbf{逆康托展开}，即求指定排名的排列。原理也很简单，注意到
+$$
+n!=n(n-1)!=(n-1)\cdot(n-1)! + (n-1)! = \sum_{i=1}^{n-1}i\cdot i!
+$$
+而$A_i\leq n-i$，所以
+$$
+\sum_{i=j}^{n-1}A_i\cdot (n-i)!\leq\sum_{i=j}^{n-1}(n-i)\cdot (n-i)!=\sum_{i=1}^{n-j}i\cdot i!=(n-j+1)!
+$$
+\par \noindent 这意味着对于这个和式而言，每一项的 $(n−i)!$ 都比后面所有项的总和还大。于是可以用类似进制转换的方法，不断地模、除，来得到 $A$ 的每一项。
+~\\
+\par \noindent 得到 $A$ 后，我们已经知道每一项之后有多少个比该项小的数，也就是说 $p_i$ 就是剩余未用的数中第 $A_{i}+1$ 小的。可以朴素地实现：
+\begin{minted}{c++}
+ll fac[maxn], P[maxn], A[maxn];        // fac需要在外部初始化
+void decanter(ll x, int n) {           // x为排列的排名，n为排列的长度
+    x--;
+    vector<int> rest(n, 0);
+    iota(rest.begin(), rest.end(), 1); // 将rest初始化为1,2,...,n
+    /** for (int i = 1; i <= n; ++i) ins(i); **/
+    for (int i = 1; i <= n; ++i) {
+        A[i] = x / fac[n - i];
+        x %= fac[n - i];
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        P[i] = rest[A[i]]; /**P[i] = kth(A[i] + 1);remove(P[i]);**/
+        rest.erase(lower_bound(rest.begin(), rest.end(), P[i]));
+    }
+}
+\end{minted}
+
+\par \noindent 当然，也可以使用各种平衡树来优化到 $O(nlog⁡n) $.

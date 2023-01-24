@@ -1,0 +1,58 @@
+\section{2-SAT 问题}
+\begin{tcolorbox}
+\par \noindent \textbf{定义}：简单的说就是给出n个集合，每个集合有两个元素，已知若干个$<a,b>$，表示 $a$ 与 $b$ 矛盾(其中 $a$ 与 $b$ 属于不同的集合)。然后从每个集合选择一个元素，判断能否一共选n个两两不矛盾的元素。
+\end{tcolorbox}
+\par \noindent \textbf{原理}： 首先建图: 假设两个集合 $\left\{a_1, b_1\right\}$ 和 $\left\{a_2, b_2\right\}$, 如果 $a_1, b_2$ 冲突, 那么连有向边 $\left(a_1, b_1\right)$ 和 $\left(b_2, a_2\right)$, 然后跑一遍 Tarjan 有向图缩点, 判断是否有一个集合的两个元素同时在同一个 SCC 中, 如果有则无 解, 否则有解。
+~\\
+\par \noindent \textbf{输出方案}： Tarjan 算法求强连通分量时用了栈, 求得各点所在的 SCC 编号相当于反拓扑序。对于任 意集合可以表示为 $\{x, \neg x\}$; 如果变量 $\neg x$ 的拓扑序在 $x$ 之后（即 $\operatorname{topo}(\neg x) \geq \operatorname{topo}(x)$ ), 则取 $x$ 为真。
+\begin{minted}{c++}
+namespace TwoSAT {
+    #define clear(x) memset(x, 0, sizeof(x))
+    int head[maxn], dfn[maxn], low[maxn], c[maxn], stk[maxn];
+    int top = 0, scccnt = 0, order = 1, cnt = 1;
+    bool instack[maxn];
+    struct Edge {
+        int u, v, next;
+        Edge(int u = 0, int v = 0, int next = 0): u(u), v(v), next(next) {}
+    } e[maxm];
+    void add_edge(int u, int v) {
+        e[cnt] = Edge(u, v, head[u]);
+        head[u] = cnt++;
+    }
+    void init() {
+        clear(dfn), clear(low), clear(c), clear(instack), clear(head);
+        scccnt = 0, order = 1, cnt = 1, top = 0;
+    }
+    void tarjan(int x) {
+        dfn[x] = low[x] = order++;
+        stk[++top] = x, instack[x] = 1;
+        for (int i = head[x]; i; i = e[i].next) {
+            int y = e[i].v;
+            if (!dfn[y])
+                tarjan(y), low[x] = min(low[x], low[y]);
+            else if (instack[y])
+                low[x] = min(low[x], dfn[y]);
+        }
+        if (dfn[x] == low[x]) {
+            int tmp;
+            do {
+                tmp = stk[top--];
+                c[tmp] = scccnt, instack[tmp] = 0;
+            } while (tmp != x);
+            scccnt++;
+        }
+    }
+    void shrink(int n) {
+        for (int x = 0; x <= n; x++)
+            if (!dfn[x])
+                tarjan(x);
+    }
+    bool solve(int n) {
+        shrink(n);
+        for (int i = 0; i <= n; i += 2)
+            if (c[i] == c[i+1])
+                return false;
+        return true;
+    }
+}using namespace TwoSAT;
+\end{minted}

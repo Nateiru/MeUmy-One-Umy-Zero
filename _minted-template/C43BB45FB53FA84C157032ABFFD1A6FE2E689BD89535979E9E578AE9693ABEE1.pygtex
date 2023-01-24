@@ -1,0 +1,67 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{//若要修改一个点的点权，应当先将其 splay 到根，然后修改，最后还要调用 pushup 维护。}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{lct}\PYG{p}{;}
+
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mi}{300005}\PYG{p}{;}
+
+\PYG{k+kt}{int} \PYG{n+nf}{dis}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{split}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+    \PYG{k}{return} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{struct} \PYG{n}{dia} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{;}
+    \PYG{k+kt}{bool} \PYG{k}{operator}\PYG{o}{\PYGZlt{}}\PYG{p}{(}\PYG{k}{const} \PYG{n}{dia} \PYG{o}{\PYGZam{}}\PYG{n}{o}\PYG{p}{)}\PYG{k}{const} \PYG{p}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{w} \PYG{o}{\PYGZlt{}} \PYG{n}{o}\PYG{p}{.}\PYG{n}{w}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{dia} \PYG{k}{operator} \PYG{o}{+}\PYG{p}{(}\PYG{k}{const} \PYG{n}{dia} \PYG{o}{\PYGZam{}}\PYG{n}{o}\PYG{p}{)}\PYG{k}{const} \PYG{p}{\PYGZob{}}
+        \PYG{n}{dia} \PYG{n}{ret} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{o}{*}\PYG{k}{this}\PYG{p}{,} \PYG{n}{o}\PYG{p}{);}\PYG{c+c1}{// 原来树的直径}
+        \PYG{c+c1}{// 两条直径端点组合构成新的直径}
+        \PYG{n}{ret} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{u}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{u}\PYG{p}{,} \PYG{n}{dis}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{u}\PYG{p}{)\PYGZcb{});}
+        \PYG{n}{ret} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{u}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{v}\PYG{p}{,} \PYG{n}{dis}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{v}\PYG{p}{)\PYGZcb{});}
+        \PYG{n}{ret} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{v}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{u}\PYG{p}{,} \PYG{n}{dis}\PYG{p}{(}\PYG{n}{v}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{u}\PYG{p}{)\PYGZcb{});}
+        \PYG{n}{ret} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{ret}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{v}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{v}\PYG{p}{,} \PYG{n}{dis}\PYG{p}{(}\PYG{n}{v}\PYG{p}{,} \PYG{n}{o}\PYG{p}{.}\PYG{n}{v}\PYG{p}{)\PYGZcb{});}
+        \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}} \PYG{n}{d}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{dsu}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{find}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{x} \PYG{o}{==} \PYG{n}{dsu}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{?} \PYG{n+nl}{x} \PYG{p}{:} \PYG{n}{dsu}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{dsu}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]);}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{merge}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{link}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+    \PYG{n}{x} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),} \PYG{n}{y} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+    \PYG{n}{dsu}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+    \PYG{n}{d}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{+} \PYG{n}{d}\PYG{p}{[}\PYG{n}{y}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{q}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{type}\PYG{p}{;}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{ios}\PYG{o}{::}\PYG{n}{sync\PYGZus{}with\PYGZus{}stdio}\PYG{p}{(}\PYG{n+nb}{false}\PYG{p}{);} \PYG{n}{cin}\PYG{p}{.}\PYG{n}{tie}\PYG{p}{(}\PYG{k}{nullptr}\PYG{p}{);} \PYG{n}{cout}\PYG{p}{.}\PYG{n}{tie}\PYG{p}{(}\PYG{k}{nullptr}\PYG{p}{);}
+    \PYG{n}{init}\PYG{p}{();}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{type} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{dsu}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{,} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{n}{i}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{};}
+
+    \PYG{k+kt}{int} \PYG{n}{lastans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{c+c1}{// 强制在线}
+
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{q}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{op}\PYG{p}{;}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{op}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{;}
+            \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{u} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{v}\PYG{p}{;}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{type}\PYG{p}{)} \PYG{n}{u} \PYG{o}{\PYGZca{}=} \PYG{n}{lastans}\PYG{p}{,} \PYG{n}{v} \PYG{o}{\PYGZca{}=} \PYG{n}{lastans}\PYG{p}{;}
+            \PYG{n}{merge}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{;}
+            \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{x}\PYG{p}{;}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{type}\PYG{p}{)} \PYG{n}{x} \PYG{o}{\PYGZca{}=} \PYG{n}{lastans}\PYG{p}{;}
+            \PYG{k}{auto} \PYG{p}{[}\PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{find}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)];}
+            \PYG{n}{lastans} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{dis}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{u}\PYG{p}{),} \PYG{n}{dis}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{v}\PYG{p}{));}
+            \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{lastans} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}\PYGZbs{}n\PYGZsq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

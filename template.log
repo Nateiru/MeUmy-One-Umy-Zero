@@ -1,0 +1,2726 @@
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.15)  13 JAN 2023 18:32
+entering extended mode
+ \write18 enabled.
+ %&-line parsing enabled.
+**template.tex
+(./template.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-02-24>
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2021/10/04 v1.4n Standard LaTeX document class
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count181
+\c@chapter=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/l3packages/xparse/xparse.st
+y (d:/Program Files/texlive/2022/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2022-02-24 L3 programming layer (loader) 
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.d
+ef
+File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
+ (|extractbb --version)
+\c__kernel_sys_dvipdfmx_version_int=\count190
+\l__color_backend_stack_int=\count191
+\g__color_backend_stack_int=\count192
+\g__graphics_track_int=\count193
+\l__pdf_internal_box=\box50
+\g__pdf_backend_object_int=\count194
+\g__pdf_backend_annotation_int=\count195
+\g__pdf_backend_link_int=\count196
+))
+Package: xparse 2022-01-12 L3 Experimental document command parser
+)
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTe
+X
+\l__fontspec_script_int=\count197
+\l__fontspec_language_int=\count198
+\l__fontspec_strnum_int=\count199
+\l__fontspec_tmp_int=\count266
+\l__fontspec_tmpa_int=\count267
+\l__fontspec_tmpb_int=\count268
+\l__fontspec_tmpc_int=\count269
+\l__fontspec_em_int=\count270
+\l__fontspec_emdef_int=\count271
+\l__fontspec_strong_int=\count272
+\l__fontspec_strongdef_int=\count273
+\l__fontspec_tmpa_dim=\dimen139
+\l__fontspec_tmpb_dim=\dimen140
+\l__fontspec_tmpc_dim=\dimen141
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2021/03/18 v5.0k Graphics/color driver for xetex
+))
+\Gin@req@height=\dimen142
+\Gin@req@width=\dimen143
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count274
+\Gm@cntv=\count275
+\c@Gm@tempcnt=\count276
+\Gm@bindingoffset=\dimen144
+\Gm@wd@mp=\dimen145
+\Gm@odd@mp=\dimen146
+\Gm@even@mp=\dimen147
+\Gm@layoutwidth=\dimen148
+\Gm@layoutheight=\dimen149
+\Gm@layouthoffset=\dimen150
+\Gm@layoutvoffset=\dimen151
+\Gm@dimlist=\toks17
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count277
+\lst@gtempboxa=\box51
+\lst@token=\toks18
+\lst@length=\count278
+\lst@currlwidth=\dimen152
+\lst@column=\count279
+\lst@pos=\count280
+\lst@lostspace=\dimen153
+\lst@width=\dimen154
+\lst@newlines=\count281
+\lst@lineno=\count282
+\lst@maxwidth=\dimen155
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count283
+\lst@skipnumbers=\count284
+\lst@framebox=\box52
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 227.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/xcolor/svgnam.def
+File: svgnam.def 2021/10/31 v2.13 Predefined colors according to SVG 1.1 (UK)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/xcolor/x11nam.def
+File: x11nam.def 2021/10/31 v2.13 Predefined colors according to Unix/X11 (UK)
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2022/02/07 v1.28a mathematical typesetting tools
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count285
+\calc@Bcount=\count286
+\calc@Adimen=\dimen156
+\calc@Bdimen=\dimen157
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count287
+\calc@Cskip=\skip51
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip52
+
+For additional information on amsmath, use the `?' option.
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks19
+\ex@=\dimen158
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen159
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
+)
+\inf@bad=\count288
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count289
+\leftroot@=\count290
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count291
+\DOTSCASE@=\count292
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box53
+\strutbox@=\box54
+\big@size=\dimen160
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count293
+\c@MaxMatrixCols=\count294
+\dotsspace@=\muskip16
+\c@parentequation=\count295
+\dspbrk@lvl=\count296
+\tag@help=\toks20
+\row@=\count297
+\column@=\count298
+\maxfields@=\count299
+\andhelp@=\toks21
+\eqnshift@=\dimen161
+\alignsep@=\dimen162
+\tagshift@=\dimen163
+\tagwidth@=\dimen164
+\totwidth@=\dimen165
+\lineht@=\dimen166
+\@envbody=\toks22
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
+)
+\g_MT_multlinerow_int=\count300
+\l_MT_multwidth_dim=\dimen167
+\origjot=\skip55
+\l_MT_shortvdotswithinadjustabove_dim=\dimen168
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen169
+\l_MT_above_intertext_sep=\dimen170
+\l_MT_below_intertext_sep=\dimen171
+\l_MT_above_shortintertext_sep=\dimen172
+\l_MT_below_shortintertext_sep=\dimen173
+\xmathstrut@box=\box55
+\xmathstrut@dim=\dimen174
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks24
+\verbatim@line=\toks25
+\verbatim@in@stream=\read2
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks26
+\thm@bodyfont=\toks27
+\thm@headfont=\toks28
+\thm@notefont=\toks29
+\thm@headpunct=\toks30
+\thm@preskip=\skip56
+\thm@postskip=\skip57
+\thm@headsep=\skip58
+\dth@everypar=\toks31
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and foote
+rs
+\f@nch@headwidth=\skip59
+\f@nch@O@elh=\skip60
+\f@nch@O@erh=\skip61
+\f@nch@O@olh=\skip62
+\f@nch@O@orh=\skip63
+\f@nch@O@elf=\skip64
+\f@nch@O@erf=\skip65
+\f@nch@O@olf=\skip66
+\f@nch@O@orf=\skip67
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/minted/minted.sty
+Package: minted 2021/12/24 v2.6 Yet another Pygments shim for LaTeX
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)) (d:/Program Files/texlive/2022/texmf-dist/tex/latex/fvextra/fvextra.sty
+Package: fvextra 2019/02/04 v1.4 fvextra - extensions and patches for fancyvrb
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count301
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+\FV@CodeLineNo=\count302
+\FV@InFile=\read3
+\FV@TabBox=\box56
+\c@FancyVerbLine=\count303
+\FV@StepNumber=\count304
+\FV@OutFile=\write3
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+Invalid UTF-8 byte or sequence at line 296 replaced by U+FFFD.
+\linenopenalty=\count305
+\output=\toks32
+\linenoprevgraf=\count306
+\linenumbersep=\dimen175
+\linenumberwidth=\dimen176
+\c@linenumber=\count307
+\c@pagewiselinenumber=\count308
+\c@LN@truepage=\count309
+\c@internallinenumber=\count310
+\c@internallinenumbers=\count311
+\quotelinenumbersep=\dimen177
+\bframerule=\dimen178
+\bframesep=\dimen179
+\bframebox=\box57
+LaTeX Info: Redefining \\ on input line 3056.
+)
+\c@FV@TrueTabGroupLevel=\count312
+\c@FV@TrueTabCounter=\count313
+\FV@TabBox@Group=\box58
+\FV@TmpLength=\skip68
+\c@FV@HighlightLinesStart=\count314
+\c@FV@HighlightLinesStop=\count315
+\FV@LoopCount=\count316
+\FV@NCharsBox=\box59
+\FV@BreakIndent=\dimen180
+\FV@BreakIndentNChars=\count317
+\FV@BreakSymbolSepLeft=\dimen181
+\FV@BreakSymbolSepLeftNChars=\count318
+\FV@BreakSymbolSepRight=\dimen182
+\FV@BreakSymbolSepRightNChars=\count319
+\FV@BreakSymbolIndentLeft=\dimen183
+\FV@BreakSymbolIndentLeftNChars=\count320
+\FV@BreakSymbolIndentRight=\dimen184
+\FV@BreakSymbolIndentRightNChars=\count321
+\c@FancyVerbLineBreakLast=\count322
+\FV@LineBox=\box60
+\FV@LineIndentBox=\box61
+\FV@LineWidth=\dimen185
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/tools/shellesc.sty
+Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 75.
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/ifplatform/ifplatform.sty
+Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+) (d:/Program Files/texlive/2022/texmf-dist/tex/generic/catchfile/catchfile.sty
+Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/iftex/ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/xstring/xstring.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/xstring/xstring.tex
+\integerpart=\count323
+\decimalpart=\count324
+)
+Package: xstring 2021/07/21 v1.84 String manipulations (CT)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip69
+\fb@frw=\dimen186
+\fb@frh=\dimen187
+\FrameRule=\dimen188
+\FrameSep=\dimen189
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count325
+\float@exts=\toks33
+\float@box=\box62
+\@float@everytoks=\toks34
+\@floatcapt=\box63
+)
+\minted@appexistsfile=\read4
+\minted@bgbox=\box64
+\minted@code=\write4
+\c@minted@FancyVerbLineTemp=\count326
+\c@minted@pygmentizecounter=\count327
+\@float@every@listing=\toks35
+\c@listing=\count328
+)
+runsystem(if not exist _minted-template mkdir _minted-template)...executed.
+
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2022/01/29 v0.5u Insert pages of external PDF documents (AM)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen190
+\ESO@tempdimb=\dimen191
+)
+\AM@pagewidth=\dimen192
+\AM@pageheight=\dimen193
+\AM@fboxrule=\dimen194
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pdfpages/ppxetex.def
+File: ppxetex.def 2022/01/29 v0.5u Pdfpages driver for XeTeX (AM)
+)
+\pdfpages@includegraphics@status=\count329
+\AM@pagebox=\box65
+\AM@global@opts=\toks36
+\AM@pagecnt=\count330
+\AM@toc@title=\toks37
+\c@AM@survey=\count331
+\AM@templatesizebox=\box66
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys
+.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (d:/Program Files/texlive/2022/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen195
+\Hy@linkcounter=\count332
+\Hy@pagecounter=\count333
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2022-02-21 v7.00n Hyperref: PDFDocEncoding definition (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count334
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4018.
+Package hyperref Info: Hyper figures OFF on input line 4137.
+Package hyperref Info: Link nesting OFF on input line 4142.
+Package hyperref Info: Hyper index ON on input line 4145.
+Package hyperref Info: Plain pages OFF on input line 4152.
+Package hyperref Info: Backreferencing OFF on input line 4157.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4390.
+\c@Hy@tempcnt=\count335
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4749.
+\XeTeXLinkMargin=\dimen196
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count336
+\Field@Width=\dimen197
+\Fld@charsize=\dimen198
+Package hyperref Info: Hyper figures OFF on input line 6027.
+Package hyperref Info: Link nesting OFF on input line 6032.
+Package hyperref Info: Hyper index ON on input line 6035.
+Package hyperref Info: backreferencing OFF on input line 6042.
+Package hyperref Info: Link coloring ON on input line 6045.
+Package hyperref Info: Link coloring with OCG OFF on input line 6052.
+Package hyperref Info: PDF/A mode OFF on input line 6057.
+LaTeX Info: Redefining \ref on input line 6097.
+LaTeX Info: Redefining \pageref on input line 6101.
+ (d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count337
+\c@Item=\count338
+\c@Hfootnote=\count339
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2022-02-21 v7.00n Hyperref driver for XeTeX
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\pdfm@box=\box67
+\c@Hy@AnnotLevel=\count340
+\HyField@AnnotCount=\count341
+\Fld@listcount=\count342
+\c@bookmark@seq@number=\count343
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/rerunfilecheck/rerunfileche
+ck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/uniquecounter/uniquecount
+er.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip70
+) (d:/Program Files/texlive/2022/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+Package: xeCJK 2021/12/12 v3.8.8 Typesetting CJK scripts with XeLaTeX
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/ctex/ctexhook.sty
+Package: ctexhook 2021/12/12 v2.5.8 Document and package hooks (CTEX)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2
+e.sty
+Package: l3keys2e 2022-01-12 LaTeX2e option processing using LaTeX3 keys
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/l3packages/xtemplate/xtempl
+ate.sty
+Package: xtemplate 2022-01-12 L3 Experimental prototype document functions
+\l__xtemplate_tmp_dim=\dimen199
+\l__xtemplate_tmp_int=\count344
+\l__xtemplate_tmp_muskip=\muskip18
+\l__xtemplate_tmp_skip=\skip71
+)
+\l__xeCJK_tmp_int=\count345
+\l__xeCJK_tmp_box=\box68
+\l__xeCJK_tmp_dim=\dimen256
+\l__xeCJK_tmp_skip=\skip72
+\g__xeCJK_space_factor_int=\count346
+\l__xeCJK_begin_int=\count347
+\l__xeCJK_end_int=\count348
+\c__xeCJK_CJK_class_int=\XeTeXcharclass1
+\c__xeCJK_FullLeft_class_int=\XeTeXcharclass2
+\c__xeCJK_FullRight_class_int=\XeTeXcharclass3
+\c__xeCJK_HalfLeft_class_int=\XeTeXcharclass4
+\c__xeCJK_HalfRight_class_int=\XeTeXcharclass5
+\c__xeCJK_NormalSpace_class_int=\XeTeXcharclass6
+\c__xeCJK_CM_class_int=\XeTeXcharclass7
+\c__xeCJK_HangulJamo_class_int=\XeTeXcharclass8
+\l__xeCJK_last_skip=\skip73
+\g__xeCJK_node_int=\count349
+\c__xeCJK_CJK_node_dim=\dimen257
+\c__xeCJK_CJK-space_node_dim=\dimen258
+\c__xeCJK_default_node_dim=\dimen259
+\c__xeCJK_default-space_node_dim=\dimen260
+\c__xeCJK_CJK-widow_node_dim=\dimen261
+\c__xeCJK_normalspace_node_dim=\dimen262
+\l__xeCJK_ccglue_skip=\skip74
+\l__xeCJK_ecglue_skip=\skip75
+\l__xeCJK_punct_kern_skip=\skip76
+\l__xeCJK_last_penalty_int=\count350
+\l__xeCJK_last_bound_dim=\dimen263
+\l__xeCJK_last_kern_dim=\dimen264
+\l__xeCJK_widow_penalty_int=\count351
+
+Package xtemplate Info: Declaring object type 'xeCJK/punctuation' taking 0
+(xtemplate)             argument(s) on line 2337.
+
+\l__xeCJK_fixed_punct_width_dim=\dimen265
+\l__xeCJK_mixed_punct_width_dim=\dimen266
+\l__xeCJK_middle_punct_width_dim=\dimen267
+\l__xeCJK_fixed_margin_width_dim=\dimen268
+\l__xeCJK_mixed_margin_width_dim=\dimen269
+\l__xeCJK_middle_margin_width_dim=\dimen270
+\l__xeCJK_bound_punct_width_dim=\dimen271
+\l__xeCJK_bound_margin_width_dim=\dimen272
+\l__xeCJK_margin_minimum_dim=\dimen273
+\l__xeCJK_kerning_total_width_dim=\dimen274
+\l__xeCJK_same_align_margin_dim=\dimen275
+\l__xeCJK_different_align_margin_dim=\dimen276
+\l__xeCJK_kerning_margin_width_dim=\dimen277
+\l__xeCJK_kerning_margin_minimum_dim=\dimen278
+\l__xeCJK_bound_dim=\dimen279
+\l__xeCJK_reverse_bound_dim=\dimen280
+\l__xeCJK_margin_dim=\dimen281
+\l__xeCJK_minimum_bound_dim=\dimen282
+\l__xeCJK_kerning_margin_dim=\dimen283
+\g__xeCJK_family_int=\count352
+\l__xeCJK_fam_int=\count353
+\g__xeCJK_fam_allocation_int=\count354
+\l__xeCJK_verb_case_int=\count355
+\l__xeCJK_verb_exspace_skip=\skip77
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/xelatex/xecjk/xeCJK-listings.sty
+Package: xeCJK-listings 2021/12/12 v3.8.8 xeCJK patch file for listings
+\l__xeCJK_listings_max_char_int=\count356
+\l__xeCJK_listings_flag_int=\count357
+) (d:/Program Files/texlive/2022/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg
+File: xeCJK.cfg 2021/12/12 v3.8.8 Configuration file for xeCJK package
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2022/01/07 version 5.0.2 text color boxes
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-com
+mon.tex
+\pgfutil@everybye=\toks38
+\pgfutil@tempdima=\dimen284
+\pgfutil@tempdimb=\dimen285
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-com
+mon-lists.tex))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-lat
+ex.def
+\pgfutil@abb=\box69
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code
+.tex (d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/pgf.revision.tex
+)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
+))
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.co
+de.tex
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfkeys.cod
+e.tex
+\pgfkeys@pathtoks=\toks39
+\pgfkeys@temptoks=\toks40
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfkeysfilt
+ered.code.tex
+\pgfkeys@tmptoks=\toks41
+))
+\pgf@x=\dimen286
+\pgf@y=\dimen287
+\pgf@xa=\dimen288
+\pgf@ya=\dimen289
+\pgf@xb=\dimen290
+\pgf@yb=\dimen291
+\pgf@xc=\dimen292
+\pgf@yc=\dimen293
+\pgf@xd=\dimen294
+\pgf@yd=\dimen295
+\w@pgf@writea=\write5
+\r@pgf@reada=\read5
+\c@pgf@counta=\count358
+\c@pgf@countb=\count359
+\c@pgf@countc=\count360
+\c@pgf@countd=\count361
+\t@pgf@toka=\toks42
+\t@pgf@tokb=\toks43
+\t@pgf@tokc=\toks44
+\pgf@sys@id@count=\count362
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
+)
+Driver file for pgf: pgfsys-xetex.def
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xe
+tex.def
+File: pgfsys-xetex.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dv
+ipdfmx.def
+File: pgfsys-dvipdfmx.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-co
+mmon-pdf.def
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)
+\pgfsys@objnum=\count363
+)))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssof
+tpath.code.tex
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count364
+\pgfsyssoftpath@bigbuffer@items=\count365
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsyspro
+tocol.code.tex
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.co
+de.tex
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code
+.tex
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathutil.code
+.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathparser.co
+de.tex
+\pgfmath@dimen=\dimen296
+\pgfmath@count=\count366
+\pgfmath@box=\box70
+\pgfmath@toks=\toks45
+\pgfmath@stack@operand=\toks46
+\pgfmath@stack@operation=\toks47
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.code.tex
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.basic.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.trigonometric.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.random.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.comparison.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.base.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.round.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.misc.code.tex)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions
+.integerarithmetics.code.tex)))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfloat.cod
+e.tex
+\c@pgfmathroundto@lastzeros=\count367
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoi
+nts.code.tex
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@picminx=\dimen297
+\pgf@picmaxx=\dimen298
+\pgf@picminy=\dimen299
+\pgf@picmaxy=\dimen300
+\pgf@pathminx=\dimen301
+\pgf@pathmaxx=\dimen302
+\pgf@pathminy=\dimen303
+\pgf@pathmaxy=\dimen304
+\pgf@xx=\dimen305
+\pgf@xy=\dimen306
+\pgf@yx=\dimen307
+\pgf@yy=\dimen308
+\pgf@zx=\dimen309
+\pgf@zy=\dimen310
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepat
+hconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@path@lastx=\dimen311
+\pgf@path@lasty=\dimen312
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepat
+husage.code.tex
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@shorten@end@additional=\dimen313
+\pgf@shorten@start@additional=\dimen314
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoresco
+pes.code.tex
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box71
+\pgf@hbox=\box72
+\pgf@layerbox@main=\box73
+\pgf@picture@serial@count=\count368
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregra
+phicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgflinewidth=\dimen315
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretra
+nsformations.code.tex
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@pt@x=\dimen316
+\pgf@pt@y=\dimen317
+\pgf@pt@temp=\dimen318
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequi
+ck.code.tex
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobj
+ects.code.tex
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepat
+hprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearr
+ows.code.tex
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfarrowsep=\dimen319
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoresha
+de.code.tex
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@max=\dimen320
+\pgf@sys@shading@range@num=\count369
+\pgf@shadingcount=\count370
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreima
+ge.code.tex
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreext
+ernal.code.tex
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box74
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelay
+ers.code.tex
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretra
+nsparency.code.tex
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepat
+terns.code.tex
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf
+.code.tex
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/modules/pgfmoduleshap
+es.code.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box75
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot
+.code.tex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-v
+ersion-0-65.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen321
+\pgf@nodesepend=\dimen322
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-v
+ersion-1-18.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+))
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box76
+\tcb@upperbox=\box77
+\tcb@lowerbox=\box78
+\tcb@phantombox=\box79
+\c@tcbbreakpart=\count371
+\c@tcblayer=\count372
+\c@tcolorbox@number=\count373
+\tcb@temp=\box80
+\tcb@temp=\box81
+\tcb@temp=\box82
+\tcb@temp=\box83
+) (d:/Program Files/texlive/2022/texmf-dist/tex/latex/lastpage/lastpage.sty
+Package: lastpage 2021/09/03 v1.2n Refers to last page's name (HMM; JPG)
+)
+
+Package fontspec Info: Font family 'SourceHanSerifCN(0)' created for font
+(fontspec)             'Source Han Serif CN' with options
+(fontspec)             [Script={CJK},AutoFakeBold={4},AutoFakeSlant={0.167}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"Source Han Serif
+(fontspec)             CN/OT:script=hani;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"Source Han Serif
+(fontspec)             CN/OT:script=hani;language=dflt;embolden=4;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"Source Han Serif
+(fontspec)             CN/OT:script=hani;language=dflt;slant=0.167;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"Source Han
+(fontspec)             Serif
+(fontspec)             CN/OT:script=hani;language=dflt;embolden=4;slant=0.167;"
+
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+
+Package fontspec Info: Font family 'TimesNewRoman(0)' created for font 'Times
+(fontspec)             New Roman' with options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"Times New
+(fontspec)             Roman/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: <->"Times New
+(fontspec)             Roman/OT:script=latn;language=dflt;+smcp;mapping=tex-tex
+t;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"Times New
+(fontspec)             Roman/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: <->"Times
+(fontspec)             New
+(fontspec)             Roman/B/OT:script=latn;language=dflt;+smcp;mapping=tex-t
+ext;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"Times New
+(fontspec)             Roman/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.:
+(fontspec)             <->"Times New
+(fontspec)             Roman/I/OT:script=latn;language=dflt;+smcp;mapping=tex-t
+ext;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"Times New
+(fontspec)             Roman/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
+(fontspec)             <->"Times New
+(fontspec)             Roman/BI/OT:script=latn;language=dflt;+smcp;mapping=tex-
+text;"
+
+
+Package fontspec Info: Could not resolve font "Fira Code/I" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: Font family 'FiraCode(0)' created for font 'Fira Code'
+(fontspec)             with options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"Fira
+(fontspec)             Code/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"Fira
+(fontspec)             Code/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"Fira
+(fontspec)             Code/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > te
+mplate.aex <nul: /p x=^%~$PATH:i>> template.aex)...executed.
+
+runsystem(del template.aex)...executed.
+
+
+(./template.aux)
+\openout1 = `template.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 59.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 5
+9.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+
+Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
+(fontspec)             this).
+
+\symlegacymaths=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 59.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 59.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 59.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 59.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 59.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 59.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 59.
+LaTeX Font Info:    Redeclaring math accent \check on input line 59.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 59.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 59.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 59.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 59.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 59.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 59.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 5
+9.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 59.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 
+59.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on 
+input line 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line
+ 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 
+59.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> TU/FiraCode(0)/m/n on input line 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 59.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on 
+input line 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input lin
+e 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> TU/FiraCode(0)/b/n on input line 59.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 59.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(42.67912pt, 528.93675pt, 42.67912pt)
+* v-part:(T,H,B)=(42.67912pt, 709.61174pt, 42.67912pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=528.93675pt
+* \textheight=709.61174pt
+* \oddsidemargin=-29.59087pt
+* \evensidemargin=-29.59087pt
+* \topmargin=-66.59087pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count374
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+
+)
+Package hyperref Info: Link coloring ON on input line 59.
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(d:/Program Files/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(d:/Program Files/texlive/2022/texmf-dist/tex/generic/gettitlestring/gettitlest
+ring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count375
+)
+LaTeX Info: Redefining \ref on input line 59.
+LaTeX Info: Redefining \pageref on input line 59.
+LaTeX Info: Redefining \nameref on input line 59.
+ (./template.out) (./template.out)
+\@outlinefile=\write6
+\openout6 = `template.out'.
+
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             https://www.ctan.org/pkg/pageslts
+(lastpage)             ! on input line 59.
+File: images/avatar.jpg Graphic file (type bmp)
+<images/avatar.jpg>
+ [1
+
+] (./template.toc [1
+
+] [2]
+[3] [4])
+\tf@toc=\write7
+\openout7 = `template.toc'.
+
+ [5] (./chapters/ch1-data-structure/index.tex
+Chapter 1.
+(./chapters/ch1-data-structure/RMQ.tex
+\openout3 = `template.pyg'.
+
+ (./_minted-template/emacs.pygstyle)
+(./_minted-template/5085BB9D5048E6ED316D30D6D0AC1B602E689BD89535979E9E578AE9693
+ABEE1.pygtex
+
+Package xeCJK Warning: Unknown CJK family `\CJKttdefault' is being ignored.
+(xeCJK)                
+(xeCJK)                Try to use `\setCJKmonofont[...]{...}' to define it.
+
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2.
+)) (./chapters/ch1-data-structure/stack.tex
+File: images/stack.png Graphic file (type bmp)
+<images/stack.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--16
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8397E1404F4DD0AE954FBDC0AED1085E2E689BD89535979E9E578AE9693
+ABEE1.pygtex [1
+
+] [2])) (./chapters/ch1-data-structure/Fenwick.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/93D48ACB7F72A61300A50766BB021D822E689BD89535979E9E578AE9693
+ABEE1.pygtex [3])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/980DA7C9C7B5A3AB0FB6B3D44CDE9E1C2E689BD89535979E9E578AE9693
+ABEE1.pygtex [4])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5338AEEECD20C396E10763077C49A56D2E689BD89535979E9E578AE9693
+ABEE1.pygtex [5])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2334DA359063CED52792E95A35D2EB552E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch1-data-structure/segTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/11DD3180FFD372689A03E6D6138090A52E689BD89535979E9E578AE9693
+ABEE1.pygtex [6])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C8440D0C855E233E6003C9D0B15145552E689BD89535979E9E578AE9693
+ABEE1.pygtex [7] [8] [9])
+Underfull \hbox (badness 10000) in paragraph at lines 188--190
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
+
+ []
+
+[10]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B0ED0B35E0C38981D987F1512DDC475D2E689BD89535979E9E578AE9693
+ABEE1.pygtex [11] [12])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/919453D39C7446EF013C5828AA9E8AD82E689BD89535979E9E578AE9693
+ABEE1.pygtex [13])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/876B65E51C961B8BA8749B906D76CAF12E689BD89535979E9E578AE9693
+ABEE1.pygtex [14] [15] [16]) [17]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F9F241C971C0E6421955926D1E27A9832E689BD89535979E9E578AE9693
+ABEE1.pygtex [18] [19])
+Underfull \hbox (badness 10000) in paragraph at lines 653--655
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 661--663
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8535FF23DA54B39AE69189E7E05DC6C02E689BD89535979E9E578AE9693
+ABEE1.pygtex [20] [21])
+Underfull \hbox (badness 10000) in paragraph at lines 741--743
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C5EF782F86D0D60561AFBB5C8D29FCE12E689BD89535979E9E578AE9693
+ABEE1.pygtex [22])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/988C0F7C7145F8E842D330F319EA6FC12E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/156382AB1FD838830C8CEEA4348F388E2E689BD89535979E9E578AE9693
+ABEE1.pygtex [23])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F5648D46F1B48F637642705D868D80F32E689BD89535979E9E578AE9693
+ABEE1.pygtex [24] [25])) (./chapters/ch1-data-structure/treeTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/34F3B3B8CC1F01C7C232CCFE216920D42E689BD89535979E9E578AE9693
+ABEE1.pygtex [26] [27])
+Underfull \hbox (badness 10000) in paragraph at lines 94--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--98
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--100
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B9404CA9AE13144E90B8D3AEB21565D32E689BD89535979E9E578AE9693
+ABEE1.pygtex [28] [29] [30] [31] [32])
+Underfull \hbox (badness 10000) in paragraph at lines 347--349
+
+ []
+
+[33]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0F0FB19A6C0AFA1096B470E5BA3F5A972E689BD89535979E9E578AE9693
+ABEE1.pygtex [34] [35] [36] [37]))
+(./chapters/ch1-data-structure/balanceTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/EECDF50163C4E8DCBC80B9566D5A6D6B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [38] [39] [40] [41] [42])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/BD21F2A36E24C6588ED756D85451BEBE2E689BD89535979E9E578AE9693
+ABEE1.pygtex [43] [44]) [45]
+Underfull \hbox (badness 10000) in paragraph at lines 353--355
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--357
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C843F774956FF44852A63FE73337F3022E689BD89535979E9E578AE9693
+ABEE1.pygtex [46] [47] [48])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/79D5C48E75DEBA46BA5660505C0783DE2E689BD89535979E9E578AE9693
+ABEE1.pygtex [49] [50] [51])) (./chapters/ch1-data-structure/LCT.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--29
+
+ []
+
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 29--31
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--33
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--35
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2C4919F243FD97324708F6AE4EA7B1002E689BD89535979E9E578AE9693
+ABEE1.pygtex [53] [54])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C43BB45FB53FA84C157032ABFFD1A6FE2E689BD89535979E9E578AE9693
+ABEE1.pygtex [55] [56])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7A97D0151B633D0F3F327E46C49F4CFF2E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch1-data-structure/undoUnionSet.tex [57]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/20A00B75C31AB3E3F05B68EFE7B74A482E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch1-data-structure/treeDecomposition.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--4
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/DC7F7C400D2276C36962CA5A4F7B40212E689BD89535979E9E578AE9693
+ABEE1.pygtex [58] [59])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/AAAE89B9900B81F9D069ED96612CE5BA2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/33907E48A4365AF0F8266BA221954AC42E689BD89535979E9E578AE9693
+ABEE1.pygtex [60]) [61]
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8EA0FFD128301E6DA1E77DFA4DC848F42E689BD89535979E9E578AE9693
+ABEE1.pygtex [62])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C2834DD794516BE51086FD407FD5BEFE2E689BD89535979E9E578AE9693
+ABEE1.pygtex [63])) (./chapters/ch1-data-structure/persistUnionSet.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/664DD4C0713B58A3840EE52E20317B152E689BD89535979E9E578AE9693
+ABEE1.pygtex [64] [65] [66]))
+(./chapters/ch1-data-structure/pointDivideAndConquer.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--4
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--20
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/1AFE3C0FF9D9CAC17ED54DF85CA01FDD2E689BD89535979E9E578AE9693
+ABEE1.pygtex [67] [68] [69])) (./chapters/ch1-data-structure/dsuOnTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/4D51ED32437585223F4AB7F36463B5262E689BD89535979E9E578AE9693
+ABEE1.pygtex [70])) (./chapters/ch1-data-structure/colorTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/DCCD284DD721615B4B1574F49D28D80B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [71] [72])) (./chapters/ch1-data-structure/pbds.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/596AE3B764E0F7D7E06B8B93CBAA29642E689BD89535979E9E578AE9693
+ABEE1.pygtex [73])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A055E09A3E8F5F79F65AC569E2B7A6432E689BD89535979E9E578AE9693
+ABEE1.pygtex [74]))) (./chapters/ch2-graph-theory/index.tex [75]
+Chapter 2.
+(./chapters/ch2-graph-theory/shortestPath.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/044CDC692983F0B133BFC05C1613E6C42E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 28--30
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/BDED9C790871871F86B8FA02123B7B5E2E689BD89535979E9E578AE9693
+ABEE1.pygtex [76
+
+])
+Underfull \hbox (badness 10000) in paragraph at lines 65--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 75--77
+
+ []
+
+[77]
+Underfull \hbox (badness 10000) in paragraph at lines 84--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
+
+ []
+
+) (./chapters/ch2-graph-theory/minimumSpanningTree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/267470615FBCD1CFA97695AA614387B62E689BD89535979E9E578AE9693
+ABEE1.pygtex [78])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5F25196998A116D04CFE9A94F63E8B112E689BD89535979E9E578AE9693
+ABEE1.pygtex [79])
+Underfull \hbox (badness 10000) in paragraph at lines 88--90
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/75B4A6CB7D587843851099D2AEDE99632E689BD89535979E9E578AE9693
+ABEE1.pygtex [80])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/9C57FE199AE20EF94E5CA0AD5B28871A2E689BD89535979E9E578AE9693
+ABEE1.pygtex) [81]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A4130A4790B4B69325836834E02BBAD82E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch2-graph-theory/Tarjan.tex [82]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/E82D4C89B95A502F774617F8749D2DBE2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3BDA5702E53847F3C146547C94DE4FA02E689BD89535979E9E578AE9693
+ABEE1.pygtex [83])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A404F7DA0A645F01EAF6D0DA8A6EB25B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [84])
+File: images/ecc.png Graphic file (type bmp)
+<images/ecc.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0D636913DA9712D31F57157D2D23DD3B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [85] [86])
+File: images/ecc-tree.png Graphic file (type bmp)
+<images/ecc-tree.png>
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/ECD11FD0471EE6CF0FC73377CA618C3D2E689BD89535979E9E578AE9693
+ABEE1.pygtex [87])
+Underfull \hbox (badness 10000) in paragraph at lines 268--270
+
+ []
+
+[88]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/00B51E017E8D2A15EB6DBBB6694C723A2E689BD89535979E9E578AE9693
+ABEE1.pygtex [89])) (./chapters/ch2-graph-theory/LCA.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5C9D19F412014AAA69F386ADA3CDED0D2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/4E2E2F07A3F9D3AC2B31B2037CEC8CA22E689BD89535979E9E578AE9693
+ABEE1.pygtex [90] [91])
+Underfull \hbox (badness 10000) in paragraph at lines 87--89
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/EA258BA89EAD796F9E2BCF3C4EC86C902E689BD89535979E9E578AE9693
+ABEE1.pygtex [92])) (./chapters/ch2-graph-theory/twoSat.tex [93]
+Underfull \hbox (badness 10000) in paragraph at lines 5--7
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8BED4195337FAA99C0D15EAE7A1271902E689BD89535979E9E578AE9693
+ABEE1.pygtex [94])) (./chapters/ch2-graph-theory/differenceConstraints.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--8
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--21
+
+ []
+
+) (./chapters/ch2-graph-theory/virtualTree.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
+
+ []
+
+[95]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/56D17BCEC326FA92C7D8700B273EE30C2E689BD89535979E9E578AE9693
+ABEE1.pygtex [96]))) (./chapters/ch3-network-flow-and-match/index.tex [97]
+Chapter 3.
+(./chapters/ch3-network-flow-and-match/bipartiteGraph.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/38070DC9958B79B0FDEF3D05DB76B18B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [98
+
+])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B5F518A6C331E3598D8229AF7528D3C22E689BD89535979E9E578AE9693
+ABEE1.pygtex [99])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F7082F0E8300A70FF0931086755436772E689BD89535979E9E578AE9693
+ABEE1.pygtex [100]) [101]) (./chapters/ch3-network-flow-and-match/maxflow.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/ED4F39B7A7C0743D44AEF7A50CC4FDB22E689BD89535979E9E578AE9693
+ABEE1.pygtex [102
+
+])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/94D960FF3FC070E516DE7DCCA3A51E112E689BD89535979E9E578AE9693
+ABEE1.pygtex [103])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/D5627C889B9BF0D232899D37404B1D062E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/102FF60C62D3ABA3532338AC7B9D8E232E689BD89535979E9E578AE9693
+ABEE1.pygtex [104]))
+(./chapters/ch3-network-flow-and-match/min-cost-max-flow.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F7CB9393C380A9701167A24B2922AF052E689BD89535979E9E578AE9693
+ABEE1.pygtex [105] [106])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/26BFDF327A390581E1CB92A2BB9AC0412E689BD89535979E9E578AE9693
+ABEE1.pygtex [107] [108]))) (./chapters/ch4-string/index.tex [109]
+Chapter 4.
+(./chapters/ch4-string/trie.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3119333EE7C66D2312D2BA15540FC3522E689BD89535979E9E578AE9693
+ABEE1.pygtex [110
+
+])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/EA16E67638B09436BE85356221C8D1C52E689BD89535979E9E578AE9693
+ABEE1.pygtex [111] [112])) (./chapters/ch4-string/hash.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5AE9F10F5C6ADBDEF3BB212B5F8C3C512E689BD89535979E9E578AE9693
+ABEE1.pygtex [113])
+Underfull \hbox (badness 10000) in paragraph at lines 44--46
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3571809221BC663BC6BFDFFFCC902BD92E689BD89535979E9E578AE9693
+ABEE1.pygtex [114] [115] [116])
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
+
+ []
+
+Missing character: There is no σ ("3C3) in font cmmi12!
+Missing character: There is no σ ("3C3) in font cmmi12!
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/FBC113ECDA9C92BE4BA74ACCA933A1362E689BD89535979E9E578AE9693
+ABEE1.pygtex [117])) (./chapters/ch4-string/kmp.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--4
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/AC7257829288DD2B63DB231FDF5E04F32E689BD89535979E9E578AE9693
+ABEE1.pygtex [118])
+Underfull \hbox (badness 10000) in paragraph at lines 46--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--50
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--56
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7A811887371B23CE3E69293743FE94372E689BD89535979E9E578AE9693
+ABEE1.pygtex [119])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/9045F3B0D599EC76349901677A2BE8D82E689BD89535979E9E578AE9693
+ABEE1.pygtex [120])) (./chapters/ch4-string/bitsetString.tex [121]
+Underfull \hbox (badness 10000) in paragraph at lines 5--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--13
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C2840B0E43403272D6190905CB1DE2512E689BD89535979E9E578AE9693
+ABEE1.pygtex [122])
+File: images/bitset.png Graphic file (type bmp)
+<images/bitset.png>
+) (./chapters/ch4-string/manacher.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/1B4B751102F413EBDB239614AB2DB8D82E689BD89535979E9E578AE9693
+ABEE1.pygtex [123])) (./chapters/ch4-string/aho-corasick-automaton.tex [124]
+Missing character: There is no ⇒ (U+21D2) in font Times New Roman/OT:script=lat
+n;language=dflt;mapping=tex-text;!
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/78645F9E29FC13F93B746A7FF556B7082E689BD89535979E9E578AE9693
+ABEE1.pygtex [125])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/08E39DC59355DCABC18A265373FE78C52E689BD89535979E9E578AE9693
+ABEE1.pygtex [126])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8F171B6B7218AEAC25A6FF2F99B80E6D2E689BD89535979E9E578AE9693
+ABEE1.pygtex [127] [128] [129])) (./chapters/ch4-string/suffix-array.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C39A9FCB79876420409CD267BB2192572E689BD89535979E9E578AE9693
+ABEE1.pygtex [130] [131])
+Underfull \hbox (badness 10000) in paragraph at lines 103--105
+
+ []
+
+[132]
+Underfull \hbox (badness 10000) in paragraph at lines 126--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 136--138
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--144
+
+ []
+
+[133]
+Underfull \hbox (badness 10000) in paragraph at lines 153--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--157
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 157--159
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--161
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/94841C0E3347D7AD1C3818BC866CDDC22E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 183--185
+
+ []
+
+[134]
+Underfull \hbox (badness 10000) in paragraph at lines 185--187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--189
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/EA4B961E74156F6A1851CA1BC72A8DF52E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+File: images/repeats.png Graphic file (type bmp)
+<images/repeats.png>
+ [135]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/FDEBF0D6EB4FFC5034F06C610B333F752E689BD89535979E9E578AE9693
+ABEE1.pygtex) [136] [137]) (./chapters/ch4-string/suffix-automaton.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/ED13A00E8AC71D32CCA3333FB30DFC932E689BD89535979E9E578AE9693
+ABEE1.pygtex [138
+
+] [139] [140])
+Underfull \hbox (badness 10000) in paragraph at lines 171--173
+
+ []
+
+[141]
+Underfull \hbox (badness 10000) in paragraph at lines 177--179
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--196
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 199--201
+
+ []
+
+[142]
+Underfull \hbox (badness 10000) in paragraph at lines 207--209
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7F25DC9316E43B47BB11ACC7B0D5BDBD2E689BD89535979E9E578AE9693
+ABEE1.pygtex) [143]
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--251
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--255
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--261
+
+ []
+
+Missing character: There is no ① (U+2460) in font Times New Roman/OT:script=lat
+n;language=dflt;mapping=tex-text;!
+Missing character: There is no ② (U+2461) in font Times New Roman/OT:script=lat
+n;language=dflt;mapping=tex-text;!
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--263
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/D0383D1A32EE206B4681FF2426C856D42E689BD89535979E9E578AE9693
+ABEE1.pygtex [144] [145] [146] [147]) [148])
+(./chapters/ch4-string/minimum-representation.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/096D1BC31D6CD6CE79EA174BDB8864F72E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch4-string/lyndon.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5B206EE7EFC04DDA20EEEC383A5031172E689BD89535979E9E578AE9693
+ABEE1.pygtex [149
+
+]))) (./chapters/ch5-math/index.tex [150]
+Chapter 5.
+(./chapters/ch5-math/zyn.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/85EDD97B728232211E56A23E4EBB2FBA2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/DCA53B74C8122FBA747AEE834C77D6632E689BD89535979E9E578AE9693
+ABEE1.pygtex) [151
+
+]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2A2A34B40576A72014F609B79F72484B2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 52--54
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--56
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F994081F7EE0416F33F9EED0DB6E5DC32E689BD89535979E9E578AE9693
+ABEE1.pygtex [152])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/72FB6FBF3DA24E0CB7F26D70F8D81D9C2E689BD89535979E9E578AE9693
+ABEE1.pygtex [153])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5293739D69EDC5E0D9452659D0BA305D2E689BD89535979E9E578AE9693
+ABEE1.pygtex [154])
+Underfull \hbox (badness 10000) in paragraph at lines 212--214
+
+ []
+
+[155]
+Underfull \hbox (badness 10000) in paragraph at lines 214--216
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/94EF5C58FCFCBFA4305C1CC9E8853EAA2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3D131E7CB9B57D08C3A79F79F2DFEE482E689BD89535979E9E578AE9693
+ABEE1.pygtex [156] [157])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/E1126521528B136543AF0E05D59A60752E689BD89535979E9E578AE9693
+ABEE1.pygtex [158] [159] [160])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/439A3526A250CE8EF5F847D36EC5FE3F2E689BD89535979E9E578AE9693
+ABEE1.pygtex [161])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F3B653CBA7CB159150B3790F8528F6CA2E689BD89535979E9E578AE9693
+ABEE1.pygtex [162] [163] [164] [165])
+Underfull \hbox (badness 10000) in paragraph at lines 716--718
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 718--720
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 720--722
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 725--727
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 727--729
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 729--731
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--733
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/AA02956E31925695DCD89F5527C6C8662E689BD89535979E9E578AE9693
+ABEE1.pygtex [166] [167])) (./chapters/ch5-math/combination.tex [168]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3A05502B02D79D510EDBB546B4BD14372E689BD89535979E9E578AE9693
+ABEE1.pygtex [169])) (./chapters/ch5-math/matrix.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7726305BE681605D51E37D8F5550CE142E689BD89535979E9E578AE9693
+ABEE1.pygtex [170])
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 51.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 51.
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5B1FD782BF3146EFD4126052556CB3552E689BD89535979E9E578AE9693
+ABEE1.pygtex [171])
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathop' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathgroup' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\symoperators' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@ifnextchar' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 88.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 88.
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B0DA652891F8E6CB6110E367F6FBD93C2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/87D7E880566E5BB3C291AC1D539A1EB72E689BD89535979E9E578AE9693
+ABEE1.pygtex [172])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0AA622E9AB8DFFB5A2F1BE63CC1F99FC2E689BD89535979E9E578AE9693
+ABEE1.pygtex [173] [174])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/CC0582ADA711CC34808DCC59D94DAE052E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C787BE17188016411080771D6FE29B862E689BD89535979E9E578AE9693
+ABEE1.pygtex [175] [176])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/EA920409A9343A7E20C81477FEFF9D742E689BD89535979E9E578AE9693
+ABEE1.pygtex [177] [178])) (./chapters/ch5-math/poly.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0D9A974B347DE40EEBF88D80C1F6184B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [179] [180])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A0A594C07C5EA6842BD593BC5451E65C2E689BD89535979E9E578AE9693
+ABEE1.pygtex [181] [182] [183] [184] [185] [186] [187]))
+(./chapters/ch5-math/cantorExpansions.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--4
+
+ []
+
+[188]
+Underfull \hbox (badness 10000) in paragraph at lines 4--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--19
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/AA3A4E7D8F5F916252740EDC2F3F9EAB2E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch5-math/lucas.tex [189]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/18338B068A3F35B5B294EAD3D446AB552E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/CC41FD4E192D35B8CC9FCE13C145E6592E689BD89535979E9E578AE9693
+ABEE1.pygtex [190]))) (./chapters/ch5-math+/index.tex [191]
+Chapter 6.
+(./chapters/ch5-math+/zyn.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B67F8E106841FD06ED61B5BC79A555282E689BD89535979E9E578AE9693
+ABEE1.pygtex [192
+
+])
+Underfull \hbox (badness 10000) in paragraph at lines 80--82
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/4C99047F7E7DDF34C5882C0B5154B9A42E689BD89535979E9E578AE9693
+ABEE1.pygtex [193] [194] [195])
+Underfull \hbox (badness 10000) in paragraph at lines 217--219
+
+ []
+
+[196]
+Underfull \hbox (badness 10000) in paragraph at lines 219--221
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--223
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--225
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/95182E603655F9ABA8A5DBDACD5995DB2E689BD89535979E9E578AE9693
+ABEE1.pygtex [197] [198])
+Underfull \hbox (badness 10000) in paragraph at lines 324--326
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B36721E3336E5F6EB0491C3ED780E6222E689BD89535979E9E578AE9693
+ABEE1.pygtex [199] [200])
+Underfull \hbox (badness 10000) in paragraph at lines 435--437
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 437--439
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C0DB1CA5C1AADD95065300AF2EB17C7F2E689BD89535979E9E578AE9693
+ABEE1.pygtex [201] [202])
+Underfull \hbox (badness 10000) in paragraph at lines 503--505
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 505--507
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B1C545D2B523B5BC22D66858850402AF2E689BD89535979E9E578AE9693
+ABEE1.pygtex [203] [204] [205]))) (./chapters/ch6-dynamic-programming/index.tex
+[206]
+Chapter 7.
+(./chapters/ch6-dynamic-programming/bag.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/E85672804E695A41C2E747D298652C562E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0A3DBE2C20E8CE34931F847A8B2581172E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/56049A157F98D5475751EA66E2D5151E2E689BD89535979E9E578AE9693
+ABEE1.pygtex [207
+
+])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/8BBEE7404076F0204A33B1A82DA9C0A02E689BD89535979E9E578AE9693
+ABEE1.pygtex) [208]) (./chapters/ch6-dynamic-programming/LCS.tex
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 2.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 2.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 2.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 19--21
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--44
+
+ []
+
+[209
+
+]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/928D908120C2FA0267E274DBD42A56892E689BD89535979E9E578AE9693
+ABEE1.pygtex [210] [211])) (./chapters/ch6-dynamic-programming/LIS.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/43F041BDA1086D4E008D2F804AA711012E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B3A85D2391D8F1B108747C94FE2AA6152E689BD89535979E9E578AE9693
+ABEE1.pygtex [212])) (./chapters/ch6-dynamic-programming/tree.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B8420A51A44C6C8D8EB08DD78882E2252E689BD89535979E9E578AE9693
+ABEE1.pygtex [213])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/6E7001BCC539CED9B6A2D3C53E75C0E62E689BD89535979E9E578AE9693
+ABEE1.pygtex [214])) (./chapters/ch6-dynamic-programming/number-bit.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/CD4FB0E53A1273CA393205BA0678D7D42E689BD89535979E9E578AE9693
+ABEE1.pygtex [215]) [216]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/C0FE5F46C6F2623ABE99DBA42D45EFE62E689BD89535979E9E578AE9693
+ABEE1.pygtex [217])) (./chapters/ch6-dynamic-programming/slope.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/49593F5D5BCE2A8A0B0445ECF579F34E2E689BD89535979E9E578AE9693
+ABEE1.pygtex))) (./chapters/ch7-uncategorized/index.tex [218]
+Chapter 8.
+(./chapters/ch7-uncategorized/divide-and-conquer.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/66C69D4B9C06969A8EB2E72985AAE4ED2E689BD89535979E9E578AE9693
+ABEE1.pygtex [219
+
+])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/40E607451FA611ABD03ECB62A19544612E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/0FC8C3FECFE2781AC1B843EA205B36222E689BD89535979E9E578AE9693
+ABEE1.pygtex [220])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2B99B9907D124DF494FF67554610248F2E689BD89535979E9E578AE9693
+ABEE1.pygtex [221])
+Underfull \hbox (badness 10000) in paragraph at lines 139--141
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--143
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 147--149
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/D1B748F46BD6819B081B0CD6789221C62E689BD89535979E9E578AE9693
+ABEE1.pygtex [222] [223])
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/FD5F66688ADBBEA1A716D7BEA920A7252E689BD89535979E9E578AE9693
+ABEE1.pygtex [224] [225])
+Underfull \hbox (badness 10000) in paragraph at lines 337--339
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/1C5F1191D7346A12792826008AF2B2672E689BD89535979E9E578AE9693
+ABEE1.pygtex [226] [227])
+Underfull \hbox (badness 10000) in paragraph at lines 424--426
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 426--428
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--430
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 432--437
+
+ []
+
+[228]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2A9F342463B0BD0A78EB032058D94EBE2E689BD89535979E9E578AE9693
+ABEE1.pygtex [229])) (./chapters/ch7-uncategorized/integralDichotomy.tex
+[230]
+Underfull \hbox (badness 10000) in paragraph at lines 16--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--20
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/DF429AB6B1E1B95415836BDDEDD9FD272E689BD89535979E9E578AE9693
+ABEE1.pygtex [231])) (./chapters/ch7-uncategorized/mo-algorithm.tex
+Underfull \hbox (badness 10000) in paragraph at lines 9--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--19
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/3D4555719E4BBE273030D7227D60DA1A2E689BD89535979E9E578AE9693
+ABEE1.pygtex [232])
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--43
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--45
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--49
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/5A5D07912A68F3D6A87170C1F92D79782E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+Underfull \hbox (badness 10000) in paragraph at lines 75--77
+
+ []
+
+[233]
+Underfull \hbox (badness 10000) in paragraph at lines 77--79
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--87
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A895AADAE436653B5BD7684CC7C3DEA42E689BD89535979E9E578AE9693
+ABEE1.pygtex [234] [235])
+File: images/time.png Graphic file (type bmp)
+<images/time.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--208
+
+ []
+
+[236]
+Underfull \hbox (badness 10000) in paragraph at lines 208--210
+
+ []
+
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/146DB579EEC83A309A64FC0D62B191332E689BD89535979E9E578AE9693
+ABEE1.pygtex [237] [238])) (./chapters/ch7-uncategorized/Bit-operation.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/1E001358DAAF58ACC1C647F2D5CBFE9D2E689BD89535979E9E578AE9693
+ABEE1.pygtex) [239]
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/2C9013906CB957F32A86416AD94CC32E2E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/D9914BFF862B2B9FD288DF68658512DC2E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch7-uncategorized/bigint.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/A4B80166E12FB48BEFF43EE67508D5002E689BD89535979E9E578AE9693
+ABEE1.pygtex [240] [241] [242])) (./chapters/ch7-uncategorized/fast-io.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/F914EB543E69C67BAEA740AE78808E932E689BD89535979E9E578AE9693
+ABEE1.pygtex [243])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/D08EA04ABBD7E121FCC9BF9D1754C3A12E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/B7A3368E35357AAE976F88AC29BF6BC22E689BD89535979E9E578AE9693
+ABEE1.pygtex [244])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7E4C6B1A1045D0E0E7E0F1D2BBC1EC432E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch7-uncategorized/check.tex
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/91A7A782EF3698AE10E90D63BF9D498B2E689BD89535979E9E578AE9693
+ABEE1.pygtex [245] [246] [247])
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/7BA1DAF8FA905832FDDEC784B34CE6F82E689BD89535979E9E578AE9693
+ABEE1.pygtex)
+\openout3 = `template.pyg'.
+
+
+(./_minted-template/E2456DCA325D8C257003BEA2EB76FC792E689BD89535979E9E578AE9693
+ABEE1.pygtex)) (./chapters/ch7-uncategorized/other.tex [248]))
+
+AED: lastpage setting LastPage
+[249] (./template.aux)
+Package rerunfilecheck Info: File `template.out' has not changed.
+(rerunfilecheck)             Checksum: B4168ABABA2C7EE64FCA1235AFF71F74;22151.
+runsystem(del template.pyg)...executed.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 31707 strings out of 476179
+ 766032 string characters out of 5806897
+ 1083343 words of memory out of 5000000
+ 51268 multiletter control sequences out of 15000+600000
+ 475546 words of font info for 95 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 83i,13n,85p,1168b,860s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on template.pdf (255 pages).

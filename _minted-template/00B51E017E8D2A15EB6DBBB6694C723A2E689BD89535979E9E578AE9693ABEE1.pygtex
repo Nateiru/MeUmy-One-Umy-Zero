@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{eDCC} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{low}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{timestamp}\PYG{p}{,} \PYG{n}{dcnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{c}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];} \PYG{c+c1}{// 缩点后的编号}
+    \PYG{k+kt}{bool} \PYG{n}{is\PYGZus{}bridge}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{k+kt}{void} \PYG{n+nf}{tarjan}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{from}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{o}{++}\PYG{n}{timestamp}\PYG{p}{;}
+        \PYG{c+c1}{// stk.push(u);}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{h}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{n}{i} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ne}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{dfn}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{tarjan}\PYG{p}{(}\PYG{n}{v}\PYG{p}{,} \PYG{n}{i}\PYG{p}{);}
+                \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],} \PYG{n}{low}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]);}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{low}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{n}{is\PYGZus{}bridge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{is\PYGZus{}bridge}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZca{}}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}\PYG{c+c1}{// 该边是桥}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{!=} \PYG{p}{(}\PYG{n}{from} \PYG{o}{\PYGZca{}} \PYG{l+m+mi}{1}\PYG{p}{))}
+                \PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{low}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{c+c1}{// 栈的方式缩点}
+        \PYG{c+c1}{// if(dfn[u] == low[u]) \PYGZob{}}
+        \PYG{c+c1}{//     ++dcnt;}
+        \PYG{c+c1}{//     int y;}
+        \PYG{c+c1}{//     do\PYGZob{}}
+        \PYG{c+c1}{//         y = stk.top();stk.pop();}
+        \PYG{c+c1}{//         c[y] = dcnt;}
+        \PYG{c+c1}{//     \PYGZcb{}while(y != u);}
+        \PYG{c+c1}{// \PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 先找出桥 然后dfs不走桥标记点 看出染色的过程}
+    \PYG{k+kt}{void} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{co}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{c}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n}{co}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{h}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{n}{i} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ne}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{c+c1}{// 节点 y 已被访问或者 (x,y) 是桥}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{c}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{||} \PYG{n}{is\PYGZus{}bridge}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{k}{continue}\PYG{p}{;}
+            \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{v}\PYG{p}{,} \PYG{n}{co}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{solve}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{dfn}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{n}{tarjan}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{);}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{c}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{o}{++}\PYG{n}{dcnt}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k+kt}{void} \PYG{n+nf}{add\PYGZus{}cut\PYGZus{}edge}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{)} \PYG{p}{\PYGZob{}\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{shrink}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{idx}\PYG{p}{;} \PYG{n}{i} \PYG{o}{+=} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{p}{\PYGZob{}}     \PYG{c+c1}{// idx 是前向星的个数}
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{u} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{o}{\PYGZca{}}\PYG{l+m+mi}{1}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{c}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{==} \PYG{n}{c}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])}
+                \PYG{k}{continue}\PYG{p}{;}                   \PYG{c+c1}{// x, y 同属一个 e\PYGZhy{}DCC, 无事可做}
+            \PYG{n}{add\PYGZus{}cut\PYGZus{}edge}\PYG{p}{(}\PYG{n}{c}\PYG{p}{[}\PYG{n}{u}\PYG{p}{],} \PYG{n}{c}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]);}       \PYG{c+c1}{// 否则将 x, y 加入新图中}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{eDCC}\PYG{p}{;}
+\end{Verbatim}

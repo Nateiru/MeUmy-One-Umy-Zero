@@ -1,0 +1,288 @@
+\section{树链剖分}
+\textbf{问题场景：} 链上求和，链上求最值，链上修改，子树修改，子树求和。
+~\\
+\par \noindent 如：修改和查询点 x 到 y 的路径的信息；修改和查询以 x 为根的子树的信息。
+\begin{minted}{c++}
+/**
+ * 第一次 DFS,需要：
+ * 1. 标记每个结点的深度 dep[]
+ * 2. 标记每个结点的父亲 fa[]
+ * 3. 标记每个非叶子结点的子树大小 sz[]
+ * 4. 标记每个非叶子结点的重儿子编号 son[]
+**/
+int fa[N], dep[N], sz[N], son[N];
+void dfs_calc(int u, int p) {
+    fa[u] = p, dep[u] = dep[p] + 1, sz[u] = 1;
+    for (int i = h[u]; i != -1; i = ne[i])
+        if (e[i] != fa[u]) {
+            dfs_calc(e[i], u);
+            sz[u] += sz[e[i]];
+            if (sz[e[i]] > sz[son[u]])
+                son[u] = e[i];
+        }
+}
+/**
+ * 第二次 DFS， 需要：
+ * 1. 标记每个点的新编号/DFS 序：dfn[u]
+ * 2. 根据新编号将值赋到数组中
+ * 3. 处理每个点所在链的顶端 top[u]
+ * 4. 先处理重儿子，然后递归处理轻儿子
+**/
+
+int timestamp, dfn[N], top[N], rev[N];
+void dfs_decomposition(int u, int t) {
+    top[u] = t, dfn[u] = ++timestamp;
+    rev[timestamp] = u;     
+    // 先处理重儿子
+    if (son[u]) dfs_decomposition(son[u], t);     
+    // 处理轻儿子
+    for (int i = h[u]; i != -1; i = ne[i])  {
+        int v = e[i];
+        if (v == fa[u] || v == son[u])
+            dfs_decomposition(v, v);    // 轻儿子单独成新链
+    }
+}
+/**
+ * 完成后可以用 rev[] 建立线段树，然后下面是查询和修改操作
+ * 修改和查询 x 到 y 的路径，直接调用就可以；如果要处理以 x 为根的子树，
+ * 因为我们记录了每个非叶结点的子树大小，并且每个子树的新编号都是连续的，
+ * 所以直接线段树区间操作 [dfn[x], dfn[x] + sz[x] - 1] 即可
+**/
+long long query_path(int x, int y) {
+    long long ans = 0;
+    while (top[x] != top[y]) {
+        if (dep[top[x]] < dep[top[y]]) 
+            swap(x, y);
+        ans = ans + query(1, 1, n, dfn[top[x]], dfn[x]);
+        x = fa[top[x]];
+    }
+    if (dep[x] > dep[y]) 
+        swap(x, y);
+    ans = ans + query(1, 1, n, dfn[x], dfn[y]);
+    return ans;
+}
+/* 更新从 (x, y) 的路径 */
+void update_path(int x, int y, long long val) {
+    while (top[x] != top[y]) {
+        if (dep[top[x]] < dep[top[y]]) 
+            swap(x, y);
+        update(1, 1, n, dfn[top[x]], dfn[x], val);
+        x = fa[top[x]];
+    }
+    if (dep[x] > dep[y]) 
+        swap(x, y);
+    update(1, 1, n, dfn[x], dfn[y], val);
+}
+\end{minted}
+
+
+\subsection{树链剖分维护LCA}
+\begin{minted}{c++}
+int lca(int x, int y) {
+    while (top[x] != top[y]) {
+        if (dep[top[x]] < dep[top[y]])
+        swap(x, y);
+        x = fa[top[x]];
+    }
+    return dep[x] < dep[y] ? x : y;
+}
+int dis(int x, int y) {
+    return dep[x] + dep[y] - 2 * dep[lca(x, y)];
+}
+\end{minted}
+\subsection{dfs序+倍增O(1)维护LCA}
+\begin{minted}{c++}
+//===========倍增+O(1) LCA
+// P3379 【模板】最近公共祖先（LCA）https://www.luogu.com.cn/problem/P3379
+#include<bits/stdc++.h>
+
+using namespace std;
+const int N=1000010;
+
+int h[N],e[N<<1],ne[N<<1],idx;
+void add(int a,int b){e[idx]=b,ne[idx]=h[a],h[a]=idx++;}
+int dfn[N],timstamp;
+int n,m,rt;
+int dep[N],rev[N],fa[N];
+void dfs(int u)
+{
+    dep[u]=dep[fa[u]]+1;
+    dfn[u]=++timstamp;
+    rev[timstamp]=u;
+    for(int i=h[u];i!=-1;i=ne[i])
+    {
+        int v=e[i];
+        if(v==fa[u]) continue;
+        fa[v]=u;
+        dfs(v);
+    }
+}
+int inline MIN(int x,int y){return dep[x]<dep[y]?x:y;}
+
+int st[N][21];
+int lg[N];
+int lca(int u,int v)
+{
+    if(u==v) return u;
+    u=dfn[u],v=dfn[v];
+    if(u>v) swap(u,v);
+    u++;
+    int k=lg[v-u+1];
+    return fa[MIN(st[u][k],st[v-(1<<k)+1][k])]; 
+}
+int main()
+{
+    ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    cin>>n>>m>>rt;
+    for(int i=1;i<=n;i++) h[i]=-1;
+    for(int i=1;i<n;i++)
+    {
+        int a,b;cin>>a>>b;
+        add(a,b),add(b,a);
+    }
+    dfs(rt);
+    for(int i=2;i<=n;i++) lg[i]=lg[i>>1]+1;
+    for(int i=1;i<=n;i++) st[i][0]=rev[i];
+    for(int k=1;k<=lg[n];k++) 
+        for(int i=1;i+(1<<k)-1<=n;i++) 
+            st[i][k]=MIN(st[i][k-1],st[i+(1<<k-1)][k-1]);
+
+    while(m--)
+    {
+        int x,y;cin>>x>>y;
+        cout<<lca(x,y)<<'\n';
+    }
+    return 0;
+}
+\end{minted}
+\subsection{长链剖分}
+
+\par \noindent 长链剖分的价值主要体现在能优化树上 \textbf{与深度有关} 的 DP。如果子树内 \textbf{每个深度仅有一个信息}，就可以使用长链剖分优化。一般形式如：设 $f{(i,j)}$ 表示以 $i$ 为根的子树内，深度为 $j$ 的节点的贡献。
+
+~\\
+\par \noindent \textbf{经典结论：}选一个节点能覆盖它到根的所有节点。选 $k$ 个节点，覆盖的最多节点数就是前 $k$ 条长链长度之和，选择的节点即 $k$ 条长链末端。一个解决方案是使用指针动态申请内存：对于一条重链，共用一个大小为其长度的数组。另一个方案是使用 vector 的 swap 特性。
+
+~\\
+
+\par \noindent 长链剖分实现起来有很多细节，例如如何 \textbf{继承重儿子} 的 DP 值，以及如何处理合并时 \textbf{下标偏移} 的问题。
+
+\begin{tcolorbox}
+\par \noindent 给定一棵以 1 为根，$n$ 个节点的树。设 $d(u,x)$ 为 $u$ 子树中到 $u$ 距离为 $x$ 的节点数。
+
+\par \noindent 对于每个点，求一个最小的 $k$，使得 $d(u,k)$ 最大。
+\end{tcolorbox}
+
+\par \noindent 类似启发式合并，每次继承\textbf{"重"儿子}的答案，然后将所有轻儿子的答案合并过来。时间复杂度是优秀的 $O(n)$
+
+\begin{minted}{c++}
+// 指针版本
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 1000010;
+vector<int> e[N];
+int n;
+int pool[N];
+int *f[N], *now = pool;
+int ans[N];
+int dep[N], son[N];
+void dfs1(int u, int fa) {
+    for (int v : e[u]) {
+        if (v == fa) continue;
+        dfs1(v, u);
+        if (dep[v] > dep[son[u]]) son[u] = v;
+    }
+    dep[u] = dep[son[u]] + 1;
+}
+void dfs2(int u, int fa) {
+    f[u][0] = 1;
+
+    if (son[u]) {
+        f[son[u]] = f[u] + 1;
+        dfs2(son[u], u);
+        ans[u] = ans[son[u]] + 1;
+    }
+    for (int v : e[u]) {
+        if (v == fa || v == son[u]) continue;
+        f[v] = now;
+        now += dep[v];
+        dfs2(v, u);
+        for (int i = 1; i <= dep[v]; i++) {
+            f[u][i] += f[v][i - 1];
+            if (f[u][i] > f[u][ans[u]] || f[u][i] == f[u][ans[u]] && i < ans[u])
+                ans[u] = i;
+        }
+    }
+    if (f[u][ans[u]] == 1) ans[u] = 0;
+}
+
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    cin >> n;
+    for (int i = 1, u, v; i < n; i++) {
+        cin >> u >> v;
+        e[u].push_back(v);
+        e[v].push_back(u);
+    }
+    dfs1(1, 0);
+    f[1] = now;
+    now += dep[1];
+    dfs2(1, 0);
+    for (int i = 1; i <= n; i++) cout << ans[i] << '\n';
+    return 0;
+}
+\end{minted}
+
+\begin{minted}{c++}
+// vector 版本
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 1e6 + 5;
+int n, dep[N], mxd[N], son[N], fa[N];
+int mx[N], ans[N];
+vector <int> e[N], f[N]; // 设 f[i][j] 表示点 i 的 j 级子节点的数量。
+void dfs1(int u, int p) {
+    dep[u] = dep[p] + 1, fa[u] = p;
+    for(int v : e[u]) {
+        if(v == p) continue;
+        dfs1(v, u), mxd[u] = max(mxd[u], mxd[v] + 1);
+        if(mxd[v] > mxd[son[u]]) son[u] = v;
+    }
+}
+// 不妨将信息倒过来存储在 vector 中，转化为在动态数组末端插入一个数。
+/**
+1. 按深度递增的顺序存储的话，因为合并重儿子信息时要在开头插入元素，效率低下。
+   所以考虑按深度递减的顺序存储信息。
+2. 合并重儿子信息的时候，直接用 swap 交换而不是复制，在时间和空间上都更优
+  （swap 交换 vector 的时间复杂度是 O(1) 的）。
+**/
+void dfs2(int u) {
+    if(son[u]) {
+        dfs2(son[u]), f[u].swap(f[son[u]]);
+        mx[u] = mx[son[u]], ans[u] = ans[son[u]];
+    }
+    for(int v : e[u]) {
+        if(v == fa[u] || v == son[u]) continue;
+        dfs2(v);
+        for(int i = 0; i < f[v].size(); i++) {
+            int d = f[v].size() - i - 1, p = f[u].size() - d - 1;
+            f[u][p] += f[v][i];
+            if(f[u][p] > mx[u] || f[u][p] == mx[u] && ans[u] > d) mx[u] = f[u][p], ans[u] = d;
+        }
+    } 
+    f[u].push_back(1);
+    if(mx[u] <= 1) mx[u] = 1, ans[u] = 0;
+    else ans[u]++;
+}
+int main() {
+    cin >> n, mxd[0] = -1;
+    for(int i = 1; i < n; i++) {
+        int u, v; scanf("%d %d", &u, &v);
+        e[u].push_back(v), e[v].push_back(u);
+    } 
+    dfs1(1, 0), dfs2(1);
+    for(int i = 1; i <= n; i++) printf("%d\n", ans[i]);
+    return 0;
+}
+\end{minted}

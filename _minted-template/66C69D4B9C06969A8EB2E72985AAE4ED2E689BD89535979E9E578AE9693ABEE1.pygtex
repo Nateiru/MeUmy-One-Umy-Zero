@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n+nf}{minimun\PYGZus{}int}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{L}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{R}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//三分求 f 函数的最小值（定义域为整数）}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{R} \PYG{o}{\PYGZgt{}} \PYG{n}{L}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{m1} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{L} \PYG{o}{+} \PYG{n}{R}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{3}\PYG{p}{;}
+        \PYG{k+kt}{int} \PYG{n}{m2} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{R} \PYG{o}{+} \PYG{n}{L} \PYG{o}{+} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{3}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{f}\PYG{p}{(}\PYG{n}{m1}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{n}{f}\PYG{p}{(}\PYG{n}{m2}\PYG{p}{))}  \PYG{c+c1}{// f(m1) \PYGZgt{} f(m2) 求最大值}
+            \PYG{n}{R} \PYG{o}{=} \PYG{n}{m2} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{else}
+            \PYG{n}{L} \PYG{o}{=} \PYG{n}{m1} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{L}\PYG{p}{;} \PYG{c+c1}{//f(L) 为最小值}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{double} \PYG{n+nf}{maximum\PYGZus{}double}\PYG{p}{(}\PYG{k+kt}{double} \PYG{n}{L}\PYG{p}{,} \PYG{k+kt}{double} \PYG{n}{R}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//三分求 f 函数的最大值（定义域为实数）}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{R} \PYG{o}{\PYGZhy{}} \PYG{n}{L} \PYG{o}{\PYGZgt{}} \PYG{n}{eps}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{// for i in range(100):}
+        \PYG{k+kt}{double} \PYG{n}{m1} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{L} \PYG{o}{+} \PYG{n}{R}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{3}\PYG{p}{;}
+        \PYG{k+kt}{double} \PYG{n}{m2} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{R} \PYG{o}{+} \PYG{n}{L}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{3}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{f}\PYG{p}{(}\PYG{n}{m1}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{f}\PYG{p}{(}\PYG{n}{m2}\PYG{p}{))}  \PYG{c+c1}{// f(m1) \PYGZgt{} f(m2) 求最小值}
+            \PYG{n}{R} \PYG{o}{=} \PYG{n}{m2}\PYG{p}{;}
+        \PYG{k}{else}
+            \PYG{n}{L} \PYG{o}{=} \PYG{n}{m1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{L}\PYG{p}{;} \PYG{c+c1}{//f(L) 为最大值}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,35 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{n}{LL} \PYG{n+nf}{calc}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{n}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{x}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{P}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{n}\PYG{p}{)} \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{p}{;}
+  \PYG{n}{LL} \PYG{n}{s} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{P}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{\PYGZpc{}} \PYG{n}{x}\PYG{p}{)} \PYG{n}{s} \PYG{o}{=} \PYG{n}{s} \PYG{o}{*} \PYG{n}{i} \PYG{o}{\PYGZpc{}} \PYG{n}{P}\PYG{p}{;}
+  \PYG{n}{s} \PYG{o}{=} \PYG{n}{Pow}\PYG{p}{(}\PYG{n}{s}\PYG{p}{,} \PYG{n}{n} \PYG{o}{/} \PYG{n}{P}\PYG{p}{,} \PYG{n}{P}\PYG{p}{);}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{n}{n} \PYG{o}{/} \PYG{n}{P} \PYG{o}{*} \PYG{n}{P} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{\PYGZpc{}} \PYG{n}{x}\PYG{p}{)} \PYG{n}{s} \PYG{o}{=} \PYG{n}{i} \PYG{o}{\PYGZpc{}} \PYG{n}{P} \PYG{o}{*} \PYG{n}{s} \PYG{o}{\PYGZpc{}} \PYG{n}{P}\PYG{p}{;}
+  \PYG{k}{return} \PYG{n}{s} \PYG{o}{*} \PYG{n}{calc}\PYG{p}{(}\PYG{n}{n} \PYG{o}{/} \PYG{n}{x}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{P}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{P}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{LL} \PYG{n+nf}{multilucas}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{m}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{n}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{x}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{P}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{/=} \PYG{n}{x}\PYG{p}{)} \PYG{n}{cnt} \PYG{o}{+=} \PYG{n}{i} \PYG{o}{/} \PYG{n}{x}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{/=} \PYG{n}{x}\PYG{p}{)} \PYG{n}{cnt} \PYG{o}{\PYGZhy{}=} \PYG{n}{i} \PYG{o}{/} \PYG{n}{x}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{n}{m} \PYG{o}{\PYGZhy{}} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{p}{;} \PYG{n}{i} \PYG{o}{/=} \PYG{n}{x}\PYG{p}{)} \PYG{n}{cnt} \PYG{o}{\PYGZhy{}=} \PYG{n}{i} \PYG{o}{/} \PYG{n}{x}\PYG{p}{;}
+  \PYG{k}{return} \PYG{n}{Pow}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{cnt}\PYG{p}{,} \PYG{n}{P}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{P} \PYG{o}{*} \PYG{n}{calc}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{P}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{P} \PYG{o}{*} \PYG{n}{inverse}\PYG{p}{(}\PYG{n}{calc}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{P}\PYG{p}{),} \PYG{n}{P}\PYG{p}{)} \PYG{o}{\PYGZpc{}}
+         \PYG{n}{P} \PYG{o}{*} \PYG{n}{inverse}\PYG{p}{(}\PYG{n}{calc}\PYG{p}{(}\PYG{n}{m} \PYG{o}{\PYGZhy{}} \PYG{n}{n}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{P}\PYG{p}{),} \PYG{n}{P}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{P}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{LL} \PYG{n+nf}{exlucas}\PYG{p}{(}\PYG{n}{LL} \PYG{n}{m}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{n}\PYG{p}{,} \PYG{n}{LL} \PYG{n}{P}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{n}{LL} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{],} \PYG{n}{a}\PYG{p}{[}\PYG{l+m+mi}{20}\PYG{p}{];}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{LL} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{i} \PYG{o}{*} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{P}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{P} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+      \PYG{n}{p}\PYG{p}{[}\PYG{o}{++}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+      \PYG{k}{while} \PYG{p}{(}\PYG{n}{P} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{n}{p}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{*} \PYG{n}{i}\PYG{p}{,} \PYG{n}{P} \PYG{o}{/=} \PYG{n}{i}\PYG{p}{;}
+      \PYG{n}{a}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{n}{multilucas}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{p}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{]);}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{if} \PYG{p}{(}\PYG{n}{P} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{p}\PYG{p}{[}\PYG{o}{++}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{n}{P}\PYG{p}{,} \PYG{n}{a}\PYG{p}{[}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{n}{multilucas}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{P}\PYG{p}{,} \PYG{n}{P}\PYG{p}{);}
+  \PYG{k}{return} \PYG{n}{CRT}\PYG{p}{(}\PYG{n}{cnt}\PYG{p}{,} \PYG{n}{a}\PYG{p}{,} \PYG{n}{p}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

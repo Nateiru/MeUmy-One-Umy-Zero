@@ -1,0 +1,23 @@
+\section{字符串循环同构的最小表示法}
+\par \noindent 字符串 S 的最小表示为与 S 循环同构（循环左移）的所有字符串中字典序最小的字符串
+\begin{minted}{c++}
+// 返回最小表示下起始位置的下标
+int MinimumRepresentation(char *s, int n) {  
+    int i = 0, j = 1, k = 0, t;  
+    while(i < n && j < n && k < n) {  
+        // s[(i + k) % n] == s[(j + k) % n]
+        t = s[(i + k) >= n ? i + k - n : i + k] \
+          - s[(j + k) >= n ? j + k - n : j + k];  
+        if(!t) k++;  
+        else{  
+            if(t > 0) 
+                i = i + k + 1;  
+            else 
+                j = j + k + 1;  
+            if(i == j) ++ j;  
+            k = 0;  
+        }  
+    }  
+    return (i < j ? i : j);  
+}  
+\end{minted}

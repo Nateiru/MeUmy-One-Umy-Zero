@@ -1,0 +1,43 @@
+\section{位运算及其运用}
+\subsection{常见等式}
+$$
+a+b=(a|b)+(a\&b)\\
+a\oplus b=(a|b)\oplus(a\&b) \\
+a+b=(a\oplus b)+2×(a\&b) \\
+$$
+\subsection{位运算函数}
+
+\par 由于这些函数是内建函数，经过了编译器的高度优化，运行速度十分快（有些甚至只需要一条指令）。这些函数都可以在函数名末尾添加 l 或 ll （如 \_\_builtin\_popcountll ）来使参数类型变为 ( unsigned ) long 或 ( unsigned ) long long （返回值仍然是 int 类型）。
+\begin{minted}{c++}
+#pragma GCC target ("popcnt")          // 这条GCC指令可以让__builtin_popcount被编译器识别为一条指令。
+
+int __builtin_ffs(int x)               // 返回 x 的二进制末尾最后一个 1 的位置
+int __builtin_clz(unsigned int x)      // 返回 x 的二进制的前导 0 的个数。当 x 为 0 时，结果未定义。
+int __builtin_ctz(unsigned int x)      // 返回 x 的二进制末尾连续 0 的个数。当 x 为 0 时，结果未定义。
+
+int __builtin_clrsb(int x)             // 当 x 的符号位为 0 时返回 x 的二进制的前导 0 的个数减一
+                                       // 否则返回 x 的二进制的前导 1 的个数减一
+int __builtin_popcount(unsigned int x) // 返回 x 的二进制中 1 的个数。
+int __builtin_parity(unsigned int x)   // 判断 x 的二进制中 1 的个数的奇偶性。
+\end{minted}
+
+\par 有时候希望求出一个数以二为底的对数，如果不考虑 0 的特殊情况，就相当于这个数二进制的位数 -1 ，而一个数 n 的二进制表示的位数可以使用 32-\_\_builtin\_clz(n) 表示，因此 31-\_\_builtin\_clz(n) 就可以求出 n 以二为底的对数。
+
+\subsection{子集枚举}
+\par \noindent 二进制枚举子集下面代码就是枚举的s的子集（二进制状态压缩）
+\begin{minted}{c++}
+for (int i = s; i; i = (i - 1) & s) {
+    //i表示的就是s的子集
+}
+\end{minted}
+\par \noindent $O(2^n)$ 求出子集质数的乘积
+\begin{minted}{c++}
+// vector<int> p(n) 有n个质数
+std::vector<std::array<int, 2>> a(1 << n);
+a[0] = {1, 1};
+for (int i = 1; i < (1 << n); i++) {
+    int j = __builtin_ctz(i);
+    auto [x, y] = a[i ^ (1 << j)];
+    a[i] = {x * p[j], -y};
+}
+\end{minted}

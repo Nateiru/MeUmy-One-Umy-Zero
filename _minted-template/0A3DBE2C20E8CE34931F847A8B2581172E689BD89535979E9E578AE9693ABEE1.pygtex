@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{M}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{cost}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{T}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+        \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j} \PYG{o}{\PYGZhy{}} \PYG{n}{cost}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]} \PYG{o}{+} \PYG{n}{val}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+\end{Verbatim}

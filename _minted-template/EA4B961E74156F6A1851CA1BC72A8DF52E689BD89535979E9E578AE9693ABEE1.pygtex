@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{=}\PYG{n}{j}\PYG{p}{,}\PYG{n}{r}\PYG{o}{=}\PYG{n}{n}\PYG{p}{;}
+\PYG{k}{while}\PYG{p}{(}\PYG{n}{l}\PYG{o}{\PYGZlt{}}\PYG{n}{r}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{mid}\PYG{o}{=}\PYG{n}{l}\PYG{o}{+}\PYG{n}{r}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{MIN}\PYG{p}{(}\PYG{n}{mnht}\PYG{p}{,}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{mid}\PYG{p}{)}\PYG{o}{\PYGZgt{}=}\PYG{n}{q}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{l}\PYG{p}{)} \PYG{n}{l}\PYG{o}{=}\PYG{n}{mid}\PYG{p}{;}
+    \PYG{k}{else} \PYG{n}{r}\PYG{o}{=}\PYG{n}{mid}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{j}\PYG{o}{=}\PYG{n}{MIN}\PYG{p}{(}\PYG{n}{mnsa}\PYG{p}{,}\PYG{n}{j}\PYG{p}{,}\PYG{n}{r}\PYG{p}{);}
+\end{Verbatim}

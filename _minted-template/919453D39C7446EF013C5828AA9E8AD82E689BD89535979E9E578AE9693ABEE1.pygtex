@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{typename} \PYG{n}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k+kt}{int} \PYG{n}{calc}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,}\PYG{n}{T} \PYG{n}{x}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{l}\PYG{o}{==}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{r}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{v}\PYG{o}{\PYGZgt{}}\PYG{n}{x}\PYG{o}{?}\PYG{l+m+mi}{1}\PYG{o}{:}\PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{].}\PYG{n}{v}\PYG{o}{\PYGZlt{}=}\PYG{n}{x}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{calc}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{|}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{return} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{cnt}\PYG{o}{\PYGZhy{}}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{].}\PYG{n}{cnt}\PYG{o}{+}\PYG{n}{calc}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{x}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

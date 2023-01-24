@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{typedef} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ll}\PYG{p}{;}
+\PYG{n}{ll} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{MAXL}\PYG{p}{][}\PYG{n}{MAXD}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{];}
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{* pos: 当前枚举的位}
+\PYG{c+cm}{* pre: 之前的状态，例如上一位，视需要的状态不同可能有不同的保存方式}
+\PYG{c+cm}{* lead: 是否有前导 0}
+\PYG{c+cm}{* limit: 当前位是否有限制}
+\PYG{c+cm}{*/}
+\PYG{n}{ll} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{pos}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{pre}\PYG{p}{,} \PYG{k+kt}{bool} \PYG{n}{lead}\PYG{p}{,} \PYG{k+kt}{bool} \PYG{n}{limit}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{c+c1}{// 递归边界，返回 1 表示枚举得当前数合法}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{pos} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{c+c1}{// 满足记忆化条件则可以返回}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{dp}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{][}\PYG{n}{pre}\PYG{p}{]} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{][}\PYG{n}{pre}\PYG{p}{][}\PYG{n}{limit}\PYG{p}{][}\PYG{n}{lead}\PYG{p}{];}
+    \PYG{n}{ll} \PYG{n}{cur} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{c+c1}{// 枚举当前位}
+    \PYG{k+kt}{int} \PYG{n}{maxd} \PYG{o}{=} \PYG{n}{limit} \PYG{o}{?} \PYG{n}{a}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{]} \PYG{o}{:} \PYG{l+m+mi}{9}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{maxd}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{c+c1}{// 需要针对多种情况具体分析，例如是否有限制，是否有前导 0 的影响等等}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{lead} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{o}{!}\PYG{n}{i}\PYG{p}{)}
+            \PYG{n}{cur} \PYG{o}{+=} \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{pos} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n+nb}{true}\PYG{p}{,} \PYG{n}{i} \PYG{o}{==} \PYG{n}{maxd} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{limit}\PYG{p}{);}
+
+        \PYG{k}{else} \PYG{k}{if} \PYG{p}{(....)}
+            \PYG{n}{cur} \PYG{o}{+=} \PYG{p}{...}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 记忆化存下结果}
+    \PYG{k}{return} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{][}\PYG{n}{pre}\PYG{p}{][}\PYG{n}{limit}\PYG{p}{][}\PYG{n}{lead}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cur}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n}{ll} \PYG{n+nf}{solve}\PYG{p}{(}\PYG{n}{ll} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{pos} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{init\PYGZus{}state} \PYG{o}{=} \PYG{o}{?}\PYG{p}{;}        \PYG{c+c1}{// init\PYGZus{}state 表示初始位之前的状态}
+    \PYG{c+c1}{// 拆数}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{dp}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{dp}\PYG{p}{);}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{a}\PYG{p}{[}\PYG{o}{++}\PYG{n}{pos}\PYG{p}{]} \PYG{o}{=} \PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{10}\PYG{p}{,} \PYGZbs{}
+        \PYG{n}{x} \PYG{o}{/=} \PYG{l+m+mi}{10}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{pos}\PYG{p}{,} \PYG{n}{init\PYGZus{}state}\PYG{p}{,} \PYG{n+nb}{true}\PYG{p}{,} \PYG{n+nb}{true}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

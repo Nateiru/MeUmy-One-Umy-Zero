@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{SPFA} \PYG{p}{\PYGZob{}}
+    \PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{maxn} \PYG{o}{=} \PYG{l+m+mi}{210000}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{inq}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{inqcnt}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{d}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{G}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{k+kt}{bool} \PYG{n+nf}{spfa}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+        \PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{inq}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{inq}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{cnt}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{cnt}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{l+m+mh}{0x3f}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{d}\PYG{p}{));}
+        \PYG{n}{d}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{n}{inq}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{true}\PYG{p}{;}
+        \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{s}\PYG{p}{);}
+        \PYG{k}{while} \PYG{p}{(}\PYG{o}{!}\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();} \PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+            \PYG{n}{inq}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{false}\PYG{p}{;}
+            \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{p}{[}\PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{]} \PYG{o}{:} \PYG{n}{G}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n}{d}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{;}
+                    \PYG{n}{cnt}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cnt}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}  \PYG{c+c1}{// 记录最短路经过的边数}
+                    \PYG{k}{if} \PYG{p}{(}\PYG{n}{cnt}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{\PYGZgt{}=} \PYG{n}{n}\PYG{p}{)} \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+                    \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{inq}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                        \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+                        \PYG{n}{inq}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{true}\PYG{p}{;}
+                        \PYG{k}{if} \PYG{p}{(}\PYG{o}{++}\PYG{n}{inqcnt}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{n}\PYG{p}{)} \PYG{c+c1}{// 记录入队次数}
+                        \PYG{k}{return} \PYG{n+nb}{false}\PYG{p}{;}
+                    \PYG{p}{\PYGZcb{}}
+                \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

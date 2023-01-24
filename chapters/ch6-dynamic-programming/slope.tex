@@ -1,0 +1,25 @@
+\section{斜率优化}
+
+\begin{itemize}
+\item 形如 $f(i) = min\{f(j) + k(j) \cdot t(i)\}$ 这样的最值型决策，与先前决策相关，又包含 $i,j$ 元素乘积时，可以使用斜率优化。
+\item 在决策 $i$ 时，考虑 $i$ 先前的两个决策 $x, y (x < y)$，且决策 $x$ 优于决策 $y$, 也就是 $f(x)+k(x) \cdot t(i) < f(y) + k(y)\cdot t(i)$.
+\item 移项得到 $f(x)-f(y) < t(i) \cdot (k(y)-k(x))$，设 $k(i)$ 单调（如单调递减），则令斜率 $slope(x, y) = \frac{f(x)-f(y)}{k(y)-k(x)}$
+\item 如果满足 $slope(x, y) < t(i)$，则决策时选择 $x$ 比选择 $y$ 更优。如果 $k$ 是有序的，则维护一个保存下标、关于斜率的单调(递增)队列，满足：
+\item 1. 如果队首的两个元素斜率 $slope(l, l+1)$ 满足 $slope(l, l+1) \leq t(i)$，则队首元素就是最优决策点。
+\item 2. 将当前决策点 $i$ 加入队尾时，如果 $slope(r-1, r) \geq slope(r-1, i)$, 则删除队尾元素后再插入。
+\end{itemize}
+
+\noindent \par 示例代码：
+\begin{minted}{c++}
+inline double slope(int i, int j) {
+        return 1.0 * (dp[j] - dp[i]) / (land[i + 1].h - land[j + 1].h);
+}
+for (int i = 1; i <= cnt; i++) {
+    while (l < r && slope(q[l], q[l + 1]) <= land[i].w)
+        l++;
+    dp[i] = dp[q[l]] + 1LL * land[i].w * land[q[l] + 1].h;
+    while (l < r && slope(q[r - 1], q[r]) >= slope(q[r - 1], i))
+        r--;
+    q[++r] = i;
+}
+\end{minted}

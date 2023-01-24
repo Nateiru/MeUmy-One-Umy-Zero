@@ -1,0 +1,64 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{VirtualTree} \PYG{p}{\PYGZob{}}
+
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{VT}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+
+    \PYG{k+kr}{inline} \PYG{k+kt}{bool} \PYG{n+nf}{cmp}\PYG{p}{(}\PYG{k}{const} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{i}\PYG{p}{,} \PYG{k}{const} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{j}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 构建虚树}
+    \PYG{k+kt}{void} \PYG{n+nf}{build\PYGZus{}virtual\PYGZus{}tree}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{node}\PYG{p}{[],} \PYG{k+kt}{int} \PYG{n}{k}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{static} \PYG{k+kt}{int} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+        \PYG{c+c1}{// k 个关键节点}
+        \PYG{n}{sort}\PYG{p}{(}\PYG{n}{node}\PYG{p}{,} \PYG{n}{node} \PYG{o}{+} \PYG{n}{k}\PYG{p}{,} \PYG{n}{cmp}\PYG{p}{),} \PYG{n}{top} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{c+c1}{// stk[top = 1]  = 1; // 根节点入栈}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{k}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{assert}\PYG{p}{(}\PYG{n}{node}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{);} \PYG{c+c1}{// 根节点是关键节点}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{top} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{node}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+                \PYG{k}{continue}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{n}{node}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{p} \PYG{o}{=} \PYG{n}{lca}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{]);}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{p} \PYG{o}{==} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}
+                \PYG{k}{continue}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{while} \PYG{p}{(}\PYG{n}{top} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]} \PYG{o}{\PYGZlt{}=} \PYG{n}{dfn}\PYG{p}{[}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]])}
+                \PYG{n}{VT}\PYG{p}{[}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]].}\PYG{n}{emplace\PYGZus{}back}\PYG{p}{(}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{]),} \PYG{n}{top}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{p} \PYG{o}{!=} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{])}
+                \PYG{n}{VT}\PYG{p}{[}\PYG{n}{p}\PYG{p}{].}\PYG{n}{emplace\PYGZus{}back}\PYG{p}{(}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{]),} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{p}\PYG{p}{;}
+            \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{top}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{VT}\PYG{p}{[}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{emplace\PYGZus{}back}\PYG{p}{(}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]);}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k+kt}{void} \PYG{n+nf}{calc\PYGZus{}vt\PYGZus{}depth}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{p}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{p}\PYG{p}{,} \PYG{n}{vdepth}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{vdepth}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n+nl}{i} \PYG{p}{:} \PYG{n}{VT}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])}
+            \PYG{n}{calc\PYGZus{}vt\PYGZus{}depth}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// void clear()  构建的时候清空 或者dfs过程遍历完就清空}
+\PYG{p}{\PYGZcb{}}\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{VirtualTree}\PYG{p}{;}
+
+\PYG{c+c1}{// 处理路径 (u, v) 上的更新和询问}
+\PYG{n}{ll} \PYG{n}{a}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{w}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+\PYG{c+c1}{// 更新}
+\PYG{k}{while} \PYG{p}{(}\PYG{n}{u} \PYG{o}{!=} \PYG{n}{v}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{rdp}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{rdp}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])}
+        \PYG{n}{swap}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{);}
+    \PYG{n}{w}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{x}\PYG{p}{,} \PYG{n}{a}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{x}\PYG{p}{,} \PYG{n}{u} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{a}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{x}\PYG{p}{;}
+\PYG{c+c1}{// 询问}
+\PYG{n}{ll} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k}{while} \PYG{p}{(}\PYG{n}{u} \PYG{o}{!=} \PYG{n}{v}\PYG{p}{)}  \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{rdp}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{rdp}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])}
+        \PYG{n}{swap}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{v}\PYG{p}{);}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{depth}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{depth}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]]} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{ans} \PYG{o}{+=} \PYG{n}{w}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{*} \PYG{p}{(}\PYG{n}{depth}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{depth}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]]} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{);}    \PYG{c+c1}{// 用 depth 统计}
+    \PYG{n}{ans} \PYG{o}{+=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{ans} \PYG{o}{+=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];}
+\end{Verbatim}

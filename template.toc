@@ -1,0 +1,229 @@
+\contentsline {chapter}{\numberline {1}数据结构}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}RMQ}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}单调栈}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}树状数组}{3}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}区间修改，区间求和}{3}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}三维前缀和}{4}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}二维树状数组（矩阵求和与修改）}{5}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}三维树状数组}{6}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}线段树}{6}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}标记优先级}{6}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}历史版本和}{7}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}不降子序列}{13}{subsection.1.4.3}%
+\contentsline {subsection}{\numberline {1.4.4}维护矩阵}{14}{subsection.1.4.4}%
+\contentsline {subsection}{\numberline {1.4.5}区间 GCD}{18}{subsection.1.4.5}%
+\contentsline {subsection}{\numberline {1.4.6}区间NAND}{20}{subsection.1.4.6}%
+\contentsline {subsection}{\numberline {1.4.7}主席树}{22}{subsection.1.4.7}%
+\contentsline {subsection}{\numberline {1.4.8}动态开点权值线段树}{23}{subsection.1.4.8}%
+\contentsline {subsection}{\numberline {1.4.9}线段树合并}{23}{subsection.1.4.9}%
+\contentsline {subsection}{\numberline {1.4.10}Segment Tree Beats!}{24}{subsection.1.4.10}%
+\contentsline {section}{\numberline {1.5}树套树}{26}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}树状数组套权值线段树}{26}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}下标线段树套（值域）平衡树}{28}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}值域线段树套（下标）平衡树}{33}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}平衡树}{38}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Splay 【模板】普通平衡树（维护值域）}{39}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Splay 【模板】文艺平衡树（维护序列）}{43}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {1.6.3}无旋 Treap【模板】普通平衡树（维护值域）}{46}{subsection.1.6.3}%
+\contentsline {subsection}{\numberline {1.6.4}无旋 Treap【模板】文艺平衡树（维护序列）}{49}{subsection.1.6.4}%
+\contentsline {section}{\numberline {1.7}Link Cut Tree}{52}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}模板}{53}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}LCT 动态维护直径}{55}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.7.3}LCT 维护子树大小}{57}{subsection.1.7.3}%
+\contentsline {section}{\numberline {1.8}可回滚并查集}{58}{section.1.8}%
+\contentsline {section}{\numberline {1.9}树链剖分}{58}{section.1.9}%
+\contentsline {subsection}{\numberline {1.9.1}树链剖分维护LCA}{60}{subsection.1.9.1}%
+\contentsline {subsection}{\numberline {1.9.2}dfs序+倍增O(1)维护LCA}{60}{subsection.1.9.2}%
+\contentsline {subsection}{\numberline {1.9.3}长链剖分}{62}{subsection.1.9.3}%
+\contentsline {section}{\numberline {1.10}可持久化并查集}{64}{section.1.10}%
+\contentsline {section}{\numberline {1.11}点分治}{67}{section.1.11}%
+\contentsline {section}{\numberline {1.12}树上启发式合并(DSU on Tree)}{70}{section.1.12}%
+\contentsline {section}{\numberline {1.13}放弃珂朵莉树}{71}{section.1.13}%
+\contentsline {section}{\numberline {1.14}pb-ds 平衡树}{73}{section.1.14}%
+\contentsline {chapter}{\numberline {2}图论}{76}{chapter.2}%
+\contentsline {section}{\numberline {2.1}最短路}{76}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Dijkstra}{76}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}SPFA 算法（负环）}{76}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}同余最短路}{77}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}最小生成树}{78}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Kruskal 算法}{78}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}堆优化的 Prim 算法}{79}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}最小瓶颈路}{80}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}最小直径生成树}{81}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Kruskal 重构树}{81}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Tarjan}{83}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}割点}{83}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}桥}{83}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}有向图强连通分量 \& 缩点}{84}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}求无向图点双连通分量 \& 缩点【圆方树】}{85}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}求无向图边双连通分量 \& 缩点}{89}{subsection.2.3.5}%
+\contentsline {section}{\numberline {2.4}最近公共祖先}{90}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}倍增法求 LCA}{90}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}O(1)询问LCA}{90}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}【模板】树上 k 级祖先}{92}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}2-SAT 问题}{94}{section.2.5}%
+\contentsline {section}{\numberline {2.6}差分约束}{95}{section.2.6}%
+\contentsline {section}{\numberline {2.7}虚树}{96}{section.2.7}%
+\contentsline {chapter}{\numberline {3}网络流/二分图/匹配}{98}{chapter.3}%
+\contentsline {section}{\numberline {3.1}二分图}{98}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}匈牙利算法}{98}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}KM算法}{99}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}染色判二分图}{101}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}最大流}{102}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Dinic 算法 (带当前弧优化)}{102}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}无源汇上下界可行流}{103}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}有源汇上下界最大流}{104}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}有源汇上下界最小流}{104}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}最小费用最大流}{105}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Primal-Dual 原始对偶算法}{105}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}EK算法求最大流}{107}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4}字符串和回文算法}{110}{chapter.4}%
+\contentsline {section}{\numberline {4.1}字典树}{110}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}普通Trie}{110}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}压位Trie}{111}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Hash}{113}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}字符串哈希}{113}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}手写Hash + 集合 Set（Set自带Hash)}{114}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}树Hash}{117}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}KMP 算法}{118}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Border等差数列}{119}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}最小重复字符矩阵}{120}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Bitset乱搞字符匹配}{122}{section.4.4}%
+\contentsline {paragraph}{核心思想：}{122}{section*.2}%
+\contentsline {section}{\numberline {4.5}Manacher 算法}{123}{section.4.5}%
+\contentsline {section}{\numberline {4.6}AC 自动机}{124}{section.4.6}%
+\contentsline {section}{\numberline {4.7}后缀数组}{130}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}模板}{130}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}SA 应用}{132}{subsection.4.7.2}%
+\contentsline {subsubsection}{寻找最小的循环移动位置}{132}{section*.3}%
+\contentsline {subsubsection}{在字符串中找子串}{132}{section*.4}%
+\contentsline {subsubsection}{两子串最长公共前缀}{133}{section*.5}%
+\contentsline {subsubsection}{比较一个字符串的两个子串的大小关系}{133}{section*.6}%
+\contentsline {subsubsection}{不同子串的数目}{133}{section*.7}%
+\contentsline {subsubsection}{出现至少 K 次的子串的最大长度}{133}{section*.8}%
+\contentsline {subsubsection}{至少出现两次且不重叠的最长子串}{133}{section*.9}%
+\contentsline {subsubsection}{结合并查集}{133}{section*.10}%
+\contentsline {subsubsection}{结合单调栈}{134}{section*.11}%
+\contentsline {subsubsection}{求本质不同第 K 大子串}{135}{section*.12}%
+\contentsline {subsubsection}{重复次数最多的连续子串}{135}{section*.13}%
+\contentsline {subsubsection}{其他}{136}{section*.14}%
+\contentsline {section}{\numberline {4.8}后缀自动机}{138}{section.4.8}%
+\contentsline {paragraph}{名词解释}{138}{section*.15}%
+\contentsline {paragraph}{性质}{138}{section*.16}%
+\contentsline {subsection}{\numberline {4.8.1}应用}{142}{subsection.4.8.1}%
+\contentsline {subsubsection}{不同子串的数目}{142}{section*.17}%
+\contentsline {subsubsection}{所有不同子串的总长度}{142}{section*.18}%
+\contentsline {subsubsection}{任意子串的数目}{142}{section*.19}%
+\contentsline {subsubsection}{字典序第 K 大子串}{142}{section*.20}%
+\contentsline {subsubsection}{第一次出现的位置}{143}{section*.21}%
+\contentsline {subsubsection}{最短的没有出现的字符串}{143}{section*.22}%
+\contentsline {subsubsection}{两个串的最长公共子串}{143}{section*.23}%
+\contentsline {subsubsection}{求子串 $[l, r]$ 在子串 $[L, R]$ 的出现次数}{144}{section*.24}%
+\contentsline {subsubsection}{区间 $[l, r]$ 本质不同子串个数}{144}{section*.25}%
+\contentsline {subsection}{\numberline {4.8.2}LCT维护Parent树}{144}{subsection.4.8.2}%
+\contentsline {section}{\numberline {4.9}字符串循环同构的最小表示法}{149}{section.4.9}%
+\contentsline {section}{\numberline {4.10}Lyndon 分解}{149}{section.4.10}%
+\contentsline {paragraph}{Lyndon 串的定义}{149}{section*.26}%
+\contentsline {paragraph}{Lyndon 分解}{149}{section*.27}%
+\contentsline {chapter}{\numberline {5}数学专题}{151}{chapter.5}%
+\contentsline {section}{\numberline {5.1}GCD与exGCD}{151}{section.5.1}%
+\contentsline {section}{\numberline {5.2}一阶同余方程}{151}{section.5.2}%
+\contentsline {section}{\numberline {5.3}线性逆元}{152}{section.5.3}%
+\contentsline {section}{\numberline {5.4}线性筛素数 / 积性函数}{152}{section.5.4}%
+\contentsline {section}{\numberline {5.5}杜教筛——phi与mob前缀和}{153}{section.5.5}%
+\contentsline {section}{\numberline {5.6}O(n)预处理与O(log(n))分解质因数}{154}{section.5.6}%
+\contentsline {section}{\numberline {5.7}扩展欧拉定理}{155}{section.5.7}%
+\contentsline {section}{\numberline {5.8}中国剩余定理(Chinese Remainder Theorem)}{155}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Miller-Rabin 素性测试与Pollard-rho质因数分解}{157}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Lucas 定理与 exLucas}{158}{section.5.10}%
+\contentsline {section}{\numberline {5.11}二次剩余 - Cipolla}{161}{section.5.11}%
+\contentsline {section}{\numberline {5.12}N次剩余}{163}{section.5.12}%
+\contentsline {section}{\numberline {5.13}离散对数同余方程}{166}{section.5.13}%
+\contentsline {subsection}{\numberline {5.13.1}BSGS(Baby Step Giant Step)}{166}{subsection.5.13.1}%
+\contentsline {subsection}{\numberline {5.13.2}EXBSGS}{166}{subsection.5.13.2}%
+\contentsline {section}{\numberline {5.14}组合数}{169}{section.5.14}%
+\contentsline {subsection}{\numberline {5.14.1}常见公式和经典问题}{169}{subsection.5.14.1}%
+\contentsline {subsubsection}{经典恒等式}{169}{section*.28}%
+\contentsline {subsubsection}{容斥原理}{169}{section*.29}%
+\contentsline {subsection}{\numberline {5.14.2}询问排列数、组合数}{169}{subsection.5.14.2}%
+\contentsline {section}{\numberline {5.15}矩阵}{170}{section.5.15}%
+\contentsline {subsection}{\numberline {5.15.1}高斯消元}{170}{subsection.5.15.1}%
+\contentsline {subsection}{\numberline {5.15.2}行列式 $O(n^3)$}{171}{subsection.5.15.2}%
+\contentsline {subsection}{\numberline {5.15.3}任意模数行列式 $O(n^2\qopname \relax o{log}n + n^3)$ }{172}{subsection.5.15.3}%
+\contentsline {subsection}{\numberline {5.15.4}抑或方程组}{172}{subsection.5.15.4}%
+\contentsline {subsection}{\numberline {5.15.5}线性基}{173}{subsection.5.15.5}%
+\contentsline {subsection}{\numberline {5.15.6}矩阵求逆}{175}{subsection.5.15.6}%
+\contentsline {subsection}{\numberline {5.15.7}特征多项式}{177}{subsection.5.15.7}%
+\contentsline {section}{\numberline {5.16}分治NTT（简短）}{179}{section.5.16}%
+\contentsline {section}{\numberline {5.17}多项式桶 - zyn1.0}{181}{section.5.17}%
+\contentsline {section}{\numberline {5.18}康托展开}{189}{section.5.18}%
+\contentsline {section}{\numberline {5.19}Lucas定理}{190}{section.5.19}%
+\contentsline {subsection}{\numberline {5.19.1}模数是质数}{190}{subsection.5.19.1}%
+\contentsline {subsection}{\numberline {5.19.2}扩展Lucas定理}{190}{subsection.5.19.2}%
+\contentsline {chapter}{\numberline {6}进阶数论}{192}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Meissel–Lehmer 算法}{192}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Berlekamp–Massey 算法}{193}{section.6.2}%
+\contentsline {section}{\numberline {6.3}第一类Stirling数——行}{197}{section.6.3}%
+\contentsline {section}{\numberline {6.4}第一类Stirling数——列}{199}{section.6.4}%
+\contentsline {section}{\numberline {6.5}第二类Stirling数——行}{201}{section.6.5}%
+\contentsline {section}{\numberline {6.6}第二类Stirling数——列}{203}{section.6.6}%
+\contentsline {chapter}{\numberline {7}动态规划}{207}{chapter.7}%
+\contentsline {section}{\numberline {7.1}背包问题}{207}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}0-1 背包（每种物品只有一个）}{207}{subsection.7.1.1}%
+\contentsline {paragraph}{状态转移方程}{207}{section*.30}%
+\contentsline {subsection}{\numberline {7.1.2}完全背包（每种物品无限多个）}{207}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}多重背包（每种物品有有限多个）}{207}{subsection.7.1.3}%
+\contentsline {subsection}{\numberline {7.1.4}混合背包 (有的物品有限，有的物品无限)}{208}{subsection.7.1.4}%
+\contentsline {subsection}{\numberline {7.1.5}二维费用背包问题}{208}{subsection.7.1.5}%
+\contentsline {paragraph}{定义}{208}{section*.31}%
+\contentsline {paragraph}{特殊限制}{208}{section*.32}%
+\contentsline {paragraph}{转移方程}{208}{section*.33}%
+\contentsline {subsection}{\numberline {7.1.6}分组背包}{208}{subsection.7.1.6}%
+\contentsline {paragraph}{定义}{208}{section*.34}%
+\contentsline {paragraph}{转移方程}{208}{section*.35}%
+\contentsline {section}{\numberline {7.2}最长公共子序列 (LCS)}{209}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}简单版本$O(n^2)$}{209}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}位运算求LCS}{209}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}最长上升子序列（LIS）}{212}{section.7.3}%
+\contentsline {paragraph}{朴素做法}{212}{section*.36}%
+\contentsline {paragraph}{优化做法}{212}{section*.37}%
+\contentsline {paragraph}{输出方案}{212}{section*.38}%
+\contentsline {section}{\numberline {7.4}树形DP}{213}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}有依赖的背包问题}{213}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}换根DP}{214}{subsection.7.4.2}%
+\contentsline {section}{\numberline {7.5}数位 DP}{215}{section.7.5}%
+\contentsline {paragraph}{问题场景}{215}{section*.39}%
+\contentsline {paragraph}{一般解法}{215}{section*.40}%
+\contentsline {paragraph}{DFS 函数的参量}{215}{section*.41}%
+\contentsline {paragraph}{最高位标记}{215}{section*.42}%
+\contentsline {paragraph}{记忆化搜索}{216}{section*.43}%
+\contentsline {section}{\numberline {7.6}斜率优化}{218}{section.7.6}%
+\contentsline {chapter}{\numberline {8}杂项}{219}{chapter.8}%
+\contentsline {section}{\numberline {8.1}分治}{219}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}三分法}{219}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}归并排序}{220}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}平面最近点对}{220}{subsection.8.1.3}%
+\contentsline {subsection}{\numberline {8.1.4}CDQ 分治求三维偏序}{221}{subsection.8.1.4}%
+\contentsline {subsection}{\numberline {8.1.5}四维偏序}{222}{subsection.8.1.5}%
+\contentsline {subsection}{\numberline {8.1.6}线段树分治}{224}{subsection.8.1.6}%
+\contentsline {subsection}{\numberline {8.1.7}猫树分治}{228}{subsection.8.1.7}%
+\contentsline {section}{\numberline {8.2}整体二分}{230}{section.8.2}%
+\contentsline {section}{\numberline {8.3}莫队算法}{232}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}普通莫队}{232}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}树上莫队}{233}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}值域分块}{234}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}时间轴分块}{236}{subsection.8.3.4}%
+\contentsline {section}{\numberline {8.4}位运算及其运用}{239}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}常见等式}{239}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}位运算函数}{239}{subsection.8.4.2}%
+\contentsline {subsection}{\numberline {8.4.3}子集枚举}{240}{subsection.8.4.3}%
+\contentsline {section}{\numberline {8.5}C++大整数模板}{240}{section.8.5}%
+\contentsline {section}{\numberline {8.6}FastIO}{243}{section.8.6}%
+\contentsline {section}{\numberline {8.7}\_\_int128 输出函数}{244}{section.8.7}%
+\contentsline {section}{\numberline {8.8}开栈}{245}{section.8.8}%
+\contentsline {section}{\numberline {8.9}随机}{245}{section.8.9}%
+\contentsline {section}{\numberline {8.10}对拍}{246}{section.8.10}%
+\contentsline {subsection}{\numberline {8.10.1}生成随机数据}{246}{subsection.8.10.1}%
+\contentsline {subsection}{\numberline {8.10.2}Windows下的批处理}{248}{subsection.8.10.2}%
+\contentsline {subsection}{\numberline {8.10.3}Linux下的Bash脚本}{248}{subsection.8.10.3}%
+\contentsline {section}{\numberline {8.11}其他}{248}{section.8.11}%

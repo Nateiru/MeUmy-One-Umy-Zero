@@ -1,0 +1,103 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{//若要修改一个点的点权，应当先将其 splay 到根，然后修改，最后还要调用 pushup 维护。}
+\PYG{k}{namespace} \PYG{n}{lct} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{rev}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+    \PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//初始化 link\PYGZhy{}cut\PYGZhy{}tree}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{fa}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{fa}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{rev}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{rev}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{sz}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{sz}\PYG{p}{));}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{bool} \PYG{n+nf}{son}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]][}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{n}{x}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{bool} \PYG{n+nf}{isroot}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]][}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{x} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{x}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n+nf}{reverse}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//给结点 x 打上反转标记}
+        \PYG{n}{swap}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]);}
+        \PYG{n}{rev}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{\PYGZca{}=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n+nf}{pushup}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{sz}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]]} \PYG{o}{+} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n+nf}{pushdown}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{rev}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{n}{reverse}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]);}
+            \PYG{n}{reverse}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]);}
+            \PYG{n}{rev}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{rotate}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{y} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{],} \PYG{n}{z} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{y}\PYG{p}{],} \PYG{n}{c} \PYG{o}{=} \PYG{n}{son}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{isroot}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))}
+            \PYG{n}{ch}\PYG{p}{[}\PYG{n}{z}\PYG{p}{][}\PYG{n}{son}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;}
+
+        \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{z}\PYG{p}{;}
+        \PYG{n}{ch}\PYG{p}{[}\PYG{n}{y}\PYG{p}{][}\PYG{n}{c}\PYG{p}{]} \PYG{o}{=} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{o}{!}\PYG{n}{c}\PYG{p}{];}
+        \PYG{n}{fa}\PYG{p}{[}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{y}\PYG{p}{][}\PYG{n}{c}\PYG{p}{]]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+        \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{o}{!}\PYG{n}{c}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+        \PYG{n}{fa}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;}
+        \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{splay}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{top} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;}
+
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{x}\PYG{p}{;} \PYG{o}{!}\PYG{n}{isroot}\PYG{p}{(}\PYG{n}{i}\PYG{p}{);} \PYG{n}{i} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+            \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{top}\PYG{p}{)}
+            \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{]);}
+
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{y} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{];} \PYG{o}{!}\PYG{n}{isroot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);} \PYG{n}{rotate}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),} \PYG{n}{y} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])}
+            \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{isroot}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))}
+                \PYG{n}{son}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{o}{\PYGZca{}} \PYG{n}{son}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)} \PYG{o}{?} \PYG{n}{rotate}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)} \PYG{o}{:} \PYG{n}{rotate}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+
+        \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{access}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{// 建立从根到 x 的路径}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{x}\PYG{p}{;} \PYG{n}{y} \PYG{o}{=} \PYG{n}{x}\PYG{p}{,} \PYG{n}{x} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{n}{splay}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+            \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+            \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{makeroot}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//将 x 变为树的新的根结点}
+        \PYG{n}{access}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{n}{splay}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{n}{reverse}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n+nf}{findroot}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//返回 x 所在树的根结点}
+        \PYG{n}{access}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{n}{splay}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+            \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),} \PYG{n}{x} \PYG{o}{=} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{];}
+
+        \PYG{n}{splay}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{k}{return} \PYG{n}{x}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{split}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//提取出来 y 到 x 之间的路径，并将 y 作为根结点}
+        \PYG{n}{makeroot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{n}{access}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+        \PYG{n}{splay}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{cut}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//切断 x 与 y 相连的边}
+        \PYG{n}{makeroot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}         \PYG{c+c1}{//将 x 置为整棵树的根}
+
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{findroot}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)} \PYG{o}{==} \PYG{n}{x} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{==} \PYG{n}{x} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{o}{!}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{y}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{n}{fa}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{n}{ch}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+            \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{link}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//连接 x 与 y}
+        \PYG{n}{makeroot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{findroot}\PYG{p}{(}\PYG{n}{y}\PYG{p}{)} \PYG{o}{!=} \PYG{n}{x}\PYG{p}{)}
+            \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{=} \PYG{n}{y}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

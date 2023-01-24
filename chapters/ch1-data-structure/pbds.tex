@@ -1,0 +1,95 @@
+\section{pb-ds 平衡树}
+
+\begin{minted}{c++}
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>   // 用tree
+#include<ext/pb_ds/hash_policy.hpp>   // 用hash
+#include<ext/pb_ds/trie_policy.hpp>   // 用trie
+#include<ext/pb_ds/priority_queue.hpp>// 用priority_queue
+using namespace __gnu_pbds;
+---
+#include<bits/extc++.h>
+using namespace __gnu_pbds;
+//bits/extc++.h与bits/stdc++.h类似，bits/extc++.h是所有拓展库，bits/stdc++.h是所有标准库
+//=======================================================
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/hash_policy.hpp>
+
+using namespace __gnu_pbds;
+template<typename T>
+using ordered_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
+
+// rb_tree_tag 和 splay_tree_tag 选择树的类型(红黑树和伸展树)
+T // 自定义数据类型
+null_type//无映射（老版本g++为null_mapped_type）
+less<T>//Node的排序方式从小到大排序
+tree_order_statistics_node_update//参数表示如何更新保存节点信息 tree_order_statistics_node_update会额外获得order_of_key()和find_by_order()两个功能。
+
+ordered_set<Node> Tree;  // Node 自定义struct 注意重载less
+Tree.insert(Node);       // 插入
+Tree.erase(Node);        // 删除
+Tree.order_of_key(Node); // 求Node的排名:当前数小的数的个数 +1
+Tree.find_by_order(k);   // 返回排名为k+1的iterator 即有k个Node比*it小
+Tree.join(b);            // 将b并入Tree，前提是两棵树类型一致并且二没有重复元素
+Tree.split(v, b);        // 分裂，key小于等于v的元素属于Tree，其余属于b
+Tree.lower_bound(Node);  // 返回第一个大于等于x的元素的迭代器
+Tree.upper_bound(Node);  // 返回第一个大于x的元素的迭代器
+
+//以上的所有操作的时间复杂度均为O(logn)
+//注意，插入的元素会去重，如set
+ordered_set<T>::point_iterator it=Tree.begin();  // 迭代器
+//显然迭代器可以++，--运算
+\end{minted}
+\par \noindent  维护 $n$ 棵平衡树，启发式合并暴力合并。平衡树支持第 $k$ 小
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/hash_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+template<typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+const int N = 500010;
+int fa[N];
+int n, m;
+int find(int x) {
+    return x == fa[x] ? x : fa[x] = find(fa[x]);
+}
+ordered_set<pair<int, int>> rt[N];
+void merge(int u, int v) { // u < - v
+    if (rt[u].size() < rt[v].size())
+        swap(u, v);
+    ordered_set<pair<int, int>>::point_iterator it = rt[v].begin();
+    for (; it != rt[v].end(); it++) rt[u].insert(*it);
+    rt[v].clear();
+    fa[v] = u;
+}
+int main() {
+    n = rd(), m = rd();
+    for (int i = 1; i <= n; i++) rt[i].insert(pair<int, int>(rd(), i));
+    for (int i = 1; i <= n; i++) fa[i] = i;
+
+    while (m--) {
+        int u = rd(), v = rd();
+        u = find(u), v = find(v);
+        if (u != v) merge(u, v);
+    }
+    int qc = rd();
+    while (qc--) {
+        char op[4];
+        scanf("%s", op);
+        int x = rd(), y = rd();
+        if (op[0] == 'Q') {
+            int u = find(x);
+            if (rt[u].size() < y) puts("-1");
+            else
+                printf("%d\n", rt[u].find_by_order(y - 1)->second);
+        } else {
+            int u = find(x), v = find(y);
+            if (u != v) merge(u, v);
+        }
+    }
+
+    return 0;
+}
+\end{minted}

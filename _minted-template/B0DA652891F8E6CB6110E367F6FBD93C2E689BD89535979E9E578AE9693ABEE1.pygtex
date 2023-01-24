@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{// P7112 【模板】行列式求值 https://www.luogu.com.cn/problem/P7112}
+\PYG{n}{ll} \PYG{n}{n}\PYG{p}{,} \PYG{n}{p}\PYG{p}{[}\PYG{n}{N}\PYG{p}{][}\PYG{n}{N}\PYG{p}{],} \PYG{n}{mod}\PYG{p}{;}
+\PYG{n}{ll} \PYG{n+nf}{det}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{assert}\PYG{p}{(}\PYG{n}{mod} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{);}
+    \PYG{n}{ll} \PYG{n}{ans} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{o}{++}\PYG{n}{j}\PYG{p}{)}
+            \PYG{k}{while} \PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{// gcd step 辗转相减}
+                \PYG{n}{ll} \PYG{n}{t} \PYG{o}{=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{/} \PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{t}\PYG{p}{)} \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;} \PYG{n}{k} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{o}{++}\PYG{n}{k}\PYG{p}{)}
+                    \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]} \PYG{o}{*} \PYG{n}{t}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+                \PYG{n}{swap}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]);}
+                \PYG{n}{ans} \PYG{o}{*=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{n}{ans} \PYG{o}{=} \PYG{n}{ans} \PYG{o}{*} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{ans}\PYG{p}{)} \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{ans} \PYG{o}{+} \PYG{n}{mod}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

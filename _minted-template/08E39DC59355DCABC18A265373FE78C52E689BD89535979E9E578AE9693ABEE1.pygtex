@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{trie}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];} \PYG{c+c1}{// trie树的结构，邻接表vector}
+\PYG{n}{map}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{trans}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{fail}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{getfail}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+    \PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{n}{q}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k}{auto} \PYG{n+nl}{it}\PYG{p}{:}\PYG{n}{trie}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{u}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{v}\PYG{o}{=}\PYG{n}{it}\PYG{p}{.}\PYG{n}{second}\PYG{p}{,}\PYG{n}{to}\PYG{o}{=}\PYG{n}{it}\PYG{p}{.}\PYG{n}{first}\PYG{p}{;}
+        \PYG{c+c1}{// u\PYGZhy{}(to)\PYGZhy{}\PYGZgt{} v}
+        \PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{to}\PYG{p}{]}\PYG{o}{=}\PYG{n}{v}\PYG{p}{;}
+        \PYG{n}{fail}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{=}\PYG{n}{u}\PYG{p}{;}
+        \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{while}\PYG{p}{(}\PYG{o}{!}\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{u}\PYG{o}{=}\PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();} \PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+        \PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{fail}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]];}\PYG{c+c1}{//先把fail的trans 复制移过来}
+
+        \PYG{k}{for}\PYG{p}{(}\PYG{k}{auto} \PYG{n+nl}{it}\PYG{p}{:}\PYG{n}{trie}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{=}\PYG{n}{it}\PYG{p}{.}\PYG{n}{second}\PYG{p}{,}\PYG{n}{to}\PYG{o}{=}\PYG{n}{it}\PYG{p}{.}\PYG{n}{first}\PYG{p}{;}
+            \PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{][}\PYG{n}{to}\PYG{p}{]}\PYG{o}{=}\PYG{n}{v}\PYG{p}{;} \PYG{c+c1}{// 然后修改}
+            \PYG{n}{fail}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{fail}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]][}\PYG{n}{to}\PYG{p}{];}
+            \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{v}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 可持久花数组维护map\PYGZlt{}int,int\PYGZgt{} trans[N]}
+\PYG{k}{struct} \PYG{n}{Node} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,}\PYG{n}{r}\PYG{p}{,}\PYG{n}{v}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{N}\PYG{o}{*}\PYG{l+m+mi}{40}\PYG{p}{];}\PYG{c+c1}{// 1\PYGZti{}n trans[u][1\PYGZti{}n] = v}
+\PYG{k+kt}{int} \PYG{n}{rt}\PYG{p}{,}\PYG{n}{cnt}\PYG{p}{;}
+\end{Verbatim}

@@ -1,0 +1,235 @@
+\section{Hash}
+\subsection{字符串哈希}
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+typedef unsigned long long ll;
+
+const int N=1e5+5;
+
+struct Hash {
+    const int base = 131;           // 13331 19260817 防止哈希冲突
+    const ll p = 212370440130137957;// (1ull<<61)-1 {402653189,805306457,1610612741,998244353}
+ // 模两个质数的双哈希，建议取一些比较不常见的质数，比如 122420729,163227661,217636919, 1222827239, 998244353 等
+    ll Pow[N], h[N];
+ 
+    inline ll mul(ll x, ll y) {
+        return (x * y - (ll) ((long double) x / p * y) * p + p) % p;
+    }
+    inline ll add(ll x, ll y) { return (x += y) >= p ? x - p : x; } 
+ 
+    void init(char *s) {
+        int l = strlen(s + 1); 
+        Pow[0] = 1; 
+        for (int i = 1; i <= l; ++i) Pow[i] = mul(Pow[i - 1], base);
+        for (int i = 1; i <= l; ++i) h[i] = add(s[i], mul(h[i - 1], base));
+    }
+    ll get(int l, int r) { return add(h[r], p - mul(h[l - 1], Pow[r - l + 1])); }
+} h;
+//=======================双哈希
+const basePrime1 = 233;
+const basePrime2 = 13331;
+// 模两个质数的双哈希，建议取一些比较不常见的质数，比如 122420729,163227661,217636919, 1222827239, 998244353 等
+pair<int, int> double_hash(char *s, int n, int mod1, int mod2) {
+    int hash1 = 0, hash2 = 0;
+    for (int i = 0; i < n; i++)
+        hash1 = (1LL * hash * basePrime1 + s[i]) % mod1,
+        hash2 = (1LL * hash * basePrime2 + s[i]) % mod2;
+    return make_pair(hash1, hash2);
+}
+\end{minted}
+\subsection{手写Hash + 集合 Set（Set自带Hash)}
+
+\par \noindent 拉链法也称开散列法（open hashing）。
+~\\
+\par \noindent 拉链法是在每个存放数据的地方开一个链表，如果有多个键值索引到同一个地方，只用把他们都放到那个位置的链表里就行了。查询的时候需要把对应位置的链表整个扫一遍，对其中的每个数据比较其键值与查询的键值是否一致。
+\begin{tcolorbox}
+\par \noindent 2020 CCPC秦皇岛 J. Jewel Splitting：https://codeforces.com/gym/102769/problem/J（哈希的各种技巧）
+\end{tcolorbox}
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+const int maxn = 310000;
+
+const unsigned long long x = 23333;//131;
+const long long mod = 998244353;
+unsigned long long H[maxn], xp[maxn];
+long long fac[maxn], inv[maxn];
+char s[maxn];
+int n;
+void init() {
+    n = strlen(s);
+    H[n] = 0;
+    for (int i = n - 1; i >= 0; --i)
+        H[i] = H[i + 1] * x + s[i];// - 'a' + 1;
+    xp[0] = 1;
+    for (int i = 1; i <= n; ++i)
+        xp[i] = xp[i - 1] * x;
+}
+
+inline unsigned long long Hash(int i, int d) {
+    return H[i] - H[i + d] * xp[d];
+}
+
+//key_t应当为整数类型，且实际值必须非负
+template<typename key_t, typename type> struct hash_table {
+    static const int maxn = 610000;        // 哈希表的大小
+    static const int table_size = 800;    // 索引的范围
+    int first[table_size], nxt[maxn], sz; // init: memset(first, 0, sizeof(first)), sz = 0
+    key_t id[maxn];
+    type data[maxn];
+    hash_table() {
+        init();
+    }
+    void init(){
+        memset(first, 0, sizeof(first));
+        sz = 0;
+    }
+    type& operator[] (key_t key) {
+        const int h = key % table_size;
+        for (int i = first[h]; i; i = nxt[i])
+            if (id[i] == key)
+                return data[i];
+        int pos = ++sz;
+        nxt[pos] = first[h];
+        first[h] = pos;
+        id[pos] = key;
+        return data[pos] = type();
+    }
+    bool count(key_t key) {
+        for (int i = first[key % table_size]; i; i = nxt[i])
+            if (id[i] == key)
+                return true;
+        return false;
+    }
+    type get(key_t key) { //如果key对应的值不存在，则返回type()。
+        for (int i = first[key % table_size]; i; i = nxt[i])
+            if (id[i] == key)
+                return data[i];
+        return type();
+    }
+};
+
+struct Set {
+    hash_table<unsigned long long, int> d;
+    // 这个集合的 Hash
+    unsigned long long code = 0;
+    long long result = 1;// 题目需要
+    void init() {
+        code = 0;
+        result = 1;
+        d.init();
+    }
+    void insert(unsigned long long x) {
+        auto val = d[x];
+        d[x] += 1;
+        result = result * fac[val] % mod * inv[val + 1] % mod; 
+        unsigned long long t = val + 37;
+        code += x * x * x + 7 * x * x + 3 * x + 7;
+    }
+    void erase(unsigned long long x) {
+        auto val = d[x];
+        d[x] -= 1;
+        result = result * fac[val] % mod * inv[val - 1] % mod;
+        unsigned long long t = val + 37;
+        code -= x * x * x + 7 * x * x + 3 * x + 7;
+    }
+    auto hash() {
+        return code;
+    }
+};
+int main() {
+    
+    fac[0]= inv[1] = 1;
+    for (int i = 1; i < maxn; ++i) fac[i] = fac[i - 1] * i % mod;
+    for (int i = 2; i < maxn; i++) inv[i] = (long long)inv[mod % i] * (mod - mod / i) % mod;
+    
+    int T, kase = 0;
+    scanf("%d", &T);
+    Set S;
+    hash_table<unsigned long long, int> vis;
+    while (T--) {
+        scanf("%s", s);
+        init();
+        long long ans = 0;
+        for (int d = 1; d <= n; d++) {
+            S.init();
+            vis.init();
+            for (int i = 0; i + d <= n; i += d) S.insert(Hash(i, d)); // hash [i, i + d)
+            vis[S.hash()]++;
+            
+            ans += fac[n / d] * S.result % mod;
+            int dis = n % d;
+            if (dis == 0) continue;
+            
+            for (int i = n - dis - d; i >= 0; i -= d) {
+                S.erase(Hash(i, d));
+                S.insert(Hash(i + dis, d));
+                if (!vis.count(S.hash())) {
+                    vis[S.hash()]++;
+                    ans += fac[n / d] * S.result % mod;
+                }
+            }
+        }
+        ans %= mod;
+        printf("Case #%d: %lld\n", ++kase, ans);
+    }
+    return 0;
+}
+\end{minted}
+\subsection{树Hash}
+\begin{tcolorbox}
+\par \noindent 给定一棵以点 1 为根的树，你需要输出这棵树中最多能选出多少个互不同构的子树。
+~\\
+\par \noindent 两棵有根树 T1、T2 同构当且仅当他们的大小相等，且存在一个顶点排列 σ 使得在 T1 中 $i$ 是 $j$ 的祖先当且仅当在 T2 中 $σ(i)$ 是 $σ(j)$ 的祖先。
+\end{tcolorbox}
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef unsigned long long ull;
+
+mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());
+ull base = rnd();
+const int N = 1e6 + 5;
+int n, tot, sz[N];
+ull h[N];
+vector<int> e[N];
+
+ull H(ull x) {
+    return x * x * x * 11451419 + 19260817;
+}
+ull F(ull x) {
+    return
+        H(x & ((1ll << 32) - 1)) +
+        H(x >> 32);
+}
+// 注释一种双Hash，需要预处理质数
+void dfs(int u, int fa) {
+    h[u] = base;
+    // f1[u] = 1;
+    // f2[u] = 0;
+    for (int v : e[u]) {
+        if (v == fa) continue;
+        dfs(v, u);
+        h[u] += F(h[v]);
+        // f1[u] += f1[v] * prime[sz[v]];
+        // f2[u] += f2[v] * base + sz[v];
+    }
+    // if (sz[u] == 1) f2[u] = 1;
+}
+int main() {
+    scanf("%d", &n);
+    for (int i = 1, u, v; i < n; ++i) {
+        scanf("%d%d", &u, &v);
+        e[u].push_back(v);
+        e[v].push_back(u);
+    }
+    dfs(1, 0);
+    sort(h + 1, h + 1 + n);
+    printf("%d\n", unique(h + 1, h + 1 + n) - h - 1);
+    return 0;
+}
+\end{minted}

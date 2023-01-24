@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n+nf}{lca}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{,}\PYG{k+kt}{int} \PYG{n}{b}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{dep}\PYG{p}{[}\PYG{n}{a}\PYG{p}{]}\PYG{o}{\PYGZlt{}}\PYG{n}{dep}\PYG{p}{[}\PYG{n}{b}\PYG{p}{])} \PYG{n}{swap}\PYG{p}{(}\PYG{n}{a}\PYG{p}{,}\PYG{n}{b}\PYG{p}{);}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{;}\PYG{n}{k}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{k}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{dep}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{a}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]]}\PYG{o}{\PYGZgt{}=}\PYG{n}{dep}\PYG{p}{[}\PYG{n}{b}\PYG{p}{])} \PYG{n}{a}\PYG{o}{=}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{a}\PYG{p}{][}\PYG{n}{k}\PYG{p}{];}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{o}{==}\PYG{n}{b}\PYG{p}{)} \PYG{k}{return} \PYG{n}{a}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{;}\PYG{n}{k}\PYG{o}{\PYGZgt{}=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{k}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{a}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]}\PYG{o}{!=}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{b}\PYG{p}{][}\PYG{n}{k}\PYG{p}{])} \PYG{n}{a}\PYG{o}{=}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{a}\PYG{p}{][}\PYG{n}{k}\PYG{p}{],}\PYG{n}{b}\PYG{o}{=}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{b}\PYG{p}{][}\PYG{n}{k}\PYG{p}{];}
+    \PYG{k}{return} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{a}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

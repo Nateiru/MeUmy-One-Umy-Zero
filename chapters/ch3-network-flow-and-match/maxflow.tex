@@ -1,0 +1,152 @@
+\section{最大流}
+
+\subsection{Dinic 算法 (带当前弧优化)}
+
+\par 不断在残量图上使用 BFS 求出结点的层次，构建分层图（即给结点标注 d[i]）；然后在分层图上 DFS 寻找增广路，回溯时实时更新剩余容量。每个点可以流向多条出边。时间复杂度为 $O(n^2m)$。
+\begin{minted}{c++}
+template <int N> struct Dinic {
+    const int INF = 1e9;
+    struct E {
+        int to, cap, rev;// x->y 目标点 to=y 流量cap 反向边G[to][rev]=x
+    };
+    vector<E> G[N];
+    int lev[N], cur[N];// 层数 当前弧优化
+    inline void add(int x, int y, int c) {
+        G[x].push_back({ y, c, (int)G[y].size() });
+        G[y].push_back({ x, 0, (int)G[x].size() - 1 });
+    }
+    void bfs(int s) {
+        queue<int> q;
+        memset(lev, -1, sizeof lev);
+
+        for (lev[s] = 0, q.push(s); q.size();) {
+            int x = q.front();
+            q.pop();
+
+            for (auto &e : G[x])
+                if (e.cap > 0 && lev[e.to] < 0)// 层数未赋值 容量大于0
+                    lev[e.to] = lev[x] + 1, q.push(e.to);
+        }
+    }
+    int dfs(int x, int t, int f) {
+        if (x == t)
+            return f;
+        // 当前弧优化
+        for (int &i = cur[x], sz = G[x].size(), d; i < sz; i++) {
+            auto &e = G[x][i];
+
+            if (e.cap > 0 && lev[x] < lev[e.to]) {// lev[e.to]==lev[x]+1
+                if ((d = dfs(e.to, t, min(f, e.cap))) > 0) {
+                    e.cap -= d, G[e.to][e.rev].cap += d;// 正向边流量-d 反向边容量+d
+                    return d;
+                }
+            }
+        }
+
+        return 0;
+    }
+    int64_t maxflow(int s, int t) {
+        for (int64_t flow = 0, f;;) {
+            bfs(s);
+
+            if (lev[t] < 0)// BFS未遍历到终点
+                return flow;
+
+            memset(cur, 0, sizeof cur);// 当前弧指向第一条边即G[x][0]
+
+            while ((f = dfs(s, t, INF)) > 0)
+                flow += f;
+        }
+    }
+};
+Dinic<10010> din;
+\end{minted}
+
+\subsection{无源汇上下界可行流}
+\par \textbf{问题：} 给定一个网络，求一个流满足：每条边的流量处在给定的下界和上界 [lower,upper] 之间，满足流量守恒
+
+\begin{itemize}
+\item 记$A(u)=\sum_{to [i]=u}f(i)-\sum_{from[i]=u}f(i)$即流入减去流出
+\item 若$A(u)>0$，源点 $S$ 向 $u$ 点连边，容量是$A(u)$
+\item 若$A(u)<0$，$u$ 点向汇点 $T$ 连边，容量是$-A(u)$
+\end{itemize}
+如果\textbf{满流}（虚拟源点 S 流跑满）此时即可求出流2（否则无解），再加上流1即是满足题意的可行流
+\begin{minted}{c++}
+int main() {
+
+    cin >> n >> m;
+    S = 0, T = n + 1; // 虚拟源点 汇点
+    for (int i = 1; i <= m; i++) {
+        int x, y, c, d; cin >> x >> y >> c >> d;
+        din.add(x, y, d - c, i);
+        in[y] += c, out[x] += c;
+        l[i] = c;
+    }
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        if (in[i] > out[i])
+            din.add(S, i, in[i] - out[i], 0), sum += in[i] - out[i]; // 满流
+        else
+            din.add(i, T, out[i] - in[i], 0);
+    }
+    if (sum != din.maxflow(S, T))
+        cout << "NO\n";
+    else {
+        cout << "YES\n";
+        for (int x = 1; x <= n; x++)
+            for (auto [y, cap, rev, id] : din.G[x]) {
+                ans[id] = cap;
+            }
+        for (int i = 1; i <= m; i++)
+            cout << ans[i] + l[i] << '\n';
+    }
+    return 0;
+}
+\end{minted}
+\subsection{有源汇上下界最大流}
+\par \noindent 连接一条 $t\to s$下界是 0 上界是 $\infty$ 的边，由此转化循环流问题（无源汇上下界可行流）
+\par \noindent 
+\par \noindent 按照循环流问题建图，首先跑 $S \to T$ 的dinic 是否能够找到一条可行流（即判断是否是满流）然后在换源点和汇点并删去 $t\to s$ 的边再跑一边 $s\to t$ dinic（榨干残留网络），可行流 + 第二次dinic即是最大流
+\begin{minted}{c++}
+int main() {
+
+    // ............. 无源汇上下界可行流建图
+    din.add(t, s, 1e9);
+
+    res = din.maxflow(S, T);
+
+    if (res != sum) {
+        cout << "No Solution\n";
+        return 0;
+    }
+    auto &[v, cap, inv] = din.G[s].back();
+    res = cap;
+    din.erase(din.G[v][inv]); //删去 t->s 容量是1e9这条边
+    cout << res + din.maxflow(s, t);
+    return 0;
+}
+\end{minted}
+
+\subsection{有源汇上下界最小流}
+\par \noindent 最小流 = 可行流 + $s\to t$ 流，由于可行流固定，为了使结果最小即 $s\to t$ 流最小，由于 $s\to t$ 的流 = $- t\to s$的流，如果 $t\to s$ 求最大流，那么 $s\to t$ 就是最小流，$f_{s\to t}=-f_{t\to s}$ 这也是为什么相减的原因。
+\begin{minted}{c++}
+int main() {
+    
+    // ............. 无源汇上下界可行流建图
+    din.add(t, s, 1e9);
+
+    res = din.maxflow(S, T);
+
+    if (res != sum) {
+        cout << "No Solution\n";
+        return 0;
+    }
+
+    auto &[v, cap, inv] = din.G[s].back();
+    res = cap;
+    din.erase(din.G[v][inv]); //删去 t->s 容量是1e9这条边
+
+    cout << res - din.maxflow(t, s); // f(s->t) = - f(t->s)
+    return 0;
+}
+\end{minted}

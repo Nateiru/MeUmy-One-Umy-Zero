@@ -1,0 +1,75 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{using} \PYG{n}{ll} \PYG{o}{=} \PYG{k+kt}{long} \PYG{k+kt}{long}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mi}{40010}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{m}\PYG{p}{,} \PYG{n}{q}\PYG{p}{,} \PYG{n}{v}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],} \PYG{n}{w}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],} \PYG{n}{b}\PYG{p}{[}\PYG{l+m+mi}{200010}\PYG{p}{];}
+\PYG{n}{ll} \PYG{n}{f}\PYG{p}{[}\PYG{n}{N}\PYG{p}{][}\PYG{l+m+mi}{205}\PYG{p}{],} \PYG{n}{ans}\PYG{p}{[}\PYG{l+m+mi}{200010}\PYG{p}{];}
+\PYG{k}{struct} \PYG{n}{Node} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{id}\PYG{p}{;}
+\PYG{p}{\PYGZcb{};}
+\PYG{k+kt}{void} \PYG{n+nf}{solve}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{Node}\PYG{o}{\PYGZgt{}} \PYG{o}{\PYGZam{}}\PYG{n}{vec}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{l} \PYG{o}{==} \PYG{n}{r}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{Node} \PYG{n+nl}{a} \PYG{p}{:} \PYG{n}{vec}\PYG{p}{)} \PYG{n}{ans}\PYG{p}{[}\PYG{n}{a}\PYG{p}{.}\PYG{n}{id}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{v}\PYG{p}{[}\PYG{n}{l}\PYG{p}{]} \PYG{o}{\PYGZlt{}=} \PYG{n}{a}\PYG{p}{.}\PYG{n}{t} \PYG{o}{?} \PYG{n}{w}\PYG{p}{[}\PYG{n}{l}\PYG{p}{]} \PYG{o}{:} \PYG{l+m+mi}{0}\PYG{p}{);}
+        \PYG{k}{return}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{Node}\PYG{o}{\PYGZgt{}} \PYG{n}{vl}\PYG{p}{,} \PYG{n}{vr}\PYG{p}{;}
+    \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{n}{l} \PYG{o}{+} \PYG{n}{r} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{idx} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{vec}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{vec}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{r} \PYG{o}{\PYGZlt{}=} \PYG{n}{mid}\PYG{p}{)} \PYG{n}{vl}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{vec}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n}{vec}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{l} \PYG{o}{\PYGZgt{}} \PYG{n}{mid}\PYG{p}{)} \PYG{n}{vr}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{vec}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{k}{else}
+            \PYG{n}{b}\PYG{p}{[}\PYG{o}{++}\PYG{n}{idx}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;} \PYG{c+c1}{// 跨过 mid 的区间}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 初始化}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{l}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{r}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{==} \PYG{n}{mid} \PYG{o}{||} \PYG{n}{i} \PYG{o}{==} \PYG{n}{mid} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+                \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{?} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{:} \PYG{l+m+mi}{0}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 向左预处理背包}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{mid} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{n}{l}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{],} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j} \PYG{o}{\PYGZhy{}} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 向右边预处理背包}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{mid} \PYG{o}{+} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{r}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{f}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{],} \PYG{n}{f}\PYG{p}{[}\PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{j} \PYG{o}{\PYGZhy{}} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 合并左右背包的答案作为询问的答案}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{idx}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{l} \PYG{o}{=} \PYG{n}{vec}\PYG{p}{[}\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{l}\PYG{p}{,} \PYG{n}{r} \PYG{o}{=} \PYG{n}{vec}\PYG{p}{[}\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{r}\PYG{p}{,} \PYG{n}{t} \PYG{o}{=} \PYG{n}{vec}\PYG{p}{[}\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{t}\PYG{p}{;}
+        \PYG{n}{ll} \PYG{n}{res} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{t}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)} \PYG{n}{res} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{res}\PYG{p}{,} \PYG{n}{f}\PYG{p}{[}\PYG{n}{l}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{+} \PYG{n}{f}\PYG{p}{[}\PYG{n}{r}\PYG{p}{][}\PYG{n}{t} \PYG{o}{\PYGZhy{}} \PYG{n}{j}\PYG{p}{]);}
+        \PYG{n}{ans}\PYG{p}{[}\PYG{n}{vec}\PYG{p}{[}\PYG{n}{b}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]].}\PYG{n}{id}\PYG{p}{]} \PYG{o}{=} \PYG{n}{res}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{vl}\PYG{p}{.}\PYG{n}{size}\PYG{p}{())} \PYG{n}{solve}\PYG{p}{(}\PYG{n}{l}\PYG{p}{,} \PYG{n}{mid}\PYG{p}{,} \PYG{n}{vl}\PYG{p}{);}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{vr}\PYG{p}{.}\PYG{n}{size}\PYG{p}{())} \PYG{n}{solve}\PYG{p}{(}\PYG{n}{mid} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{vr}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{v}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{Node}\PYG{o}{\PYGZgt{}} \PYG{n}{vec}\PYG{p}{;}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{q}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{t}\PYG{p}{;}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{l} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{r} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{t}\PYG{p}{;}
+        \PYG{n}{m} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,} \PYG{n}{t}\PYG{p}{);}
+        \PYG{n}{vec}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{((}\PYG{n}{Node}\PYG{p}{)} \PYG{p}{\PYGZob{}}\PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{i}\PYG{p}{\PYGZcb{});}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{solve}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{vec}\PYG{p}{);}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{q}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{ans}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}\PYGZbs{}n\PYGZsq{}}\PYG{p}{;}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

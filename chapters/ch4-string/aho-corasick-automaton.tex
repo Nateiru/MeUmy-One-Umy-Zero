@@ -1,0 +1,279 @@
+\section{AC 自动机}
+
+\par 在 Trie 树的基础上，为节点增加 fail 指针；当前节点失配的时候，将匹配指针转移到 fail 指针指向的节点。
+\vspace{0.5em}
+
+\par\textbf{建树}
+\begin{itemize}
+    \item 根节点指向的所有节点的 $fail$ 指针都指向根节点
+    \item 不存在的节点，$fail$ 指针指向根节点
+    \item 普通节点，字符为 $s$ 的 $fail$ 指针，指向它的父节点的 $fail$ 指针指向节点 $fail[p]$ 沿 $s$ 走到的节点。
+\end{itemize}
+
+\par\textbf{匹配}
+\begin{itemize}
+    \item 如果走到了不存在的节点，则将匹配指针移到 fail 指针指向的节点
+    \item 从根节点开始匹配，原理与 Trie 树相同，匹配指针沿着 $p[i]$ 所在的字母向下走
+    \item 如果失配，则沿着 fail 指针移动，若匹配上则继续匹配，否则不断沿着 fail 指针走。
+\end{itemize}
+
+\par\textbf{Fail 指针}
+\begin{itemize}
+    \item 每个节点 $s$ 有一个失配指针 $p$ ，所有的 $s$ 和它们的 $p$ 构成的树形结构称为 fail 树。
+    \item fail 树上每个节点所代表的字符串，是其所有子树所代表的字符串的后缀 ⇒ 一个节点所有祖先，代表的字符串都是这个节点代表的字符串的后缀，如下图所示。
+    \item 重要性质：每个节点的 fail 指针，都指向当前节点代表的字符串的最长后缀（如果存在）。
+\end{itemize}
+
+\par\textbf{Fail 指针的用法}
+\begin{itemize}
+    \item 统计每个模式串 p 在文本串 t 当中出现的次数：将 t 在 AC 自动机的上匹配同时建立 fail 树，当经过某个节点时，对答案的贡献为：这个节点所有祖先的权值之和。利用树上差分将经过的所有节点计数 + 1。
+    \item 一个模式串 $p_i$ 在其它模式串中出现的次数统计：如果 $p_i$ 在其它的模式串中出现，那么其它模式串的链上一定有一个节点的 fail 指针指向该节点，直接统计该节点在 fail 树上的子节点个数即可。
+\end{itemize}
+
+
+
+\begin{minted}{c++}
+namespace ACAM { 
+    struct Trie {
+        int ch[26],fail,cnt;
+    }trans[N];
+    int ins(char *s) {
+        int p=0;
+        for(int i=0;s[i];i++) {
+            int c=s[i]-'a';
+            if(!trans[p].ch[c]) trans[p].ch[c]=++cnt;
+            p=trans[p].ch[c];
+        }
+        return p;
+    }
+    void getfail() {
+        queue<int> q;
+        for(int i=0;i<26;i++)
+            if(trans[0].ch[i]) q.push(trans[0].ch[i]);
+            
+        while(q.size()) {
+            int u=q.front();q.pop();
+            for(int i=0;i<26;i++) {
+                int &ch=trans[u].ch[i];
+                if(ch) // add(trans[ch].fail,ch);// 构建失配树 fail指针向自己连边
+                    trans[ch].fail=trans[trans[u].fail].ch[i],q.push(ch);
+                else// 如果没有儿子 那么将fail的儿子作为儿子
+                    ch=trans[trans[u].fail].ch[i];  
+            }
+        }
+    }
+    // t在AC自动机中跑一遍
+    void find (char *t) { 
+        int n = strlen(t + 1);
+        for (int i = 1, p = 0; i <= n; i++) {
+            int c = t[i] - 'a';
+            p = trans[p].ch[c];
+            // ......
+        }
+    }
+}
+\end{minted}
+
+字符集较大的情况：可以用map来维护 tran[N][26] ，也可以用可持久化数组维护map<int,int> trans[N]
+
+\begin{minted}{c++}
+vector<pair<int,int>> trie[N]; // trie树的结构，邻接表vector
+map<int,int> trans[N];
+int fail[N];
+void getfail()
+{
+    queue<int>q;
+    for(auto it:trie[0]) {
+        int u=0,v=it.second,to=it.first;
+        // u-(to)-> v
+        trans[u][to]=v;
+        fail[v]=u;
+        q.push(v);
+    }
+    while(!q.empty()) {
+        int u=q.front(); q.pop();
+        trans[u]=trans[fail[u]];//先把fail的trans 复制移过来
+        
+        for(auto it:trie[u]) {
+            int v=it.second,to=it.first;
+            trans[u][to]=v; // 然后修改
+            fail[v]=trans[fail[u]][to]; 
+            q.push(v);
+        }
+    }
+}
+// 可持久花数组维护map<int,int> trans[N]
+struct Node {
+    int l,r,v;
+}trans[N*40];// 1~n trans[u][1~n] = v
+int rt,cnt;
+\end{minted}
+给定 $n$ 个字符串 $s_{1 \dots n}$。, $q$ 次询问 $s_{l \dots r}$ 在 $s_k$ 中出现了多少次。$n,q,\sum_{i=1}^n |s_i| \le 10^5$。
+\begin{tcolorbox}
+
+\par \noindent 出现多串一定要考虑一下根号分治。
+
+\begin{itemize}
+\item 对于 $|s_k| < B$ 的，可以在 ac 自动机上暴力跑，差分一下用扫描线求一下，需要一个 $O(\sqrt N) - O(1)$ 的数据结构。
+\item 对于 $|s_k| \geq B$ 的，这样的串不会有很多种，对于每种，把该串在ac自动机上的路径加1，然后计算子树和就可获得每个点在该串的出现次数。
+\end{itemize}
+\par \noindent 总复杂度 $O(n\sqrt n)$
+
+\end{tcolorbox}
+
+\begin{minted}{c++}
+// 1. s[k]在 s[l~r]出现多少次
+// 2. s[l~r]在 s[k] 中共出现多少次
+
+// 如何理解 s[k] 在 s[r] 中出现的次数
+
+// 1. 修改：s[r]的子串是根到 pos[r] 的链 + 1
+//    查询：pos[k]子树即可               差分 + 扫描线
+
+// 2. 修改：将 pos[k] 的子树打上标记 
+//    查询：根到 pos[r] 的链上有多少标记 差分 + 扫描线 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+using LL = long long;
+using PII = pair<int, int>;
+
+const  int N = 1000005;
+struct ACAM{
+  int ch[N][26], cnt = 1, q[N], fa[N], head[N], ne[N];
+  int ins(int p, int x) {
+    if (!ch[p][x]) ch[p][x] = ++cnt;
+    return ch[p][x];
+  }
+  void build() {
+    int l, r;
+    q[l = r = 1] = 1;
+    while (l <= r) {
+      int x = q[l++];
+      if (x > 1 && !fa[x]) fa[x] = 1;
+      for (int i = 0; i < 26; i++) {
+        int &y = ch[x][i], z = ch[fa[x]][i];
+        if (y) {
+          q[++r] = y, fa[y] = z;
+        } else {
+          y = z;
+        }
+      }
+    }
+
+    for (int i = 2; i <= r; i++) {
+      int x = fa[q[i]];
+      assert(x);
+      ne[i] = head[x], head[x] = i;
+    }
+    dfs(1);
+  }
+
+  int in[N], out[N], dfn;
+  void dfs(int x) {
+    in[x] = dfn++;
+    for (int i = head[x]; i; i = ne[i]) {
+      dfs(q[i]);
+    }
+    out[x] = dfn;
+  }
+
+  int val[N];
+  void clear() {
+    memset(val, 0, cnt + 1 << 2);
+  }
+  void cal() {
+    for (int i = cnt; i; i--) {
+      val[fa[q[i]]] += val[q[i]];
+    }
+  }
+} ac;
+
+template <class T>
+struct DS {
+  T s0[N], s1[(N >> 8) + 1];
+  void add(int l, int r, const T &x) {
+    while (l & 255 && l < r) s0[l++] += x;
+    while (l + 256 <= r) s1[l >> 8] += x, l += 256;
+    while (l < r) s0[l++] += x;
+  }
+  T ask(int p) {
+    return s0[p] + s1[p >> 8];
+  }
+};
+
+DS<int> ds;
+
+int n, m, pos[N];
+string s[N];
+int main() {
+  
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cin >> n >> m;
+  for (int i = 1; i <= n; i++) {
+    cin >> s[i];
+    int p = 1;
+    for (char c : s[i]) {
+      p = ac.ins(p, c - 'a');
+    }
+    pos[i] = p;
+  }
+
+  vector<LL> ans(m);
+  vector<array<int, 4>> q0, q1;
+  for (int i = 0, l, r, k; i < m; i++) {
+    cin >> l >> r >> k;
+    if (s[k].size() < 350) {
+      q0.push_back({r, 1, k, i});
+      q0.push_back({l - 1, -1, k, i});
+    } else {
+      q1.push_back({k, l, r, i});
+    }
+  }
+
+  sort(q0.begin(), q0.end());
+  sort(q1.begin(), q1.end());
+
+  ac.build();
+  
+  for (int i = 0, j = 1; i < q0.size(); i++) {
+    while (j <= q0[i][0]) {
+      int x = pos[j++];
+      ds.add(ac.in[x], ac.out[x], 1);
+    }
+    int p = 1;
+    LL res = 0;
+    for (char c : s[q0[i][2]]) {
+      p = ac.ch[p][c - 'a'];
+      res += ds.ask(ac.in[p]);
+    }
+    ans[q0[i][3]] += q0[i][1] * res;
+  }
+
+  vector<LL> sum(n + 1);
+  for (int i = 0; i < q1.size(); i++) {
+    auto &[k, l, r, id] = q1[i];
+    if (!i || q1[i - 1][0] != k) {
+      ac.clear();
+      int p = 1;
+      for (char c : s[k]) {
+        p = ac.ch[p][c - 'a'];
+        ac.val[p]++;
+      }
+      
+      ac.cal();     // 子树求和
+      // ac.val[pos[j]] 是 s[j] 在 s[k] 出现的次数
+      for (int j = 1; j <= n; j++) {
+        sum[j] = sum[j - 1] + ac.val[pos[j]];
+      }
+    }
+    ans[id] = sum[r] - sum[l - 1];
+  }
+
+  for (auto z : ans) cout << z << "\n";
+  return 0;
+}
+\end{minted}

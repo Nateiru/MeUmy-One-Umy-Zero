@@ -1,0 +1,71 @@
+\section{Lucas定理}
+\subsection{模数是质数}
+\par \noindent Lucas 定理内容如下：对于**质数** $p$，有
+
+$$
+\binom{n}{m}\bmod p = \binom{\left\lfloor n/p \right\rfloor}{\left\lfloor m/p\right\rfloor}\cdot\binom{n\bmod p}{m\bmod p}\bmod p
+$$
+
+\par \noindent 观察上述表达式，可知 $n\bmod p$ 和 $m\bmod p$ 一定是小于 $p$ 的数，可以直接求解，$\displaystyle\binom{\left\lfloor n/p \right\rfloor}{\left\lfloor m/p\right\rfloor}$ 可以继续用 Lucas 定理求解。这也就要求 $p$ 的范围不能够太大，一般在 $10^5$ 左右。边界条件：当 $m=0$ 的时候，返回 $1$。
+
+\par \noindent Lucas的过程相当于把$n,m$在p进制下的每一位拿出来做组合数
+
+$$
+\text{Lucas}(n,m,p)=\prod \dbinom {n_k}{m_k} \bmod p
+$$
+
+\begin{minted}{c++}
+ll lucas(ll n, ll m, ll p) {
+    if (m == 0)
+        return 1ll;
+    return C(n % p, m % p, p) * lucas(n / p, m / p, p) % p;
+}
+\end{minted}
+
+\subsection{扩展Lucas定理}
+\par \noindent 当 $n, m$ 较大且 $p$ 不为质数的时候，令 $p = p_1^{\alpha_1} \cdot ... p_r^{\alpha_r}$，列出同余方程组：
+$$
+\begin{cases}
+a_1\equiv \displaystyle\binom{n}{m}&\pmod {{p_1}^{\alpha_1}}\\
+a_2\equiv \displaystyle\binom{n}{m}&\pmod {{p_2}^{\alpha_2}}\\
+&\cdots\\
+a_r\equiv \displaystyle\binom{n}{m}&\pmod {{p_r}^{\alpha_r}}\\
+\end{cases}
+$$
+\par \noindent 我们发现，在求出 $a_i$ 后，就可以用中国剩余定理求解出 $\binom{n}{m}$。
+
+\begin{minted}{c++}
+LL calc(LL n, LL x, LL P) {
+  if (!n) return 1;
+  LL s = 1;
+  for (LL i = 1; i <= P; i++)
+    if (i % x) s = s * i % P;
+  s = Pow(s, n / P, P);
+  for (LL i = n / P * P + 1; i <= n; i++)
+    if (i % x) s = i % P * s % P;
+  return s * calc(n / x, x, P) % P;
+}
+
+LL multilucas(LL m, LL n, LL x, LL P) {
+  int cnt = 0;
+  for (LL i = m; i; i /= x) cnt += i / x;
+  for (LL i = n; i; i /= x) cnt -= i / x;
+  for (LL i = m - n; i; i /= x) cnt -= i / x;
+  return Pow(x, cnt, P) % P * calc(m, x, P) % P * inverse(calc(n, x, P), P) %
+         P * inverse(calc(m - n, x, P), P) % P;
+}
+
+LL exlucas(LL m, LL n, LL P) {
+  int cnt = 0;
+  LL p[20], a[20];
+  for (LL i = 2; i * i <= P; i++) {
+    if (P % i == 0) {
+      p[++cnt] = 1;
+      while (P % i == 0) p[cnt] = p[cnt] * i, P /= i;
+      a[cnt] = multilucas(m, n, i, p[cnt]);
+    }
+  }
+  if (P > 1) p[++cnt] = P, a[cnt] = multilucas(m, n, P, P);
+  return CRT(cnt, a, p);
+}
+\end{minted}

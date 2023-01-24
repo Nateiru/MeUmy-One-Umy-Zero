@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N} \PYG{o}{=} \PYG{l+m+mf}{1e7} \PYG{o}{+} \PYG{l+m+mi}{5}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{lim} \PYG{o}{=} \PYG{l+m+mf}{1e7}\PYG{p}{;}
+\PYG{k+kt}{int} \PYG{n}{fac}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];} \PYG{c+c1}{//fac(i) 表示i的除1以外的最小质因子}
+\PYG{k+kt}{bool} \PYG{n}{np}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kt}{void} \PYG{n+nf}{init}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{n}{np}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{fac}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{lim}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{np}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}} \PYG{n}{pri}\PYG{p}{[}\PYG{o}{++}\PYG{n}{cnt}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;} \PYG{n}{fac}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{cnt} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZlt{}=} \PYG{n}{lim}\PYG{p}{;} \PYG{o}{++}\PYG{n}{j}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{np}\PYG{p}{[}\PYG{n}{i} \PYG{o}{*} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{fac}\PYG{p}{[}\PYG{n}{i} \PYG{o}{*} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]]} \PYG{o}{=} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{\PYGZpc{}} \PYG{n}{pri}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{break}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{T}\PYG{p}{,} \PYG{n}{n}\PYG{p}{;}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{T}\PYG{p}{;}
+    \PYG{n}{init}\PYG{p}{();}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{T}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n}\PYG{p}{;}
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{n} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d \PYGZdq{}}\PYG{p}{,} \PYG{n}{fac}\PYG{p}{[}\PYG{n}{n}\PYG{p}{]);}
+            \PYG{n}{n} \PYG{o}{/=} \PYG{n}{fac}\PYG{p}{[}\PYG{n}{n}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

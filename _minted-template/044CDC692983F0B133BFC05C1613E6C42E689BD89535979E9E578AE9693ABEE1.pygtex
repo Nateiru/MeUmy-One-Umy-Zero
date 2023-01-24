@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n}{dist}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{],} \PYG{n}{vis}\PYG{p}{[}\PYG{n}{maxn}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n+nf}{dijkstra}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{s}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{priority\PYGZus{}queue}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{p}{,} \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{p}{,} \PYG{n}{greater}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+    \PYG{n}{memset}\PYG{p}{(}\PYG{n}{vis}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{vis}\PYG{p}{),} \PYG{n}{memset}\PYG{p}{(}\PYG{n}{dist}\PYG{p}{,} \PYG{l+m+mh}{0x3f}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{dist}\PYG{p}{);}
+    \PYG{n}{dist}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{make\PYGZus{}pair}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{s}\PYG{p}{));}
+    \PYG{k}{while} \PYG{p}{(}\PYG{o}{!}\PYG{n}{q}\PYG{p}{.}\PYG{n}{empty}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{n}{q}\PYG{p}{.}\PYG{n}{top}\PYG{p}{().}\PYG{n}{second}\PYG{p}{;}
+        \PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{vis}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{n}{vis}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{n}{h}\PYG{p}{[}\PYG{n}{u}\PYG{p}{];} \PYG{n}{i} \PYG{o}{!=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ne}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{e}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{dist}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{dist}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{dist}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{dist}\PYG{p}{[}\PYG{n}{u}\PYG{p}{]} \PYG{o}{+} \PYG{n}{w}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+                \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{make\PYGZus{}pair}\PYG{p}{(}\PYG{n}{dist}\PYG{p}{[}\PYG{n}{v}\PYG{p}{],} \PYG{n}{v}\PYG{p}{));}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n}{dist}\PYG{p}{[}\PYG{n}{t}\PYG{p}{];}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

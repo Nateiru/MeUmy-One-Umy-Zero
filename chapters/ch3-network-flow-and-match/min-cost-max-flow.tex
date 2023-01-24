@@ -1,0 +1,175 @@
+\section{最小费用最大流}
+\subsection{Primal-Dual 原始对偶算法}
+\par 给定一个网络 $G=(V, E)$，每条边 $(u, v) \in E$ 带有属性 $c(u, v)$，表示从当前边流过 1 个单位流量时的费用。在最大化流量的基础上，求最小的费用。
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+#define int long long
+#pragma GCC optimize(2)
+using namespace std;
+const int inf=1e9;
+template <int N> struct MCMF {
+    struct E {
+        int to, cap, val, inv;
+    };
+    vector <E> G[N];
+    int lev[N], cur[N], h[N], pre[N], preu[N];
+    void add(int u, int v, int f, int w) {
+        G[u].push_back({v, f, w, (int)G[v].size()});
+        G[v].push_back({u, 0, -w, (int)G[u].size() - 1});
+    }
+    void dijkstra(int st) {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>q;
+        memset(lev, 0x3f, sizeof lev);
+        memset(pre, -1, sizeof pre);
+        memset(preu, -1, sizeof preu);
+        lev[st] = 0;
+        q.push({0, st});
+
+        while (q.size()) {
+            auto [d, u] = q.top();
+            q.pop();
+
+            if (lev[u] < d) continue;
+
+            int x = 0;
+
+            for (auto [v, f, w, inv] : G[u]) {
+                if (f && lev[v] > lev[u] + w + h[u] - h[v]) {
+                    lev[v] = lev[u] + h[u] - h[v] + w;
+                    pre[v] = x;
+                    preu[v] = u;
+                    q.push({lev[v], v});
+                }
+                x++;
+            }
+        }
+    }
+    pair<int, int> min_cost_max_flow(int st, int ed) {
+        memset(h, 0, sizeof h);
+
+        for (int flow = 0, cost = 0, res = inf;; res = inf) {
+
+            dijkstra(st);
+
+            if (lev[ed] > inf)
+                return {flow, cost};
+
+            for (int i = 0; i < N; i++) {
+                h[i] += lev[i];
+            }
+
+            for (int i = ed; i != st; i = preu[i]) {
+                res = min(res, G[preu[i]][pre[i]].cap);
+            }
+
+            flow += res;
+            cost += res * h[ed];
+
+            for (int i = ed; i != st; i = preu[i]) {
+                G[i][G[preu[i]][pre[i]].inv].cap += res;
+                G[preu[i]][pre[i]].cap -= res;
+            }
+        }
+    }
+};
+
+MCMF<5005>mcmf;
+int n, m, s, t;
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    cin >> n >> m >> s >> t;
+
+    for (int i = 1; i <= m; i++) {
+        int u, v, w, c;
+        cin >> u >> v >> w >> c;
+        mcmf.add(u, v, w, c);
+    }
+
+    auto [f, c] = mcmf.min_cost_max_flow(s, t);
+    cout << f << " " << c << '\n';
+}
+\end{minted}
+
+\subsection{EK算法求最大流}
+
+\begin{minted}{c++}
+#include <queue>
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+const int N = 5010, M = 100010;
+int h[N], e[M], ne[M], f[M], w[M], idx;
+int d[N], flow[N], pre[N];
+bool st[N];
+queue<int> q;
+
+void add(int a, int b, int c, int d) {
+    e[idx] = b, f[idx] = c, w[idx] = d, ne[idx] = h[a], h[a] = idx++;
+    e[idx] = a, f[idx] = 0, w[idx] = -d, ne[idx] = h[b], h[b] = idx++;
+}
+bool spfa(int s, int t) {
+    memset(d, 0x3f, sizeof d);
+    memset(flow, 0, sizeof flow);
+    d[s] = 0, flow[s] = 0x3f3f3f3f;
+    q.push(s);
+
+    while (q.size()) {
+        int u = q.front();
+        q.pop();
+        st[u] = 0;
+
+        for (int i = h[u]; i != -1; i = ne[i]) {
+            int v = e[i];
+
+            if (f[i] && d[v] > d[u] + w[i]) {
+                d[v] = d[u] + w[i];
+                pre[v] = i;
+                flow[v] = min(f[i], flow[u]);
+
+                if (!st[v]) {
+                    q.push(v);
+                    st[v] = 1;
+                }
+            }
+        }
+    }
+
+    return flow[t] > 0;
+}
+pair<int, int> EK(int s, int t) {
+    int maxflow = 0, mincost = 0;
+
+    while (spfa(s, t)) {
+        int r = flow[t];
+        maxflow += r, mincost += r * d[t];
+
+        for (int i = t; i != s; i = e[pre[i] ^ 1]) {
+            f[pre[i]] -= r;
+            f[pre[i] ^ 1] += r;
+        }
+    }
+
+    return make_pair(maxflow, mincost);
+}
+int n, m, s, t;
+int main() {
+    cin >> n >> m >> s >> t;
+    memset(h, -1, sizeof h);
+
+    while (m--) {
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+        add(a, b, c, d);
+    }
+
+    auto [maxflow, mincost] = EK(s, t);
+
+    cout << maxflow << ' ' << mincost << '\n';
+    return 0;
+}
+\end{minted}

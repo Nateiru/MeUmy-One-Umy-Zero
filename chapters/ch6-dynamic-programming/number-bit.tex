@@ -1,0 +1,126 @@
+\section{数位 DP}
+\paragraph{问题场景} 处理出某一区间 $[l, r]$ 范围内，满足条件的数的个数。
+
+\paragraph{一般解法}
+
+\begin{itemize}
+    \item \textbf{数位处理}：处理不多于 $i$ 位的数中，有多少个数满足条件，用 $dp[i]$ 表示。
+    \item \textbf{状态拓展}：大部分题目与数字本身有一定的关系（不能出现/必须出现特定数字），则状态数组需要多加一维/多维进行转移：$dp[i][j]$ 表示第 $i$ 位数字为 $j$ 且满足条件的数字个数。
+    \item \textbf{处理区间端点}：用预处理的信息计算出 $0 \sim r$ 和 $0 \sim l-1$ 闭区间满足条件的数字个数，然后求解 $[l, r]$ 范围的答案，即为 $r$ 端的答案减去 $l-1$ 端的答案。
+    \item \textbf{具体实现}：首先在第当前考虑的第 $i$ 位上固定一个数字，那么后面就可以随便填。
+\end{itemize}
+
+\paragraph{DFS 函数的参量}
+\begin{itemize}
+\item 基本量：数字位数 $pos$，最高位限制 $lim$
+\item 判断前导 0 的标志：$lead$
+\item 一般需要记录数位中的前一位（或前几位）：$pre$
+\item 其它用于区分状态的参量
+\end{itemize}
+
+\paragraph{最高位标记}
+
+当给定的区间 $[0, r]$ 不同时，数位 DP 统计时的位数限制也不同，如 $r=1234$ 那么，当第一位为 1 的时候，第二位的取值范围 $[0, 2]$；当第一位为 0 的时候第二位则可以取 $[0, 9]$。为了分清这样的情况，引入 $lim$ 变量：
+\begin{itemize}
+    \item 若当前位 $lim = 1$ ，且已经取到了当前位可以取得的最大数字，则下一位 $lim = 1$
+    \item 若当前位 $lim = 1$，但取到的数字小于可以取得的最大数字，则下一位 $lim = 0$
+    \item 若当前位 $lim = 0$，则下一位 $lim = 0$
+\end{itemize}
+
+\paragraph{记忆化搜索}DFS 的时候，可以将已经搜索过的状态记录下来，那么下一次在遇到\textbf{完全相同}的状态的时候，就可以直接返回；所以 DP 数组的维度需要和 DFS 函数的参量（除了 $lim, lead$）相同。
+
+\par \textbf{DFS 参量完全相同} 是状态相同的必要非充分条件。
+
+\begin{minted}{c++}
+typedef long long ll;
+ll dp[MAXL][MAXD][2][2];
+
+/**
+* pos: 当前枚举的位
+* pre: 之前的状态，例如上一位，视需要的状态不同可能有不同的保存方式
+* lead: 是否有前导 0
+* limit: 当前位是否有限制
+*/
+ll dfs(int pos, int pre, bool lead, bool limit) {
+    // 递归边界，返回 1 表示枚举得当前数合法
+    if (pos == 0)
+        return 1;
+    // 满足记忆化条件则可以返回
+    if (dp[pos][pre] != -1)
+        return dp[pos][pre][limit][lead];
+    ll cur = 0;
+    // 枚举当前位
+    int maxd = limit ? a[pos] : 9;
+    for (int i = 0; i <= maxd; i++) {
+        // 需要针对多种情况具体分析，例如是否有限制，是否有前导 0 的影响等等
+        if (lead && !i)
+            cur += dfs(pos - 1, i, true, i == maxd && limit);
+
+        else if (....)
+            cur += ...
+    }
+    // 记忆化存下结果
+    return dp[pos][pre][limit][lead] = cur;
+}
+
+ll solve(ll x) {
+    int pos = 0, init_state = ?;        // init_state 表示初始位之前的状态
+    // 拆数
+    memset(dp, -1, sizeof dp);
+    while (x) {
+        a[++pos] = x % 10, \
+        x /= 10;
+    }
+    return dfs(pos, init_state, true, true);
+}
+\end{minted}
+
+\par \noindent 一般的数位dp的进制很小，比如常见的10进制在dfs会枚举 $[0,9]$，但如果进制数是B，如果进制数非常大，那么在枚举 $[0, B)$ 时复杂度很高，一个优化时不难发现往往只有某些为会影响到lead和limit一些条件，其余的都是相同的lead和limit，可以同时计算。
+\begin{tcolorbox}
+\par \noindent 求 $\sum_{i=l}^r f^k(i, b, d)$ 表示用 $\mathrm{b}$ 进制表示i，数位数位的次数 数据范围: $1 \leq b \leq 10^9, 0 \leq d<b, 0 \leq k \leq 10^9, 1 \leq l \leq r \leq 10^{18}$ 并且规定 $0^0=0$
+\end{tcolorbox}
+
+\begin{minted}{c++}
+int dfs(int pos, int s, bool limit, bool lead) {
+    if (!pos) return pw[s];
+    if (f[pos][s][limit][lead] != -1) return f[pos][s][limit][lead];
+
+    int &res = f[pos][s][limit][lead];
+    res = 0;
+    vector<int> v; // 存一些可能会改变limit 和 lead 值的"关键位"
+    v.push_back(-1);
+    v.push_back(0);
+    v.push_back(a[pos] - 1);
+    v.push_back(a[pos]);
+    v.push_back(d - 1);
+    v.push_back(d);
+    v.push_back(B - 1);
+    sort(v.begin(), v.end());
+    v.resize(unique(v.begin(), v.end()) - v.begin());
+
+    for (int i = 1; i < (int)v.size(); i++) {
+        if (limit && v[i] > a[pos]) break;
+        if (lead)
+            res = (res + 1ll * (v[i] - v[i - 1]) \ // 一类的同时计算 用做差的形式统计
+                * dfs(pos - 1, s + (d == v[i]) && (v[i] != 0)\
+                , limit && (v[i] == a[pos]), v[i] == 0) % mod) % mod;
+        else
+            res = (res + 1ll * (v[i] - v[i - 1]) \
+                * dfs(pos - 1, s + (d == v[i])\
+                , limit && (v[i] == a[pos]), 0) % mod) % mod;
+    }
+
+    return res;
+}
+
+int solve(int x) {
+    memset(f, -1, sizeof f);
+    int cnt = 0;
+
+    while (x) a[++cnt] = x % B, x /= B;
+
+    for (int i = 1; i <= cnt; i++) pw[i] = POW(i, k); // 快速幂预处理
+
+    return dfs(cnt, 0, 1, 1);
+}
+\end{minted}

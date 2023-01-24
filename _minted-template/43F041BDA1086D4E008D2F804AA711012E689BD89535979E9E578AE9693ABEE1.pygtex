@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{// 写法 1，不需要输出方案}
+\PYG{k+kt}{int} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{MAXN}\PYG{p}{],} \PYG{n}{top} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{a}\PYG{p}{;}
+\PYG{n}{stk}\PYG{p}{[}\PYG{n}{top} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{];}
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{a}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{stk}\PYG{p}{[}\PYG{n}{top}\PYG{p}{])} \PYG{c+c1}{// 严格上升}
+        \PYG{n}{stk}\PYG{p}{[}\PYG{o}{++}\PYG{n}{top}\PYG{p}{]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{k}{else} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{pos} \PYG{o}{=} \PYG{n}{lower\PYGZus{}bound}\PYG{p}{(}\PYG{n}{stk} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{stk} \PYG{o}{+} \PYG{n}{top} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{o}{\PYGZhy{}} \PYG{n}{stk}\PYG{p}{;}
+        \PYG{n}{stk}\PYG{p}{[}\PYG{n}{pos}\PYG{p}{]} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n}{ans} \PYG{o}{=} \PYG{n}{top}\PYG{p}{;}        \PYG{c+c1}{// stk.size 即为答案}
+\end{Verbatim}

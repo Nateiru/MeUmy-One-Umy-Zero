@@ -1,0 +1,46 @@
+\section{Lyndon 分解}
+
+\paragraph{Lyndon 串的定义} 对于字符串 $s$，如果 $s$ 的字典序严格小于 $s$ 的所有后缀的字典序，我们称 $s$ 是简单串，或者 Lyndon 串 。
+
+\paragraph{Lyndon 分解} $s$ 的 Lyndon 分解记为 $s = w_1w_2...w_k$，其中所有的 $w_i$ 为简单串，且字典序非单调递增，即 $w_{i-1} \ge w_i$。
+
+\begin{minted}{c++}
+namespace Lyndon {
+    vector<string> duval(string s) {
+        int n = s.size(), i = 0;
+        vector<string> res;
+        while (i < n) {
+            int j = i + 1, k = i;
+            while (j < n && s[k] <= s[j]) {
+                if (s[k] < s[j])
+                    k = i;
+                else
+                    k++;
+                j++;
+            }
+            while (i <= k)
+                res.emplace_back(s.substr(i, j - k)), i += j - k;
+        }
+        return res;
+    }
+    // 使用 Lyndon 分解求最小表示
+    string minimum_representation(string s) {
+        s += s;
+        int n = s.size();
+        int i = 0, ans = 0;
+        while (i < n / 2) {
+            ans = i;
+            int j = i + 1, k = i;
+            while (j < n && s[k] <= s[j]) {
+                if (s[k] < s[j])
+                    k = i;
+                else
+                    k++;
+                j++;
+            }
+            while (i <= k) i += j - k;
+        }
+        return s.substr(ans, n / 2);
+    }    
+}
+\end{minted}

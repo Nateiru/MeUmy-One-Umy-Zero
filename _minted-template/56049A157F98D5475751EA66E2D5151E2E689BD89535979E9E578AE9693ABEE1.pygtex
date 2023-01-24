@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{struct} \PYG{n}{Item} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}} \PYG{n}{items}\PYG{p}{[}\PYG{n}{MAXN}\PYG{p}{];}
+\PYG{k+kt}{int} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{MAXV}\PYG{p}{],} \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}}\PYG{n}{m}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{c} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{w}\PYG{p}{,} \PYG{n}{n}\PYG{p}{;}
+    \PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d\PYGZpc{}d\PYGZpc{}d\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{v}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{w}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{n}\PYG{p}{);}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{n} \PYG{o}{\PYGZhy{}} \PYG{n}{c} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{n} \PYG{o}{\PYGZhy{}=} \PYG{n}{c}\PYG{p}{;}
+        \PYG{n}{items}\PYG{p}{[}\PYG{n}{cnt}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{Item}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{n}{c} \PYG{o}{*} \PYG{n}{v}\PYG{p}{,} \PYG{n}{c} \PYG{o}{*} \PYG{n}{w} \PYG{p}{\PYGZcb{};}
+        \PYG{n}{c} \PYG{o}{*=} \PYG{l+m+mi}{2}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{item}\PYG{p}{[}\PYG{n}{cnt}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{Item}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{n}{k} \PYG{o}{*} \PYG{n}{v}\PYG{p}{,} \PYG{n}{k} \PYG{o}{*} \PYG{n}{w} \PYG{p}{\PYGZcb{};}
+\PYG{p}{\PYGZcb{}}
+\PYG{n}{memset}\PYG{p}{(}\PYG{n}{dp}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{dp}\PYG{p}{);}
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{cnt}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{cap}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n}{items}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{w}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{dp}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{dp}\PYG{p}{[}\PYG{n}{j} \PYG{o}{\PYGZhy{}} \PYG{n}{items}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{w}\PYG{p}{]} \PYG{o}{+} \PYG{n}{items}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{v}\PYG{p}{);}
+\end{Verbatim}

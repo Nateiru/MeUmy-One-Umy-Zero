@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{m}\PYG{p}{;}
+    \PYG{n}{S} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{T} \PYG{o}{=} \PYG{n}{n} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{c+c1}{// 虚拟源点 汇点}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{c}\PYG{p}{,} \PYG{n}{d}\PYG{p}{;} \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{y} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{c} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{d}\PYG{p}{;}
+        \PYG{n}{din}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{d} \PYG{o}{\PYGZhy{}} \PYG{n}{c}\PYG{p}{,} \PYG{n}{i}\PYG{p}{);}
+        \PYG{n}{in}\PYG{p}{[}\PYG{n}{y}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{c}\PYG{p}{,} \PYG{n}{out}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{c}\PYG{p}{;}
+        \PYG{n}{l}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{c}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n}{sum} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{in}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{out}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+            \PYG{n}{din}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{S}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{in}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{out}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{),} \PYG{n}{sum} \PYG{o}{+=} \PYG{n}{in}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{out}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];} \PYG{c+c1}{// 满流}
+        \PYG{k}{else}
+            \PYG{n}{din}\PYG{p}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{T}\PYG{p}{,} \PYG{n}{out}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{in}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{l+m+mi}{0}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{sum} \PYG{o}{!=} \PYG{n}{din}\PYG{p}{.}\PYG{n}{maxflow}\PYG{p}{(}\PYG{n}{S}\PYG{p}{,} \PYG{n}{T}\PYG{p}{))}
+        \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}NO}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+    \PYG{k}{else} \PYG{p}{\PYGZob{}}
+        \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}YES}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{x} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{x}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{p}{[}\PYG{n}{y}\PYG{p}{,} \PYG{n}{cap}\PYG{p}{,} \PYG{n}{rev}\PYG{p}{,} \PYG{n}{id}\PYG{p}{]} \PYG{o}{:} \PYG{n}{din}\PYG{p}{.}\PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{ans}\PYG{p}{[}\PYG{n}{id}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cap}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{ans}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{+} \PYG{n}{l}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}\PYGZbs{}n\PYGZsq{}}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

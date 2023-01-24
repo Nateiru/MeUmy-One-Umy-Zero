@@ -1,0 +1,49 @@
+\section{组合数}
+\subsection{常见公式和经典问题}
+\begin{itemize}
+\item 组合数公式：$C_n^m = \frac{n!}{m!(n-m)!}$
+
+\item 排列数公式 $A_n^m = C_n^m \cdot m! = \frac{n!}{(n-m)!}$
+
+\item 二项式定理 $(x+a)^n = \Sigma_{k=0}^{n}C_n^kx^ka^{n-k}$
+
+\item 从 $n$ 个物品中可重复取得 $k$ 个的方案数：$n^k$
+\item 从 $n$ 个物品中不可重复取 $k$ 个做排列的方案数：$C_n^k \cdot k!$
+\item 从 $n$ 个物品中不可重复取 $k$ 个做圆排列的方案数：$\frac{C_n^k \cdot k!}{m}$
+\item $n$ 个物品中，第 $i$ 种物品有 $k_i$ 个，且$\Sigma_{i=1}^{m}k_i = n$，它的所有排列种数为 $\frac{n!}{k_1!k_2!...k_m!}$
+\item 从 $n$ 个物品中可重复地选 $k$ 个做组合的方案数为 $C_{n+k-1}^k$
+\item 从$\{1,2,3,..,n\}$ 中选 $k$ 个不相邻的数做组合的方案数 $C_{n-k+1}^k$
+\end{itemize}
+\subsubsection{经典恒等式}
+\begin{itemize}
+\item $\sum_{i=0}^{n}C_n^i = 2^n$
+\item $\sum_{i=0}^{n}(-1)^iC_n^i = 0$
+\item $\sum_{i=0}^{n}2^iC_n^i = 3^n$
+\end{itemize}
+
+\subsubsection{容斥原理}
+$$|\cup^{n}_{i=1}A_i|=\sum_{O \subseteq B}(-1)^{size(C)-1}|\cap_{e\in C}e|$$
+
+$$\left|\bigcap_{i=1}^{n}S_i\right|=|U|-\left|\bigcup_{i=1}^n\overline{S_i}\right|$$
+\subsection{询问排列数、组合数}
+\begin{minted}{c++}
+ll fac[N], ifac[N];
+void init() {
+    fac[0] = ifac[0] = 1;
+    for (int i = 0; i < N; i++)
+        fac[i] = (fac[i] * fac[i - 1]) % mod;
+    ifac[N - 1] = inv(fac[N - 1]);
+    for (int i = N - 2; i > 0; i--)
+        ifac[i] = (ifac[i + 1] * (i + 1)) % mod;
+}
+ll C(int n, int m) {
+    if (m > n || m < 0)
+        return 0;
+    return (((fac[n] * ifac[m]) % mod) * ifac[n-m]) % mod;
+}
+ll P(int n, int m) {
+    if (m > n || m < 0)
+        reutrn 0;
+    return (fac[n] * ifac[m]) % mod;
+}
+\end{minted}

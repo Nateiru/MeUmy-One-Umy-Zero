@@ -1,0 +1,140 @@
+\section{对拍}
+
+\subsection{生成随机数据}
+
+\begin{minted}{c++}
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+int random(int n) { //生成一个[0,n-1]范围内的数
+    return (long long)rand() * rand() % n;
+}
+int main() {
+    srand((unsigned)time(0));
+    // ===========随机生成排列===========
+    int n = random(100000) + 1, a[100050];
+
+    for (int i = 1; i <= n; i++)
+        a[i] = i;
+
+    random_shuffle(a + 1, a + n + 1); //库文件algorithm
+
+    for (int i = 1; i <= n; i++)
+        printf("%d ", a[i]);
+
+    //===========随机生成m个[1,n]的子区间===========
+    for (int i = 1; i <= m; i++) {
+        int l = random(n) + 1;
+        int r = random(n) + 1;
+
+        if (l > r)
+            swap(l, r);
+
+        printf("%d %d\n", l, r);
+    }
+
+    //===========随机生成一棵n个点带边权(<=100000)的树===========
+    for (int i = 2; i <= n; i++) {
+        int fa = random(i - 1) + 1;
+        int val = random(100000) + 1;
+        printf("%d %d %d\n", fa, i, val);
+    }
+
+    //随机生成一张n个点,m条边的无向图.
+    pair<int, int> e[]; //[]内填写数组大小
+    map<pair<int, int>, bool> h; //库文件map
+    //先生成一棵树,保证联通
+
+    int n = random(具体大小), m = random(具体大小);
+    printf("%d %d\n", n, m);
+
+    for (int i = 1; i < n; i++) {
+        int fa = random(i) + 1;
+        e[i] = make_pair(fa, i + 1);
+        h[e[i]] = h[make_pair(i + 1, fa)] = 1;
+    }
+
+    //在生成剩余的m-n+1条边
+    for (int i = n; i <= n; i++) {
+        int x, y;
+
+        do {
+            x = random(n) + 1, y = random(n) + 1;
+        } while (x == y || h[make_pair(x, y)]);
+
+        e[i] = make_pair(x, y);
+        h[e[i]] = h[make_pair(y, x)] = 1;
+    }
+
+    //随机打乱,输出
+    random_shuffle(e + 1, e + m + 1); //库文件algorithm
+
+    for (int i = 1; i <= m; i++)
+        printf("%d %d\n", e[i].first, e[i].second);
+
+    //===========生成一条有n个节点的链===========
+    int n = random(1000) + 1;
+    printf("%d\n", &n);
+    int root = random(n) + 1;
+    bool vis[100000];
+    vis[root] = 1;
+    int last = root;
+
+    for (int i = 1; i < n; i++) {
+        int x = random(n) + 1;
+
+        while (vis[x] == 1)
+            x = random(n) + 1;
+
+        printf("%d %d\n", last, x);
+        last = x;
+        vis[x] = 1;
+    }
+
+    //===========生成一条有n个节点的菊花图===========
+    int n = random(1000) + 1;
+    printf("%d\n", n);
+    int root = random(n) + 1;
+
+    for (int i = 1; i <= n; i++) {
+        if (i == root)
+            continue;
+
+        printf("%d %d\n", root, i);
+    }
+
+    return 0;
+}
+\end{minted}
+
+\subsection{Windows下的批处理}
+
+\par \noindent 用文本编辑器（记事本就行）写好，保存为.bat 后缀名
+\begin{minted}{c++}
+@echo off                               //关掉输入显示，否则所有的命令也会显示出来
+:loop                                   //生成随机输入
+    rand.exe > in.txt
+    my.exe < in.txt  > out.txt       
+    std.exe < in.txt  > stdout.txt
+    fc out.txt stdout.txt               //比较文件
+    if not errorlevel 1   goto loop     //不为1继续循环，fc在文件相同时返回0，不同时返回1
+pause                                   //不同时暂停，你可以看in.txt里的数据
+goto loop                               //看完数据，按任意键结束暂停，继续循环
+\end{minted}
+
+\subsection{Linux下的Bash脚本}
+
+\par \noindent 同样用文本编辑器写好保存为.sh(例如cmp.sh),在执行chmod +x cmp.sh,即可用./cmp.sh来执行它，当然扩展名也不是必需的，完全可以用不带扩展名的cmp命名。
+\begin{minted}{c++}
+#!/bin/bash
+while true; do
+    ./r > input                         //生成随机事件
+    ./a < input > output.a
+    ./b < input > output.b
+    diff output.a output.b　　　　　      //文本比较
+    if [ $? -ne 0 ] ; then break;fi     //判断返回值
+done
+\end{minted}
+
+

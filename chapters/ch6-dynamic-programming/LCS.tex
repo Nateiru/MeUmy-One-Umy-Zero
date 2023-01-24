@@ -1,0 +1,134 @@
+\section{最长公共子序列 (LCS)}
+\subsection{简单版本$O(n^2)$}
+\par \noindent 状态转移方程：
+$$
+f(i, j) = max\begin{cases} f(i-1, j)\\ f(i, j-1) \\ f(i-1, j-1) + 1, A[i] = B[j] \end{cases}
+$$
+\par \noindent \textbf{当其中一个数组元素各不相同时，最长公共子序列问题（LCS）可以转换为最长上升子序列问题（LIS）进行求解}。
+\subsection{位运算求LCS}
+
+\par \noindent 上述转移方程有一个极其重要的性质：    
+$$
+\begin{cases}
+f_{i,j} \ge f_{i-1,j} \\
+f_{i,j} \ge f_{i,j-1} \\
+|f_{i,j} - f_{i,j-1}| \le 1
+\end{cases}
+$$
+
+\par \noindent 即 $f$ 的同一行内是 \textbf{单调不减} 并且 \textbf{相邻两个相差不超过一}。
+~\\
+\par \noindent 我们定义矩阵 $M$ 为 $f$ 数组每行分别 \textbf{差分} 的结果，即：
+$$
+f_{i,j} = \sum_{k=1}^j M_{i,j}
+$$
+\par \noindent 根据上述 $f$ 的性质，不难发现 $M$ 是个 \textbf{01矩阵}。那么可以直接 \textbf{压位}（类似 std::bitset）。
+~\\
+\par \noindent 然后考虑直接转移 $M_i$ 整行，最后 $\sum_{j}M_{|B|,j}$ 就是答案。这就是优化的基本思想。
+
+\begin{tcolorbox}
+
+\par \noindent \textbf{M 的实际意义}
+
+\par 上面只提到 $M$ 是个差分数组，现在来考虑它的实际意义是什么，以便推出它的转移方式。
+
+\par 考虑一个 $M_{i,j}$ 什么时候会是 1。观察原转移方程，发现 $f_{i,j-1}$ 方向必然不会使 $f_{i,j}$ 加一，唯一两个方向就是 $f_{i-1,j-1}$ 或 $f_{i-1,j}$。
+\begin{itemize}
+\item 如果是从 $f_{i,j-1} + 1$ 而来，那么说明这个位置 $A_j$ 发生了配对，从而答案 +1；
+
+\item 如果是 $f_{i-1,j}$，仔细思考一下还是一样的，在下面总有一个位置会和上面一条相同。
+\end{itemize}
+
+\par 总而言之就是 $A_j$ \textbf{被计入答案} 了，但注意这不意味着 $M_i$ 中所有的 1 都对应一个被选中的 $A_j$。
+~\\
+\par 正确的理解是 $M_{i,j}$ 如果为 1，设 k 为当前位到第一位之间 1 的个数，那就说明当前一个 LCS 长度为 k 的方案，最后的一位为 j。事实我们也是只需要考虑当前 LCS 的最后一位，添加时答案只要保证在当前方案的最后一位之后即可。
+\end{tcolorbox}
+
+\begin{minted}{c++}
+/*
+ * Author : _Wallace_
+ * Source : https://www.cnblogs.com/-Wallace-/p/bit-lcs.html
+ * Problem : LOJ #6564. 最长公共子序列
+ * Standard : GNU C++ 03
+ * Optimal : -Ofast
+ */
+#include <algorithm>
+#include <cstddef>
+#include <cstdio>
+#include <cstring>
+
+typedef unsigned long long ULL;
+
+const int N = 7e4 + 5;
+int n, m, u;
+
+struct bitset {
+  ULL t[N / 64 + 5];
+
+  bitset() {
+    memset(t, 0, sizeof(t));
+  }
+  bitset(const bitset &rhs) {
+    memcpy(t, rhs.t, sizeof(t));
+  }
+
+  bitset& set(int p) {
+    t[p >> 6] |= 1llu << (p & 63);
+    return *this;
+  }
+  bitset& shift() {
+    ULL last = 0llu;
+    for (int i = 0; i < u; i++) {
+      ULL cur = t[i] >> 63;
+      (t[i] <<= 1) |= last, last = cur;
+    }
+    return *this;
+  }
+  int count() {
+    int ret = 0;
+    for (int i = 0; i < u; i++)
+      ret += __builtin_popcountll(t[i]);
+    return ret;
+  }
+
+  bitset& operator = (const bitset &rhs) {
+    memcpy(t, rhs.t, sizeof(t));
+    return *this;
+  }
+  bitset& operator &= (const bitset &rhs) {
+    for (int i = 0; i < u; i++) t[i] &= rhs.t[i];
+    return *this;
+  }
+  bitset& operator |= (const bitset &rhs) {
+    for (int i = 0; i < u; i++) t[i] |= rhs.t[i];
+    return *this;
+  }
+  bitset& operator ^= (const bitset &rhs) {
+    for (int i = 0; i < u; i++) t[i] ^= rhs.t[i];
+    return *this;
+  }
+
+  friend bitset operator - (const bitset &lhs, const bitset &rhs) {
+    ULL last = 0llu; bitset ret;
+    for (int i = 0; i < u; i++){
+      ULL cur = (lhs.t[i] < rhs.t[i] + last);
+      ret.t[i] = lhs.t[i] - rhs.t[i] - last;
+      last = cur;
+    }
+    return ret;
+  }
+} p[N], f, g;
+
+signed main() {
+  scanf("%d%d", &n, &m), u = n / 64 + 1;
+  for (int i = 1, c; i <= n; i++)
+    scanf("%d", &c), p[c].set(i);
+  for (int i = 1, c; i <= m; i++) {
+    scanf("%d", &c), (g = f) |= p[c];
+    f.shift(), f.set(0);
+    ((f = g - f) ^= g) &= g;
+  }
+  printf("%d\n", f.count());
+  return 0;
+}
+\end{minted}

@@ -1,0 +1,121 @@
+% ACM Algorithm Template - v4.0
+% Yume Maruyama <kirainmoe@gmail.com>
+
+\documentclass[12pt]{report}
+
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage[dvipsnames, svgnames, x11names]{xcolor}
+\usepackage{fontspec}
+\usepackage{mathtools}
+\usepackage{verbatim} 
+\usepackage{amsthm}
+\usepackage{fancyhdr}
+\usepackage{minted}
+\usepackage{verbatim}
+\usepackage{pdfpages}
+\usepackage{setspace}  %设置行间距
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[BoldFont,SlantFont,CJKchecksingle]{xeCJK}
+\usepackage{tcolorbox}
+\usepackage{lastpage} %总页数
+\usepackage{fancyhdr} %使用fancyhdr
+
+% 设置字体
+\setCJKmainfont{Source Han Serif CN}
+\setmainfont{Times New Roman}
+\setsansfont{Fira Code}
+% 页边距，行距设置
+\geometry{left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm}
+\linespread{1.2}
+
+% 代码样式，使用 minted
+\setminted[c++]{linenos, frame=lines, framesep=2mm, baselinestretch=1.0, breaklines, mathescape, numbers=left, numbersep=2mm}
+\setminted[java]{linenos, frame=leftline, framesep=2mm, baselinestretch=1.0, breaklines, mathescape, bgcolor=LavenderBlush1}
+\setminted[python]{linenos, frame=leftline, framesep=2mm, baselinestretch=1.0, breaklines, mathescape, bgcolor=LavenderBlush1}
+\setminted[batch]{linenos, frame=leftline, framesep=2mm, baselinestretch=1.0, breaklines, mathescape, bgcolor=LavenderBlush1}
+\setminted[bash]{linenos, frame=leftline, framesep=2mm, baselinestretch=1.0, breaklines, mathescape, bgcolor=LavenderBlush1}
+\usemintedstyle{emacs}
+\definecolor{primary-blue}{RGB}{9,109,217}
+\definecolor{cyan}{RGB}{19,194,194}
+
+% 标题 & 作者信息
+\title{\Huge \textbf{ACM Algorithm Template} \linebreak \linebreak \large \textcolor{primary-blue}{\textbf{MeUmy天下第一}}}
+\author{Merry One Umy Zero \\ \small \textcolor{cyan}{<zhuziyi2929@163.com>} \\ \small \textcolor{cyan}{https://nateiru.github.io/} \\ \small BUPT ACM Team}
+
+% 设置页眉风格
+\pagestyle{fancy}                         %设置页眉页脚
+\lhead{}                                  %页眉左侧显示页数                  
+\chead{}                                  %页眉中
+\rhead{\small\leftmark}                   %章节信息                       
+\cfoot{\thepage}                          %当前页，记得调用前文提到的宏包 
+\rfoot{}%                                 %页脚左               
+\lfoot{}%					          %页脚右
+\renewcommand{\headrulewidth}{0mm}        %页眉线宽，设为0可以去页眉线
+\renewcommand{\footrulewidth}{0mm}        %页脚线宽，设为0可以去页脚线
+
+\begin{document}
+% 用\setlength设置页眉页脚边距
+%\setlength{\voffset}{-10mm}                        
+%\setlength{\topmargin}{0mm}
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{5mm}
+%\setlength{\footskip}{10mm}
+%\setlength{\baselineskip}{20pt}  %设置行间距
+
+% 标题页面
+\begin{titlepage}
+    \begin{figure}
+        \centering
+        \includegraphics[height=8cm]{images/avatar.jpg}
+        % \par\includegraphics[height=3cm]{images/acm.jpg}
+    \end{figure}
+    
+    \maketitle
+\end{titlepage}
+
+%\clearpage
+%\phantom{s}
+%\setcounter{page}{0}
+%\thispagestyle{empty}
+%\clearpage
+
+% 目录
+\tableofcontents       % 生成目录
+\thispagestyle{empty}  % 目录页不显示页码
+
+\newpage
+\setcounter{page}{1}   % 从下面开始编页码
+
+% 正文内容
+
+%% Chapter 1 数据结构
+\input{chapters/ch1-data-structure/index}
+%
+%% Chpater 2 图论
+\input{chapters/ch2-graph-theory/index}
+%
+%% Chapter 3 网络流/二分图/匹配
+\input{chapters/ch3-network-flow-and-match/index}
+%
+%% Chapter 4 字符串
+\input{chapters/ch4-string/index}
+%
+%% Chapter 5 数学专题
+\input{chapters/ch5-math/index}
+
+%% Chapter 5+ 进阶数学
+\input{chapters/ch5-math+/index}
+
+%
+%% Chapter 6 动态规划
+ \input{chapters/ch6-dynamic-programming/index}
+
+%% Chapter 7 杂项
+\input{chapters/ch7-uncategorized/index}
+
+%% 附录
+%\input{chapters/appendix/index} 
+\end{document}

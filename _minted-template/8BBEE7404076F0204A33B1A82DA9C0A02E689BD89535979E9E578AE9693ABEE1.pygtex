@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{k} \PYG{o}{\PYGZlt{}} \PYG{n}{tot}\PYG{p}{;} \PYG{n}{k}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{v} \PYG{o}{=} \PYG{n}{cap}\PYG{p}{;} \PYG{n}{v} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{v}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{type}\PYG{p}{[}\PYG{n}{k}\PYG{p}{].}\PYG{n}{size}\PYG{p}{();} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{v} \PYG{o}{\PYGZgt{}=} \PYG{n}{type}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{i}\PYG{p}{].}\PYG{n}{cost}\PYG{p}{)}
+                \PYG{n}{f}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{f}\PYG{p}{[}\PYG{n}{v}\PYG{p}{],} \PYG{n}{f}\PYG{p}{[}\PYG{n}{v}\PYG{o}{\PYGZhy{}}\PYG{n}{type}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{i}\PYG{p}{].}\PYG{n}{cost}\PYG{p}{]} \PYG{o}{+} \PYG{n}{type}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{i}\PYG{p}{].}\PYG{n}{value}\PYG{p}{);}
+\end{Verbatim}

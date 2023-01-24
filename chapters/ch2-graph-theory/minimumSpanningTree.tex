@@ -1,0 +1,202 @@
+\section{最小生成树}
+
+\subsection{Kruskal 算法}
+\begin{minted}{c++}
+// n 个点 m 条边的最小生成树
+int p[maxn], n, m;
+int find(int x) {
+    return x == p[x] ? x : p[x] = find(p[x]);
+}
+int main() {
+    // ...
+    for (int i = 1; i <= n; i++) p[i] = i;
+    sort(e + 1, e + 1 + m);
+    int cnt = 0, ans = 0;
+    for (int i = 1; i <= m; i++) {
+        int px = find(e[i].u), py = find(e[i].v);
+        if (px != py) {
+            p[px] = py;
+            ans += e[i].w;
+            cnt++;
+        }
+    }
+    if (cnt != n - 1) // 
+        printf("No solution\n");
+    else
+        printf("%d", ans);
+    return 0;
+}
+\end{minted}
+
+\subsection{堆优化的 Prim 算法}
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+const int maxn=200010;
+struct Edge {
+    int u, v, w, next;
+} e[maxn << 1];
+struct Node {
+    int v, w;
+    bool operator < (const Node& o) const {
+        return w > o.w;
+    }
+};
+priority_queue<Node> q;
+int n, m, head[maxn], cnt = 1;
+bool vis[maxn];
+void add_edge(int u, int v, int w) {
+    e[cnt] = (Edge) { u, v, w, head[u] };
+    head[u] = cnt++;
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for(int i = 0; i < m; i++) {    
+        int a, b, w;
+        scanf("%d%d%d", &a, &b, &w);
+        add_edge(a, b, w);
+        add_edge(b, a, w);
+    }
+    // ...
+    vis[0] = 1;
+    q.push((Node) {1, 0}); // 1 号节点的边权是0
+    long long ans = 0;
+    int cnt = 0;
+    while (!q.empty() && cnt <= n) {
+        Node t = q.top();
+        q.pop();
+        if (vis[t.v]) continue; // 已经在最小生成树中
+        vis[t.v] = 1;
+        ans += t.w;
+        cnt++;
+        for (int i = head[t.v]; i; i = e[i].next) {
+            if (!vis[e[i].v])
+                q.push((Node) { e[i].v, e[i].w });
+        }
+    } 
+    if (cnt != n) 
+        printf("No solution\n");
+    else 
+        printf("%lld", ans);
+    
+}
+\end{minted}
+
+\subsection{最小瓶颈路}
+\par \noindent 给定一个加权无向图，并给定无向图中两个结点 $u$ 和 $v$，求 $u$ 到 $v$ 的一条路径，使得路径上边的最大权值最小。
+~\\
+\par \noindent 可以证明这个“最大权值最小”的边一定在最小生成树上。对于询问两个点 $u, v$ 的最小瓶颈路的问题，我们对求完的最小生成树求一遍最近公共祖先 LCA，两者到达 LCA 的路径中的最大边就是最小瓶颈路了。
+\begin{minted}{c++}
+// 倍增求LCA过程 同时预处理 ancestor 和 cost 数组
+int query(int x, int y) {
+  int d = 0;
+  if (dep[x] < dep[y]) swap(x, y);
+  for (d = 0; (1 << (d + 1)) <= dep[x]; d++);
+  
+  int ans = -1;
+  for (int i = d; i >= 0; i--)
+    if (dep[x] - (1 << i) >= dep[y]) {
+      ans = max(ans, cost[x][i]);
+      x = ancestor[x][i];
+    }
+  if (x == y)
+    return ans;
+  for (int i = d; i >= 0; i--)
+    if (ancestor[x][i] > 0 && ancestor[x][i] != ancestor[y][i]) {
+      ans = max(ans, max(cost[x][i], cost[y][i]));
+      x = ancestor[x][i], y = ancestor[y][i];
+    }
+  ans = max(ans, max(cost[x][0], cost[y][0]));
+  return ans;
+}
+\end{minted}
+\subsection{最小直径生成树}
+\textbf{定义：} 在无向图的所有生成树中，直径长度最小的一棵生成树。
+\begin{minted}{c++}
+bool cmp(int a, int b) {
+    return val[a] < val[b];
+}
+void floyd() {
+    for (int k = 1; k <= n; k ++)
+        for (int i = 1; i <= n; i ++)
+            for (int j = 1; j <= n; j ++)
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+}
+int solve() {
+    floyd();
+    for (int i = 1; i <= n; i ++) {
+        for (int j = 1; j <= n; j ++) 
+            rk[i][j] = j, val[j] = d[i][j];
+        sort(rk[i] + 1, rk[i] + 1 + n, cmp);
+    }
+    int ans = INF;
+    // 图的绝对中心可能在结点上
+    for (int i = 1; i <= n; i ++)
+        ans = min(ans, d[i][rk[i][n]] * 2);
+    // 图的绝对中心可能在边上
+    for (int i = 1; i <= m; i ++) {
+        int u = a[i].u, v = a[i].v, w = a[i].w;
+        for (int p = n, i = n - 1; i >= 1; i --)
+            if (d[v][rk[u][i]] > d[v][rk[u][p]])
+                ans = min(ans, d[u][rk[u][i]] + d[v][rk[u][p]] + w),
+                p = i;
+    }
+    return ans;
+}
+\end{minted}
+\subsection{Kruskal 重构树}
+\textbf{建树步骤：}
+
+\begin{enumerate}
+\item 将所有边按边权从小到大排序 
+\item 顺序遍历每条边 $(u,v,w)$，若 $u,v$ 已经联通跳过，否则建立一个新点 $x$，让$x$ 作为$p_u$ 与 $p_v$ 的父亲（即连 $x\to p_u$ 和 $x\to p_v$ 的有向边），然后让 $p_u=p_v=x$。这个新点的点权是$w$。
+   $O(m\log m)$
+\end{enumerate}
+\textbf{性质：}
+\begin{enumerate}
+\item 原图中的点在重构树中一定是叶子节点，其余节点都代表了一条边的边权。
+\item 重构树中的点数是$2n-1$且以$2n-1$号点为根节点
+\item 如果边权按照从小到大排序建立重构树，重构树的点权是一个大根堆，反之小根堆
+\item 对于一个 $x$ 和一个值 $v$。从 $x$ 出发只经过 $≤v$的边能到达的点集 $= x$ 的祖先节点中深度最小的点权 $≤v$ 的点 $z$ 的子树中的原来的点集。
+\item 原树两点间的的最大边权就是kruskal重构树上两点的LCA的权值。
+\end{enumerate}
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 200005, M = 400005;
+struct Edge {
+    int u, v, w;
+    bool operator<(const Edge &o)const {
+        return w > o.w;
+    }
+} edge[M];
+vector<int> G[N << 1];
+int fa[N << 1];
+int find(int x) {
+    return x == fa[x] ? x : fa[x] = find(fa[x]);
+}
+int tot, val[N << 1];
+void Merge(int u, int v, int w) {
+    u = find(u), v = find(v);
+
+    if (u == v) return;
+
+    fa[u] = fa[v] = ++tot;
+    val[tot] = w;
+    G[tot].push_back(u);
+    G[tot].push_back(v);
+}
+int n, m;
+void build() {
+    for (int i = 1; i <= 2 * n; i++) fa[i] = i;
+
+    sort(edge + 1, edge + 1 + m);
+
+    for (int i = 1; i <= m; i++) Merge(edge[i].u, edge[i].v, edge[i].w);
+}
+int main() {
+    return 0;
+}
+\end{minted}

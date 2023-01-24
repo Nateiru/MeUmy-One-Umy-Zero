@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{void} \PYG{n+nf}{output}\PYG{p}{(}\PYG{n}{\PYGZus{}\PYGZus{}int128} \PYG{n}{x}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{x}\PYG{p}{)}
+        \PYG{k}{return}\PYG{p}{;}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{n}{putchar}\PYG{p}{(}\PYG{l+s+sc}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{),} \PYG{n}{x} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{x}\PYG{p}{;}
+    \PYG{n}{output}\PYG{p}{(}\PYG{n}{x} \PYG{o}{/} \PYG{l+m+mi}{10}\PYG{p}{);}
+    \PYG{n}{putchar}\PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{10} \PYG{o}{+} \PYG{l+s+sc}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

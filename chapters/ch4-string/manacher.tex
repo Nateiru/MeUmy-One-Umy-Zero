@@ -1,0 +1,45 @@
+\section{Manacher 算法}
+\begin{itemize}
+    \item $r[i]$: 以 $i$ 为回文中心的回文串半径
+    \item $pre[i]$: 以 $i$ 为起点的回文串数量
+    \item $suf[i]$: 以 $i$ 为终点的回文串数量
+\end{itemize}
+\textbf{对于一个字符串 $s$ ，它的本质不同回文子串个数最多只有$|s|$个}
+\begin{minted}{c++}
+namespace Manacher {
+    int r[maxn << 1], pre[maxn << 1], suf[maxn << 1], l, len;
+    char str[maxn << 1];
+    // r[i]新串以i为中心的回文半径 r[i]-1对应一个原串回文长度
+    int init(char *s) {
+        str[0] = '$', str[1] = '#', len = 2, l = strlen(s);
+        for (int i = 0; i < l; i++)
+            str[len++] = s[i], str[len++] = '#';
+        str[len] = 0;
+        return len; // 返回构造的字符串长度
+    }
+
+    int solve() {
+        int ans = -1, id = 0, mx = 0;
+        for (int i = 1; i < len; i++) {
+            r[i] = (i < mx) ? min(r[2 * id - i], mx - i) : 1;
+            while (str[i - r[i]] == str[i + r[i]])
+                r[i]++;
+            if (mx < i + r[i])
+                mx = i + r[i], id = i;
+            ans = max(ans, r[i] - 1);
+        }
+        return ans; // 返回最长回文半径
+    }
+
+    void calc() {
+        for (int i = l * 2, x; i >= 2; i--)
+            x = i / 2, pre[x]++, pre[x - (r[i] / 2)]--;
+        for (int i = l; i >= 1; i--)
+            pre[i] += pre[i+1];
+        for (int i = 2, x; i <= l * 2; i++)
+            x = (i + 1) / 2, suf[x]++, suf[x + (r[i] / 2)]--;
+        for (int i = 1; i <= l; i++)
+            suf[i] += suf[i-1];
+    }
+ }
+\end{minted}

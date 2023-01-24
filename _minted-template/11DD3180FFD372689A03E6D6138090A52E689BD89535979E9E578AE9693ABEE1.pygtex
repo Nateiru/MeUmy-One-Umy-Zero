@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+c1}{// sum = sum * mul + add * len}
+\PYG{c+c1}{// add = add * mul + add}
+\PYG{c+c1}{// mul = mul}
+\PYG{k+kt}{void} \PYG{n+nf}{puttag}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{add} \PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{mul}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{=} \PYG{p}{((}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{+} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{r} \PYG{o}{\PYGZhy{}} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{l} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{add}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{=} \PYG{p}{((}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{+} \PYG{n}{add}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{=} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{pushdown}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{puttag}\PYG{p}{(}\PYG{n}{u} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1} \PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul}\PYG{p}{);}
+    \PYG{n}{puttag}\PYG{p}{(}\PYG{n}{u} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1} \PYG{o}{|} \PYG{l+m+mi}{1} \PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul}\PYG{p}{);}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{=} \PYG{l+m+mi}{0} \PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{c+c1}{// 另一种写法}
+\PYG{c+c1}{// 优先级  mul \PYGZgt{} add}
+\PYG{k+kt}{void} \PYG{n+nf}{mark\PYGZus{}mul}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{mul}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{=} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{=} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{=} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{*} \PYG{n}{mul} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{mark\PYGZus{}add}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{add}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{=} \PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sum} \PYG{o}{+} \PYG{p}{(}\PYG{n}{ll}\PYG{p}{)(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{r} \PYG{o}{\PYGZhy{}} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{l} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{add}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+    \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{=} \PYG{p}{((}\PYG{n}{ll}\PYG{p}{)}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{+} \PYG{n}{add}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{n}{mod}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{pushdown}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{!=} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{mark\PYGZus{}mul}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul}\PYG{p}{);}
+        \PYG{n}{mark\PYGZus{}mul}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{|}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul}\PYG{p}{);}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{mul} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{mark\PYGZus{}add}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add}\PYG{p}{);}
+        \PYG{n}{mark\PYGZus{}add}\PYG{p}{(}\PYG{n}{u}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mi}{1}\PYG{o}{|}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add}\PYG{p}{);}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{add} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

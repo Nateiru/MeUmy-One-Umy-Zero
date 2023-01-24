@@ -1,0 +1,34 @@
+\section{可回滚并查集}
+
+\begin{itemize}
+\item 注意这个不是可持久化并查集
+\item 查找时不进行路径压缩,复杂度靠按秩合并解决
+\end{itemize}
+
+\par \noindent 那观察我们的合并操作，我们每次只修改了两个数的值，所以用一个栈记录修改的值。
+
+\begin{minted}{c++}
+namespace uf {
+    int fa[maxn], sz[maxn];
+    int undo[maxn], top;
+    void init() { memset(fa, -1, sizeof fa); memset(sz, 0, sizeof sz); top = 0; }
+    int find(int x) { while (fa[x] != -1) x = fa[x]; return x; }
+    bool join(int x, int y) {
+        x = find(x); y = find(y);
+        if (x == y) return false;
+        if (sz[x] > sz[y]) swap(x, y);
+        undo[top++] = x;
+        fa[x] = y;
+        sz[y] += sz[x] + 1;
+        return true;
+    }
+    inline int checkpoint() { return top; }
+    void rewind(int t) {
+        while (top > t) {
+            int x = undo[--top];
+            sz[fa[x]] -= sz[x] + 1;
+            fa[x] = -1;
+        }
+    }
+}
+\end{minted}

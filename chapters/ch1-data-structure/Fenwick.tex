@@ -1,0 +1,155 @@
+\section{树状数组}
+
+\par \noindent Tips: lowbit(x) => (x \& (-x)) 的含义：当 x 为 0 时，结果为 0。当 x 为奇数时，结果为 1。当 *x* 为偶数时，结果为 x 中 2 的最大次方的因子。
+\subsection{区间修改，区间求和}
+
+\par \noindent 引入差分序列，使树状数组支持区间修改。树状数组中维护的是差分序列，需要有一个数组维护原数据。
+\begin{minted}{c++}
+namespace Fenwick {
+    int c0[maxn], c1[maxn], n;
+    
+    inline int lowbit(int x) { return x & (-x); }
+    
+    void add(int k, int v) {
+      int i = k * v;
+      while (k <= n) {
+        c0[k] += v, c1[k] += i;
+        k += lowbit(k);
+      }
+    }
+    int sum(int k) {
+      int ret = 0;
+      int i = k + 1;
+      while (k) {
+        ret += i * c0[k] - c1[k];
+        k -= lowbit(k);
+      }
+      return ret;
+    }
+    
+    void modify(int l, int r, int v) {
+      add(l, v), add(r + 1, -v);  // 将区间加差分为两个前缀加
+    }
+    
+    long long query(int l, int r) {
+      return sum(r) - sum(l - 1);
+    }
+}
+\end{minted}
+
+\subsection{三维前缀和}
+\par \noindent 树状数组维护三维前缀和
+\par $$\sum_{i=1}^{n}\sum_{j=1}^i\sum_{k=1}^jd_k=\frac{1}{2}[(n^2+3n+2)\sum_{i=1}^nd_i-(2n+3)\sum_{i=1}^ni·d_i+\sum_{i=1}^ni^2·d_i]$$
+\par \noindent 由此也成功转化成三个一阶前缀和问题，如果继续推下去，会发现 $n$ 个树状数组就可以解决 $n$ 阶前缀和问题
+\begin{minted}{c++}
+namespace Fenwick {
+    const int maxn = 1100;
+    int c0[maxn], c1[maxn], c2[maxn];
+    void add(int k, int v)
+    {
+        int i = k * v, ii = 1ll * k * k * v;
+        while (k < maxn)
+        {
+            c0[k] += v;
+            c1[k] += i;
+            c2[k] += ii;
+            k += k & -k;
+        }
+    }
+    int sum(int k)
+    {
+        int ans = 0;
+        int k1 = 1ll * k * k + 3 * k + 2, k2 = 2 * k + 3;
+        while (k)
+        {
+            ans += k1 * c0[k] - k2 * c1[k] + c2[k];
+            k -= k & -k;
+        }
+        return ans >> 1;
+    }
+    void modify(int l, int r, int v)
+    {
+        add(l, v);
+        add(r + 1, -v);
+    }
+}
+\end{minted}
+
+\subsection{二维树状数组（矩阵求和与修改）}
+
+\begin{minted}{c++}
+namespace Fenwick_2D {
+    int c0[maxn][maxn], c1[maxn][maxn], c2[maxn][maxn], c3[maxn][maxn];
+    int n, m;
+    inline int lowbit(int x) {
+        return x & (-x);
+    }
+    void add(int x, int y, int v) {
+        int i = x;
+        while (i <= n) {
+            int j = y;
+            while (j <= m) {
+                c0[i][j] += v;
+                c1[i][j] += v * x;
+                c2[i][j] += v * y;
+                c3[i][j] += v * x * y;
+                j += lowbit(j);
+            }
+            i += lowbit(i);
+        }
+    }
+    int sum(int x, int y) {
+        int ret = 0, i = x;
+        while (i) {
+            int j = y;
+            while (j) {
+                ret += c0[i][j] * (x + 1) * (y + 1);
+                ret -= c1[i][j] * (y + 1);
+                ret -= c2[i][j] * (x + 1);
+                ret += c3[i][j];
+                j -= lowbit(j);
+            }
+            i -= lowbit(i);
+        }
+        return ret;
+    }
+        /* 在矩形 (x0, y0),(x1, y1) 上加上 v */
+    void change(int x0, int y0, int x1, int y1, int v) {
+        add(x0, y0, v);
+        add(x1 + 1, y0, -v);
+        add(x0, y1 + 1, -v);
+        add(x1 + 1, y1 + 1, v);
+    }
+    /* 查询矩形 (x0, y0),(x1, y1) 所有元素的和 */
+    int query(int x0, int y0, int x1, int y1) {
+        return sum(x1, y1) - sum(x0 - 1, y1) - sum(x1, y0 - 1) + sum(x0 - 1, y0 - 1);
+    }
+}using namespace Fenwick_2D;
+\end{minted}
+\subsection{三维树状数组}
+\begin{minted}{c++}
+inline int lowbit(int x) { return x & -x; }
+void update(int x, int y, int z, int d) {
+    for (int i = x; i <= n; i += lowbit(i))
+        for (int j = y; j <= n; j += lowbit(j))
+            for (int k = z; k <= n; k += lowbit(k))
+                c[i][j][k] += d;
+}
+long long query(int x, int y, int z) {
+    long long ret = 0;
+    for (int i = x; i > 0; i -= lowbit(i))
+        for (int j = y; j > 0; j -= lowbit(j))
+            for (int k = z; k > 0; k -= lowbit(k))
+                ret += c[i][j][k];
+    return ret;
+}
+long long solve(int x0, int y0, int z0, int x1, int y1, int z1) {
+    return    query(x1, y1, z1)
+            - query(x1, y1, z0 - 1)
+            - query(x1, y0 - 1, z1)
+            - query(x0 - 1, y1, z1)
+            + query(x1, y0 - 1, z0 - 1)
+            + query(x0 - 1, y1, z0 - 1)
+            + query(x0 - 1, y0 - 1, z1)
+            - query(x0 - 1, y0 - 1, z0 - 1);
+\end{minted}

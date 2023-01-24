@@ -1,0 +1,65 @@
+\section{背包问题}
+
+\subsection{0-1 背包（每种物品只有一个）}
+\paragraph{状态转移方程} $f(i, j)$ 表示背包已用容量为 $j$ 时考虑第 $i$ 件物品装或不装能获得的最大价值。
+
+$$f(i, j) = max\{f(i-1, j), f(i-1, j - v_i) +w_i\}$$
+
+\begin{minted}{c++}
+for (i = 0; i < m; i++)
+    for (j = t; j >= cost[i]; j --) // 这里必须逆序枚举~
+        dp[j] = max(dp[j], dp[j - cost[i]] + value[i]);
+\end{minted}
+
+\subsection{完全背包（每种物品无限多个）}
+在上文 0-1 背包的基础上将 $j$ 改为正向枚举即可，这样每种物品就可以被拿多次。
+\begin{minted}{c++}
+for (int i = 1; i <= M; i++)
+    for (int j = cost[i]; j <= T; j++)
+        dp[j] = max(dp[j], dp[j - cost[i]] + val[i]);
+\end{minted}
+
+\subsection{多重背包（每种物品有有限多个）}
+使用二进制思想将物品个数拆分为 2 的幂次之和，然后使用 0-1 背包解决。
+\begin{minted}{c++}
+struct Item {
+    int v, w;
+} items[MAXN];
+int dp[MAXV], cnt = 1;
+for (int i = 0; i <m; i++) {
+    int c = 1, v, w, n;
+    scanf("%d%d%d", &v, &w, &n);
+    while (n - c > 0) {
+        n -= c;
+        items[cnt++] = (Item) { c * v, c * w };
+        c *= 2
+    }
+    item[cnt++] = (Item) { k * v, k * w };
+}
+memset(dp, 0, sizeof dp);
+for (int i = 1; i < cnt; i++)
+    for (int j = cap; j >= items[i].w; j--)
+        dp[j] = max(dp[j], dp[j - items[i].w] + items[i].v);
+\end{minted}
+
+\subsection{混合背包 (有的物品有限，有的物品无限)}
+分别处理，根据当前物品的类型，变更第二维（容量维）的枚举顺序即可：如果是有限物品，倒序枚举容量；如果是无限物品，正序枚举容量。再加上多重背包的情况也是一样的。
+
+\subsection{二维费用背包问题}
+
+\paragraph{定义} 二维背包问题是指：对于每件物品，具有两种不同的费用；两种费用分别对应不同的可付出的最大值（容量），求物品的最大价值。设第 $i$ 件物品所需的两种费用分别为 $c_i, d_i$，价值为 $w_i$.
+\paragraph{特殊限制} 如果题目限制“最多只能取 $k$ 件物品”，则可以将可取的物品件数也视为费用，每个物品的费用均为 1.
+\paragraph{转移方程} $f(i, v, u) = \max\{f(i-1, v, u), f(i-1, v-c_i, u-d_i) + w_i\}$
+
+\subsection{分组背包}
+\paragraph{定义} 有 $N$ 件物品被划分为 $K$ 组，每组的物品互相冲突，最多可以选一件；求最大的价值和。
+\paragraph{转移方程} $f(k, v)$ 表示前 $k$ 组物品花费 $v$ 容量取得的最大权值：$f(k, v) = \max\{ f(k-1, v), f(k-1, v-c_i) + w_i | i \in group(k) \}$
+\begin{minted}{c++}
+for (int k = 0; k < tot; k++)
+    for (int v = cap; v >= 0; v--)
+        for (int i = 0; i < type[k].size(); i++)
+            if (v >= type[k][i].cost)
+                f[v] = max(f[v], f[v-type[k][i].cost] + type[k][i].value);
+\end{minted}
+
+\clearpage

@@ -1,0 +1,69 @@
+\section{虚树}
+
+\par \noindent 给定一棵树，有多次询问，每组询问对树上的一些关键点，询问它们的某些信息，满足所有询问中的关键点数量\textbf{总和}与树的大小同阶。此时可以对原树建立一棵只包含关键点和 LCA 的虚树，可以将问题的复杂度压缩到 $O(Q \log_2N + f(Q))$ 的等级。
+~\\
+\par \noindent \textbf{关键性质：}在一棵有根树中，任选 $k$ 个不重复的点，这  $k$ 个点两两之间的不同 LCA 数量不超过  $k-1$  个（即  $k$ 个点两两之间的 LCA 数量不超过自身的阶数）。
+\begin{minted}{c++}
+namespace VirtualTree {
+    
+    vector<int> VT[maxn];
+    
+    inline bool cmp(const int &i, const int &j) {
+        return dfn[i] < dfn[j];
+    }
+    // 构建虚树
+    void build_virtual_tree(int node[], int k) {
+        static int stk[maxn];
+        // k 个关键节点
+        sort(node, node + k, cmp), top = 0;
+        // stk[top = 1]  = 1; // 根节点入栈
+        for (int i = 0; i < k; i++) {   
+            if (i == 0)
+                assert(node[i] == 1); // 根节点是关键节点
+            if (top <= 1) {
+                stk[++top] = node[i];
+                continue;
+            }
+            int u = node[i], p = lca(u, stk[top]);
+            if (p == stk[top]) {
+                stk[++top] = u;
+                continue;
+            }
+            while (top > 1 && dfn[p] <= dfn[stk[top-1]])
+                VT[stk[top-1]].emplace_back(stk[top]), top--;
+            if (p != stk[top])
+                VT[p].emplace_back(stk[top]), stk[top] = p;
+            stk[++top] = u;
+        }
+        for (int i = 1; i < top; i++)
+            VT[stk[i]].emplace_back(stk[i+1]);
+    }
+
+    void calc_vt_depth(int x, int p) {
+        fa[x] = p, vdepth[x] = vdepth[p] + 1;
+        for (int i : VT[x])
+            calc_vt_depth(i, x);
+    }
+    // void clear()  构建的时候清空 或者dfs过程遍历完就清空
+}using namespace VirtualTree;
+
+// 处理路径 (u, v) 上的更新和询问 
+ll a[maxn], w[maxn];
+// 更新
+while (u != v) {
+    if (rdp[u] < rdp[v])
+        swap(u, v);
+    w[u] += x, a[u] += x, u = fa[u];
+}
+a[u] += x;
+// 询问
+ll ans = 0;
+while (u != v)  {
+    if (rdp[u] < rdp[v])
+        swap(u, v);
+    if (depth[u] - depth[fa[u]] - 1)
+        ans += w[u] * (depth[u] - depth[fa[u]] - 1);    // 用 depth 统计 
+    ans += a[u];
+}
+ans += a[u];
+\end{minted}

@@ -1,0 +1,162 @@
+\section{KMP 算法}
+\par \noindent 字符串 $s$ 的\textbf{border}：若 $s$ 的一个子串既是它的前缀又是它的后缀，则这个子串是它的border（一般不包含本身）
+~\\
+\par \noindent 字符串 $s$ 的\textbf{period}：循环节。用前 $T$ 个字符向后不断复制，能得到 $s$，最后一次可以只复制一部分
+
+\begin{itemize}
+\item \textbf{引理1}：如果有一个border $k$ 长度大于 $s$ 的一半，可以得出得 $s$ 有周期 $|s|−|k|$
+\item \textbf{引理2}：如果 $p,q$ 都为周期，则 $\gcd(p,q)$ 也为周期
+\item \textbf{引理3}：字符串 $s$ 所有不小于 $|s|$ 一半的border构成一个等差数列
+\item \textbf{引理4}：可以把字符串分成 $log|s|$ 段，每一段的border都是一个等差数列
+\end{itemize}
+
+\begin{minted}{c++}
+#include<iostream>
+using namespace std;
+const int N=1000010;
+int n,m;
+char p[N],s[N];
+int ne[N];
+int main()
+{
+    cin>>n>>p+1>>m>>s+1;
+    // 求ne过程看成两个相同的串匹配
+    for(int i=2,j=0;i<=n;i++)
+    {
+        while(j&&p[i]!=p[j+1]) j=ne[j];
+        if(p[i]==p[j+1]) j++;// i结尾能够匹配 1~j 那么ne[i]=j
+        ne[i]=j;
+    }
+    // 当前需要判断是否匹配 p[j+1]?=s[i]
+    for(int i=1,j=0;i<=m;i++)
+    {
+        while(j&&s[i]!=p[j+1]) j=ne[j];
+        if(s[i]==p[j+1]) j++;
+        if(j==n)
+        {
+            cout<<i-n<<' ';
+            j=ne[j];
+        }
+    }
+    return 0;
+}
+\end{minted}
+
+\subsection{Border等差数列}
+\par \noindent 一个字符串的所有border可以被我们分成log数量级个等差数列。
+~\\
+\par \noindent 在 KMP 匹配中，我们可以利用这个性质快速跳过一串border
+~\\
+\par \noindent 具体而言，在一次跳border时，如果发现border长度不小于原串的一半，则接下来的border构成等差数列，直到一半以下（引理3），可以直接跳到 $(x−\lfloor\frac{\lfloor\frac{x}{2}\rfloor}{d}\rfloor×d)$。（网上博客直接跳到了 $x\mod d+d$处，经过几道题检验也是对的，但不是很能理解）
+~\\
+\par \noindent 一次至少跳一半，保证 $\log$ 次以内可以跳完
+~\\
+\begin{tcolorbox}
+\par 有 $m$ 组询问，每组询问给定 $p, q$，求 $s$ 的 $p$ 前缀和 $q$ 前缀 的 \textbf{最长公共border} 的长度。
+\end{tcolorbox}
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 1000010;
+int n, m;
+char s[N];int ne[N];
+int main() {
+    cin >> s + 1; n = strlen(s + 1);
+    for (int i = 2, j = 0; i <= n; i++) {
+        while (j && s[i] != s[j + 1]) j = ne[j];
+        if (s[i] == s[j + 1]) j++;
+        ne[i] = j;
+    }
+    int m; cin >> m;
+    while (m--) {
+        int p, q;
+        cin >> p >> q;
+        p = ne[p], q = ne[q];
+        while (p != q) {
+            if (p < q) swap(p, q);
+
+            if (ne[p] > p / 2) {
+                int d = p - ne[p];
+                if (p % d == q % d)
+                    p = q;
+                else
+                    p = p % d + d;
+            } else
+                p = ne[p];
+        }
+        cout << p << '\n';
+    }
+    return 0;
+}
+\end{minted}
+\subsection{最小重复字符矩阵}
+
+\begin{tcolorbox}
+\par $q$ 组询问，每次询问一个矩形的最小重复字符矩阵，行列hash，为了在KMP加速匹配过程
+\end{tcolorbox}
+\begin{minted}{c++}
+#include <iostream>
+using namespace std;
+typedef unsigned long long ull;
+const int N = 2010;
+
+const ull P = 13331;
+int n, q;
+char s[N][N];
+ull hr[N][N], hc[N][N], p[N];
+int ne[N];
+// 第 s[l~r][i] 和 s[l~r][j] 是否相等 
+bool samc(int i, int j, int l, int r) {
+    ull x = hc[i][r] - hc[i][l - 1] * p[r - l + 1];
+    ull y = hc[j][r] - hc[j][l - 1] * p[r - l + 1];
+    return (x == y);
+}
+// 第 s[i][l~r] 和 s[j][l~r] 是否相等 
+bool samr(int i, int j, int l, int r) {
+    ull x = hr[i][r] - hr[i][l - 1] * p[r - l + 1];
+    ull y = hr[j][r] - hr[j][l - 1] * p[r - l + 1];
+    return (x == y);
+}
+int main() {
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++) cin >> s[i] + 1;
+    p[0] = 1;
+    for (int i = 1; i <= n; i++) p[i] = p[i - 1] * P;
+
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            hr[i][j] = hr[i][j - 1] * P + s[i][j];
+
+    for (int j = 1; j <= n; j++)
+        for (int i = 1; i <= n; i++)
+            hc[j][i] = hc[j][i - 1] * P + s[i][j];
+
+    while (q--) {
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+
+        for (int i = 2, j = 0; i <= d - b + 1; i++) {
+            while (j && !samc(i + b - 1, j + b, a, c)) j = ne[j];
+
+            if (samc(i + b - 1, j + b, a, c))
+                j++;
+            ne[i] = j;
+        }
+
+        int ans = d - b + 1 - ne[d - b + 1];
+
+        for (int i = 2, j = 0; i <= c - a + 1; i++) {
+            while (j && !samr(i + a - 1, j + a, b, d)) j = ne[j];
+
+            if (samr(i + a - 1, j + a, b, d))
+                j++;
+            ne[i] = j;
+        }
+        ans *= c - a + 1 - ne[c - a + 1];
+        cout << ans << '\n';
+    }
+
+    return 0;
+}
+\end{minted}

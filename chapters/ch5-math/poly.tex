@@ -1,0 +1,477 @@
+\section{分治NTT（简短）}
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N = 3e5 + 5, P = 998244353;
+using ll = int64_t;
+
+#define inc(a, b) (((a) += (b)) >= P ? (a) -= P : 0)
+#define dec(a, b) (((a) -= (b)) < 0 ? (a) += P : 0)
+#define mul(a, b) (ll(a) * (b) % P)
+int POW(ll a, int b = P - 2, ll x = 1) {
+    for (; b; b >>= 1, a = a * a % P)
+        if (b & 1) x = x * a % P;
+    return x;
+}
+
+int inv[N], fac[N], ifac[N], _ = [] {
+    fac[0] = fac[1] = ifac[0] = ifac[1] = inv[1] = 1;
+    for (ll i = 2; i < N; ++i) {
+        fac[i] = (ll)fac[i - 1] * i % P;
+        inv[i] = (ll)(P - P / i) * inv[P % i] % P;
+        ifac[i] = (ll)ifac[i - 1] * inv[i] % P;
+    }
+    return 0;
+}();
+
+namespace NTT {
+const int G = 3, L = 1 << 21;
+int W[L], _ = [] {
+    W[L / 2] = 1;
+    for (int i = L / 2 + 1, wn = POW(G, P / L); i < L; ++i) W[i] = mul(W[i - 1], wn);
+    for (int i = L / 2 - 1; ~i; --i) W[i] = W[i << 1];
+    return 0;
+}();
+void dft(int *a, int n) {
+    for (int k = n >> 1; k; k >>= 1)
+        for (int i = 0; i < n; i += k << 1)
+            for (int j = 0; j < k; ++j) {
+                int &x = a[i + j], y = a[i + j + k];
+                a[i + j + k] = mul(x - y + P, W[k + j]);
+                inc(x, y);
+            }
+}
+void idft(int *a, int n) {
+    for (int k = 1; k < n; k <<= 1)
+        for (int i = 0; i < n; i += k << 1)
+            for (int j = 0; j < k; ++j) {
+                int x = a[i + j], y = mul(a[i + j + k], W[k + j]);
+                a[i + j + k] = x < y ? x - y + P : x - y;
+                inc(a[i + j], y);
+            }
+    for (int i = 0, in = P - (P - 1) / n; i < n; ++i)
+        a[i] = mul(a[i], in);
+    reverse(a + 1, a + n);
+}
+} // namespace NTT
+
+int norm(int n) { return 1 << (__lg(n - 1) + 1); }
+
+struct Poly : public vector<int> {
+#define T (*this)
+    using vector<int>::vector;
+    int deg() const { return size(); } // 多项式维度
+
+    Poly &operator^=(const Poly &a) { // 点乘（对应位置相乘）
+        if (a.deg() < deg()) resize(a.deg());
+        for (int i = 0; i < deg(); ++i) T[i] = mul(T[i], a[i]);
+        return T;
+    }
+
+    Poly pre(int k) const { return k < deg() ? Poly(begin(), begin() + k) : T; }
+    friend void dft(Poly &a) { NTT::dft(a.data(), a.size()); }
+    friend void idft(Poly &a) { NTT::idft(a.data(), a.size()); }
+    friend Poly conv(Poly a, Poly b, int n) { // 卷积
+        a.resize(n), dft(a);
+        b.resize(n), dft(b);
+        return idft(a ^= b), a;
+    }
+    Poly operator*(const Poly &a) const { // 多项式 × 多项式 （卷积）
+        int n = deg() + a.deg() - 1;
+        return conv(T, a, norm(n)).pre(n);
+    }
+#undef T
+};
+Poly f, g;
+int n;
+void solve(int l, int r) {
+    if (l == r) return;
+
+    int mid = l + r >> 1;
+    solve(l, mid);
+
+    Poly a, b;
+    // [l, mid] -> [mid + 1, r]
+    for (int i = l; i <= mid; i++) a.push_back(f[i]);
+    // 需要 g 的下标范围是 [1, r - l]
+    for (int i = 1; i <= r - l; i++) b.push_back(g[i]);
+
+    a = a * b;
+    // a[0] 是 f[l] 和 g[1] 卷积出来 原偏移量需要 - (l + 1)
+    for (int i = mid + 1; i <= r; i++) f[i] = (1ll * f[i] + a[i - l - 1]) % P;
+    solve(mid + 1, r);
+}
+int main() {
+    cin >> n;
+    f.resize(n), g.resize(n);
+    f[0] = g[0] = 1;
+
+    for (int i = 1; i < n; i++) cin >> g[i];
+
+    solve(0, n - 1);
+
+    for (int i = 0; i < n; i++) cout << f[i] << ' ';
+    return 0;
+}
+\end{minted}
+
+\section{多项式桶 - zyn1.0}
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+typedef vector<int> poly;
+typedef long long ll;
+
+constexpr int N = 262144 + 5, G = 3, invG = 332748118, MOD = 998244353;
+int w[2][N << 1], rev[N], inv[N];
+inline int qpow(int x, int pw, int p = MOD) {
+    int res = 1;
+    while (pw) {
+        if (pw & 1) res = (ll)res * x % p;
+        x = (ll)x * x % p;
+        pw >>= 1;
+    }
+    return res;
+}
+// Cipolla 解二次剩余
+inline int quad_res(int x, int p = MOD) {
+    if (x >= p) x %= p;
+    if (x == 0 || x == 1) return x;
+    if (qpow(x, (p - 1) >> 1, p) != 1) return -1;
+    static int i_squared, mp = p;
+    int tmp;
+    for (int i = 1; i <= p; ++i) {
+        i_squared = ((ll)i * i + p - x) % p;
+        if (qpow(i_squared, (p - 1) >> 1, p) == p - 1) {
+            tmp = i;
+            break;
+        }
+    }
+    struct M_Complex {
+        int a, b;
+        M_Complex(int x, int y) {
+            this->a = x;
+            this->b = y;
+        }
+        M_Complex operator*(const M_Complex x) {
+            int xa = ((ll)this->a * x.a + (ll)i_squared * this->b % mp * x.b) % mp;
+            int xb = ((ll)this->a * x.b + (ll)this->b * x.a) % mp;
+            this->a = xa;
+            this->b = xb;
+            return *this;
+        }
+        static M_Complex qpow(M_Complex x, int pw) {
+            M_Complex res(1, 0);
+            while (pw) {
+                if (pw & 1) res = res * x;
+                x = x * x;
+                pw >>= 1;
+            }
+            return res;
+        }
+    };
+    M_Complex r(tmp, 1);
+    r = M_Complex::qpow(r, (p + 1) >> 1);
+    return min(r.a, p - r.a);
+}
+void poly_init(int upb = 200005) {
+    int lim = 1;
+    while (lim <= upb) lim <<= 1;
+    for (int k = 1; k <= lim; k <<= 1) {
+        int wk = qpow(G, (MOD - 1) / k), iwk = qpow(wk, MOD - 2);
+        w[0][k] = w[1][k] = 1;
+        for (int i = 1; i < k; ++i) {
+            w[0][k + i] = (ll)w[0][k + i - 1] * wk % MOD;
+            w[1][k + i] = (ll)w[1][k + i - 1] * iwk % MOD;
+        }
+    }
+    inv[0] = inv[1] = 1;
+    for (int i = 2; i < lim; ++i) inv[i] = (ll)(MOD - MOD / i) * inv[MOD % i] % MOD;
+}
+void poly_print(const poly &a) {
+    int la = a.size();
+    for (int i = 0; i < la; ++i) printf("%d ", a[i]);
+    printf("\n");
+}
+void NTT(poly &a, int lim, int opt) {
+    for (int i = 0; i < lim; ++i)
+        if (i < rev[i]) swap(a[i], a[rev[i]]);
+    for (int k = 2; k <= lim; k <<= 1)
+        for (int i = 0; i < lim; i += k)
+            for (int j = 0; j < (k >> 1); ++j) {
+                int u = a[i + j], v = (ll)w[opt][k + j] * a[i + j + (k >> 1)] % MOD;
+                a[i + j] = (u + v) % MOD;
+                a[i + j + (k >> 1)] = (u - v + MOD) % MOD;
+            }
+    if (opt) {
+        int invl = qpow(lim, MOD - 2);
+        for (int i = 0; i < lim; ++i) a[i] = (ll)a[i] * invl % MOD;
+    }
+}
+// 以下方法视需求使用
+poly operator+(const poly &a, const int &b) {
+    poly res = a;
+    if (!res.size())
+        res.push_back(b);
+    else
+        res[0] = (res[0] + b) % MOD;
+    return res;
+}
+poly operator+(const int &a, const poly &b) {
+    return b + a;
+}
+poly operator+(const poly &a, const poly &b) {
+    int lb = b.size();
+    poly res = a;
+    if (res.size() < lb) res.resize(lb);
+    for (int i = 0; i < lb; ++i) res[i] = (res[i] + b[i]) % MOD;
+    return res;
+}
+poly operator-(const poly &a, const int &b) {
+    return a + (MOD - b);
+}
+poly operator-(const int &a, const poly &b) {
+    int lb = b.size();
+    poly res(lb);
+    for (int i = 0; i < lb; ++i) res[i] = MOD - b[i];
+    res[0] = (a + res[0]) % MOD;
+    return res;
+}
+poly operator-(const poly &a, const poly &b) {
+    int lb = b.size();
+    poly res = a;
+    if (res.size() < lb) res.resize(lb);
+    for (int i = 0; i < lb; ++i) res[i] = (res[i] + MOD - b[i]) % MOD;
+    return res;
+}
+poly operator*(const poly &a, const int &b) {
+    int la = a.size();
+    poly res(la);
+    for (int i = 0; i < la; ++i) res[i] = (ll)a[i] * b % MOD;
+    return res;
+}
+poly operator*(const int &a, const poly &b) {
+    return b * a;
+}
+// 多项式乘法
+poly poly_mul(const poly &a, const poly &b, int deg = -1) {
+    poly f = a, g = b;
+    if (deg == -1) deg = f.size() + g.size() - 2;
+    if (f.size() > deg + 1) f.resize(deg + 1);
+    if (g.size() > deg + 1) g.resize(deg + 1);
+    int lim = 1, len = 0, upb = f.size() + g.size() - 2;
+    while (lim <= upb) {
+        lim <<= 1;
+        len++;
+    }
+    f.resize(lim);
+    g.resize(lim);
+    for (int i = 1; i < lim; ++i)
+        rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (len - 1));
+    NTT(f, lim, 0);
+    NTT(g, lim, 0);
+    for (int i = 0; i < lim; ++i) f[i] = (ll)f[i] * g[i] % MOD;
+    NTT(f, lim, 1);
+    f.resize(deg + 1);
+    return f;
+}
+//　多项式逆元 (mod x^(deg+1)),deg >= 0
+poly poly_inv(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    poly f, res(1, qpow(a[0], MOD - 2));
+    int now = 0, lim = 2, len = 1;
+    while (now < deg) {
+        now = (now << 1) + 1;
+        lim <<= 1;
+        len++;
+        if (now > a.size() - 1)
+            f.assign(a.begin(), a.end());
+        else
+            f.assign(a.begin(), a.begin() + now + 1);
+        f.resize(lim);
+        res.resize(lim);
+        for (int i = 1; i < lim; ++i)
+            rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (len - 1));
+        NTT(f, lim, 0);
+        NTT(res, lim, 0);
+        for (int i = 0; i < lim; ++i) res[i] = (ll)res[i] * (MOD + 2 - (ll)f[i] * res[i] % MOD) % MOD;
+        NTT(res, lim, 1);
+        res.resize(now + 1);
+    }
+    res.resize(deg + 1);
+    return res;
+}
+// 多项式除法
+poly poly_div(const poly &a, const poly &b) {
+    int rdeg = a.size() - b.size();
+    poly res;
+    if (rdeg < 0) perror("Wrong div");
+    poly f = a, g = b;
+    reverse(f.begin(), f.end());
+    reverse(g.begin(), g.end());
+    res = poly_mul(f, poly_inv(g, rdeg), rdeg);
+    reverse(res.begin(), res.end());
+    return res;
+}
+// 多项式开方，需满足a[0]为二次剩余
+poly poly_sqrt(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    poly f, res(1, quad_res(a[0], MOD));
+    int now = 0, lim = 2, len = 1;
+    while (now < deg) {
+        now = (now << 1) + 1;
+        lim <<= 1;
+        len++;
+        if (now > a.size() - 1)
+            f.assign(a.begin(), a.end());
+        else
+            f.assign(a.begin(), a.begin() + now + 1);
+        res = inv[2] * (poly_mul(f, poly_inv(res, now), now) + res);
+        res.resize(now + 1);
+    }
+    res.resize(deg + 1);
+    return res;
+}
+// 多项式求导
+poly poly_derive(const poly &a) {
+    int la = a.size();
+    poly res;
+    if (la == 1) {
+        res.push_back(0);
+    }
+    else {
+        res.resize(la - 1);
+        for (int i = 1; i < la; ++i) res[i - 1] = (ll)a[i] * i % MOD;
+    }
+    return res;
+}
+// 多项式积分
+poly poly_integrate(const poly &a) {
+    int la = a.size();
+    poly res(la + 1);
+    for (int i = 0; i < la; ++i) res[i + 1] = (ll)a[i] * inv[i + 1] % MOD;
+    return res;
+}
+// 多项式对数
+poly poly_ln(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    return poly_integrate(poly_mul(poly_derive(a), poly_inv(a, deg - 1), deg - 1));
+}
+// 多项式指数
+poly poly_exp(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    poly f, res(1, 1);
+    int now = 0, lim = 2, len = 1;
+    while (now < deg) {
+        now = (now << 1) + 1;
+        if (now > a.size() - 1)
+            f.assign(a.begin(), a.end());
+        else
+            f.assign(a.begin(), a.begin() + now + 1);
+        res = poly_mul(res, f - poly_ln(res, now) + 1, now);
+    }
+    res.resize(deg + 1);
+    return res;
+}
+// 多项式快速幂 - pw 为 const char*
+poly poly_qpow(const poly &a, char *cpw, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    poly res;
+    if (strlen(cpw) == 1 && cpw[0] == '0') {
+        res.push_back(1);
+        res.resize(deg + 1);
+    }
+    else {
+        poly f = a;
+        int lf = f.size(), t = lf, lcpw = strlen(cpw);
+        ll ppw = 0, kpw = 0;
+        bool zflag = false;
+        for (int i = 0; i < lf; ++i) {
+            if (f[i]) {
+                t = i;
+                break;
+            }
+        }
+        if (t == lf)
+            zflag = true;
+        else {
+            for (int i = 0; i < lcpw; ++i) {
+                ppw = ppw * 10 + cpw[i] - '0';
+                kpw = kpw * 10 + cpw[i] - '0';
+                if (ppw * t > deg) {
+                    zflag = true;
+                    break;
+                }
+                if (ppw >= MOD) ppw %= MOD;
+                if (kpw >= MOD - 1) kpw %= MOD - 1;
+            }
+        }
+        if (zflag)
+            res.resize(deg + 1);
+        else {
+            f.erase(f.begin(), f.begin() + t);
+            int k = f[0], zbound = ppw * t;
+            f = f * qpow(k, MOD - 2);
+            f = poly_exp((int)ppw * poly_ln(f, deg - zbound), deg - zbound) * qpow(k, kpw);
+            res.resize(zbound);
+            res.insert(res.end(), f.begin(), f.end());
+        }
+    }
+    return res;
+}
+// 多项式三角函数
+poly poly_sin(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    int i = qpow(G, (MOD - 1) >> 2);
+    poly res = poly_exp(i * a, deg);
+    return qpow(2 * i, MOD - 2) * (res - poly_inv(res, deg));
+}
+poly poly_cos(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    int i = qpow(G, (MOD - 1) >> 2);
+    poly res = poly_exp(i * a, deg);
+    return inv[2] * (res + poly_inv(res, deg));
+}
+// 多项式反三角函数
+poly poly_arcsin(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    return poly_integrate(poly_mul(poly_derive(a), poly_inv(poly_sqrt(1 - poly_mul(a, a, deg), deg), deg), deg - 1));
+}
+poly poly_arctan(const poly &a, int deg = -1) {
+    if (deg == -1) deg = a.size() - 1;
+    return poly_integrate(poly_mul(poly_derive(a), poly_inv(1 + poly_mul(a, a, deg), deg), deg - 1));
+}
+inline int read() {
+    char ch = getchar();
+    int re = 0;
+    while (ch < '0' || ch > '9') ch = getchar();
+    while (ch >= '0' && ch <= '9') {
+        re = re * 10 + ch - '0';
+        ch = getchar();
+    }
+    return re;
+}
+// 多项式多点求值 - 转置原理
+int tr[N << 1];
+void build() {
+
+}
+int main() {
+    //freopen("1.in", "r", stdin);
+    int n, k;
+    char ck[15];
+    poly a;
+    poly_init();
+    n = read();
+    k = read();
+    sprintf(ck, "%d", k);
+    for (int i = 0; i <= n; ++i) a.push_back(read());
+    poly r = poly_derive(poly_qpow(poly_ln(a + 2 - a[0] - poly_exp(poly_integrate(poly_inv(poly_sqrt(a))))) + 1, ck));
+    r.resize(n);
+    poly_print(r);
+    return 0;
+}
+\end{minted}

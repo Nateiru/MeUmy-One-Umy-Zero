@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{ACAM} \PYG{p}{\PYGZob{}}
+    \PYG{k}{struct} \PYG{n}{Trie} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{ch}\PYG{p}{[}\PYG{l+m+mi}{26}\PYG{p}{],}\PYG{n}{fail}\PYG{p}{,}\PYG{n}{cnt}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n+nf}{ins}\PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{s}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{p}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{c}\PYG{o}{=}\PYG{n}{s}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}}\PYG{l+s+sc}{\PYGZsq{}a\PYGZsq{}}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{p}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{c}\PYG{p}{])} \PYG{n}{trans}\PYG{p}{[}\PYG{n}{p}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{c}\PYG{p}{]}\PYG{o}{=++}\PYG{n}{cnt}\PYG{p}{;}
+            \PYG{n}{p}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{p}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{c}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{p}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{getfail}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+        \PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{26}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{trans}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{trans}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+
+        \PYG{k}{while}\PYG{p}{(}\PYG{n}{q}\PYG{p}{.}\PYG{n}{size}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{u}\PYG{o}{=}\PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();}\PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+            \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{26}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{ch}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+                \PYG{k}{if}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{)} \PYG{c+c1}{// add(trans[ch].fail,ch);// 构建失配树 fail指针向自己连边}
+                    \PYG{n}{trans}\PYG{p}{[}\PYG{n}{ch}\PYG{p}{].}\PYG{n}{fail}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fail}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{ch}\PYG{p}{);}
+                \PYG{k}{else}\PYG{c+c1}{// 如果没有儿子 那么将fail的儿子作为儿子}
+                    \PYG{n}{ch}\PYG{o}{=}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{trans}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fail}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// t在AC自动机中跑一遍}
+    \PYG{k+kt}{void} \PYG{n+nf}{find} \PYG{p}{(}\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{t}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{n} \PYG{o}{=} \PYG{n}{strlen}\PYG{p}{(}\PYG{n}{t} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{p} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{c} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{l+s+sc}{\PYGZsq{}a\PYGZsq{}}\PYG{p}{;}
+            \PYG{n}{p} \PYG{o}{=} \PYG{n}{trans}\PYG{p}{[}\PYG{n}{p}\PYG{p}{].}\PYG{n}{ch}\PYG{p}{[}\PYG{n}{c}\PYG{p}{];}
+            \PYG{c+c1}{// ......}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,82 @@
+\section{树形DP}
+\subsection{有依赖的背包问题}
+
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+const int N = 110;
+int h[N], e[N], ne[N], idx;
+int f[N][N], rt;
+int g[N]; // 备份数组
+int n, m, v[N], w[N], sz[N];
+void add(int a, int b) { e[idx] = b, ne[idx] = h[a], h[a] = idx++; }
+void dfs(int u) {
+    for (int j = v[u]; j <= m; j++) f[u][j] = w[u];
+    sz[u] = 1;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int son = e[i];
+        dfs(son);
+        // clear
+        for (int j = 0; j <= m; j++) g[j] = 0;
+
+        for (int j = v[u]; j <= m; j++) // 该子树至少体积是v[u] 因为已经选了u的物品
+            for (int k = 0; k + j <= m; k++)
+                g[j + k] = max(g[j + k], f[u][j] + f[son][k]);
+
+        // memcpy
+        for (int j = 0; j <= m; j++) f[u][j] = g[j];
+
+        sz[u] += sz[son]; // 必要的时候sz 可以优化复杂度 
+    }
+}
+int main() {
+    memset(h, -1, sizeof h);
+    cin >> n >> m;
+
+    for (int i = 1, p; i <= n; i++) {
+        cin >> v[i] >> w[i] >> p;
+        if (p == -1)
+            rt = i;
+        else
+            add(p, i);
+    }
+
+    dfs(rt);
+    cout << f[rt][m] << endl;
+    return 0;
+}
+\end{minted}
+
+\subsection{换根DP}
+
+
+\par \noindent 通常需要两次 DFS
+\begin{enumerate}
+\item DFS1 预处理诸如深度，点权和之类的信息（先递归儿子，再用儿子信息更新父亲）
+
+\item DFS2 开始运行换根动态规划。（先利用父亲信息更新儿子，达到换根，再到儿子节点）
+
+\begin{minted}{c++}
+void dfs1(int u, int fa) {
+    sz[u] = 1;
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa) continue;
+        dep[v] = dep[u] + 1;
+        dfs1(v, u);
+        sz[u] += sz[v];
+    }
+}
+void dfs2(int u, int fa) {
+    if (f[u] > f[ans]) ans = u;
+
+    for (int i = h[u]; i != -1; i = ne[i]) {
+        int v = e[i];
+        if (v == fa) continue;
+        f[v] = f[u] + n - sz[v] - sz[v]; // 换根
+        dfs2(v, u);
+    }
+}
+\end{minted}
+\end{enumerate}

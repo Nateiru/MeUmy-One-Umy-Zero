@@ -1,0 +1,414 @@
+\section{矩阵}
+\subsection{高斯消元}
+\begin{minted}{c++}
+double ans[N], a[N][N];
+int n;
+int gauss() {
+    int dim = 0;
+    for (int i = 1; i <= n; i++) {
+        int r = dim + 1;
+        int t = r;
+        for (int j = t + 1; j <= n; j++)
+            if (fabs(a[t][i]) < fabs(a[j][i]))
+                t = j;
+        if (fabs(a[t][i]) < eps) continue;
+        
+        // 把非 0 元素所在行交换到当前行
+        if (r != t) swap(a[r], a[t]);
+        // 第 r 行第一项变成 1
+        double tmp = a[r][i];
+        for (int j = i; j <= n + 1; j++)
+            a[r][j] /= tmp;
+        
+        // 变成上三角 用第 i 行去消掉其他所有行的第c列
+        for (int j = r + 1; j <= n; j++) {
+            tmp = a[j][i];
+            if (fabs(tmp) < eps) continue;
+            for (int k = i; k <= n + 1; k++)
+                a[j][k] -= a[r][k] * tmp;
+        }
+        dim++;
+    }
+
+    if (dim < n) {
+        
+        for (int i = dim + 1; i <= n; i++) 
+            if (fabs(a[i][n + 1]) > eps) 
+                return -1; // 无解
+        return dim; // 无穷多解
+    }
+    // 唯一解
+    ans[n] = a[n][n + 1];
+    for (int i = n - 1; i >= 1; i--) {
+        ans[i] = a[i][n + 1];
+        for (int j = i + 1; j <= n; j++)
+            ans[i] -= a[i][j] * ans[j];
+    }
+    return dim;
+}
+\end{minted}
+
+\subsection{行列式 $O(n^3)$}
+\par \noindent 高斯消元过程求行列式，需要模数有逆元。
+\begin{minted}{c++}
+const int mod = 1e9 + 7; // 需要是质数
+ll n, p[N][N];
+ll qpow(int a, int b) {
+    ll res = 1; a %= mod;
+    while (b) {
+        if (b & 1) res = (ll)res * a % mod;
+        a = (ll)a * a % mod; b >>= 1;
+    }
+    return res;
+}
+ll det() {   // 高斯消元求行列式 mod需要有逆元
+    // assert(!isprime(mod));
+    ll ans = 1;
+    for (int i = 1; i <= n; i++) {
+        for (int j = i + 1; j <= n; j++) 
+            if (!p[i][i] && p[j][i]) { // 不能让 p[i][i] = 0, 即对角线的部分不能为0
+                ans *= -1, swap(p[i], p[j]);
+                break;
+            }
+        // 用第 i 行去修改第 j 行
+        // p[j][k] = p[j][k] - p[i][k] * p[j][i] / p[i][i];
+        ll inv = qpow(p[i][i], mod - 2);
+        for (int j = i + 1; j <= n; j++) {
+            ll tmp = p[j][i] * inv % mod;
+            for (int k = i; k <= n; k++)
+                p[j][k] = (p[j][k] - p[i][k] * tmp % mod + mod) % mod;
+        }
+        // 行列式的值就是化成上三角后主对角线的积乘上已经提取出来的数字
+        ans = (ans * p[i][i] % mod + mod) % mod;
+        if (!ans) return 0;
+    }
+    return ans;
+}
+\end{minted}
+\subsection{任意模数行列式 $O(n^2\log n + n^3)$ }
+\par \noindent  $a_{i,i}$ 在模 $mod$ 意义下不一定有逆元。考虑到可以任意相减，这个性质和辗转相除法很相似，可以考虑对两行进行辗转相除，这样一定可以消掉某行第 $i$ 列。
+\begin{minted}{c++}
+// P7112 【模板】行列式求值 https://www.luogu.com.cn/problem/P7112
+ll n, p[N][N], mod;
+ll det() {
+    assert(mod != 0);
+    ll ans = 1;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i + 1; j <= n; ++j) 
+            while (p[j][i] != 0) { // gcd step 辗转相减
+                ll t = p[i][i] / p[j][i];
+                if (t) for (int k = i; k <= n; ++k)
+                    p[i][k] = (p[i][k] - p[j][k] * t) % mod;
+                swap(p[i], p[j]);
+                ans *= -1;
+            }
+        ans = ans * p[i][i] % mod;
+        if (!ans) return 0;
+    }
+    return (ans + mod) % mod;
+}
+\end{minted}
+\subsection{抑或方程组}
+\begin{minted}{c++}
+bitset<1010> p[2010];  // p[1~n]：增广矩阵，0 位置为常数
+// n 为未知数个数，m 为方程个数，返回方程组的解（多解 / 无解返回一个空的 vector）
+vector<bool> GaussElimination(int n, int m) {
+    // 循环消去第 i 个元
+    for (int i = 1; i <= n; i++) {
+        int cur = i;
+        while (cur <= m && !p[cur].test(i)) cur++;
+        // 第 i 个元的所有系数均为 0，有多解
+        if (cur > m) return std::vector<bool>(0);
+        if (cur != i) swap(p[cur], p[i]);
+        for (int j = 1; j <= m; j++)
+            if (i != j && p[j].test(i)) p[j] ^= p[i];
+    }
+  vector<bool> ans(n + 1, 0);
+  for (int i = 1; i <= n; i++) ans[i] = p[i].test(0);
+  return ans;
+}
+\end{minted}
+\subsection{线性基}
+\begin{itemize}
+\item 原序列中任意一个数都可以由线性基里面的一些数异或得到；
+
+\item 线性基里面的任意一些数异或起来都不能得到0
+
+\item 线性基里面的个数唯一，并且保持在性质一的前提下，数的个数最少
+\end{itemize}
+
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+struct L_B {
+    ll d[61], p[61];
+    ll cnt;
+    L_B() {
+        memset(d, 0, sizeof(d));
+        memset(p, 0, sizeof(p));
+        cnt = 0;
+    }
+    bool insert(ll val) { //普通插入：不能保证除了主元上其他线性基元素该位置为1
+        for (ll i = 60; i >= 0; i--)
+            if (val & (1LL << i)) {
+                if (!d[i]) {
+                    d[i] = val;
+                    break;
+                }
+                val ^= d[i];
+            }
+        return val > 0;
+    }
+    bool _insert(ll val) { //进阶插入：除主元其他线性基元素该位置为0
+        for (ll i = 60; i >= 0; i--)
+            if (val & (1LL << i)) {
+                if (!d[i]) {
+                    
+                    for (ll j = i - 1; j >= 0; j--)
+                        if (val >> j & 1) val ^= d[j];
+                    for (ll j = 60; j > i; j--)
+                        if (d[j] >> i & 1) d[j] ^= val;
+                    d[i] = val;
+                    break;
+                }
+                val ^= d[i];
+            }
+        return val > 0;
+    }
+    ll query_max() { //取若干个数 求异或最大值
+        ll ret = 0;
+        for (ll i = 60; i >= 0; i--)
+            if ((ret ^ d[i]) > ret)
+                ret ^= d[i];
+        return ret;
+    }
+    ll query_min() { //取若干个数 求异或最小值
+        for (ll i = 0; i <= 60; i++)
+            if (d[i])
+                return d[i];
+        return 0;
+    }
+    void rebuild() { //重构线性基
+        for (ll i = 60; i >= 0; i--)
+            for (ll j = i - 1; j >= 0; j--)
+                if (d[i] & (1LL << j))
+                    d[i] ^= d[j];
+        for (ll i = 0; i <= 60; i++)
+            if (d[i])
+                p[cnt++] = d[i];
+    }
+    ll kthquery(ll k) { //查询第 k 大，之前需要rebuild
+        ll ret = 0;
+        if (k >= (1LL << cnt)) return -1;
+
+        for (ll i = 60; i >= 0; i--)
+            if (k & (1LL << i))
+                ret ^= p[i];
+        return ret;
+    }
+} lb;
+L_B merge(const L_B &n1, const L_B &n2) { //将线性基 n2 插入线形基 n1
+    L_B ret = n1;
+
+    for (ll i = 60; i >= 0; i--)
+        if (n2.d[i])
+            ret.insert(n1.d[i]);
+    return ret;
+}
+int main() {
+    ll n, tp;
+    scanf("%lld", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%lld", &tp);
+        lb.insert(tp);
+    }
+    printf("%lld", lb.query_max());
+    return 0;
+}
+\end{minted}
+\par \noindent \textbf{Bitset 版本}
+\begin{minted}{c++}
+// 注意 d[0] 是低位 d[n]是高位
+// 比如：6 的二进制是110 应该有 d[0] = 0, d[1] = 1, d[2] = 1;
+struct line_basis{
+    bitset<1005> d[1005]; 
+    line_basis()  {
+        for(int i = 0; i < n; i++) // n 为一个向量的维数
+            d[i].reset();
+    }
+    bool ins(bitset<1005> val) {
+        for(int i = n - 1; i >= 0; i--) {
+            if(val[i]) {
+                if (!d[i].any()) {
+                    for (int j = i - 1; j >= 0; j--)
+                        if (val[j] && d[j][j]) val ^= d[j];
+                    for (int j = i + 1; j < m; j++)
+                        if (d[j][i]) d[j] ^= val; 
+                    d[i] = val;
+                    break;
+                }
+                val ^= d[i];
+            }
+        }
+        return val.count();
+    }
+    bitset<1005> query_max() {
+        bitset<1005> ret;
+        ret.reset();
+        for(int i = n - 1; i >= 0; i--)
+            if(!ret[i] && d[i].any())
+                ret ^= d[i];
+        return ret;
+    }
+};
+\end{minted}
+
+\subsection{矩阵求逆}
+\par \noindent 求一个 $N×N$ 的矩阵的逆矩阵。答案对 $10^9 + 7$ 取模，无解输出一行 `No Solution`。
+\begin{minted}{c++}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll mod = 1e9 + 7;
+const int N = 505;
+ll a[N][N + N];
+int n;
+ll qpow(ll a, ll b) {
+    ll ret = 1;
+    while (b) {
+        if (b & 1)
+            ret = ret * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return ret;
+}
+void gauss() { // 单位矩阵跟着做行变换
+    for (int i = 1; i <= n; i++) {
+        for (int j = i; j <= n; j++) {
+            if (a[j][i] && !a[i][i]) {
+                for (int k = 1; k <= n << 1; k++)
+                    swap(a[i][k], a[j][k]);
+            }
+        }
+        if (!a[i][i]) {
+            puts("No Solution");
+            return ;
+        }
+        ll inv = qpow(a[i][i], mod - 2);
+        for (int j = i; j <= n << 1; j++)
+            a[i][j] = a[i][j] * inv % mod;
+        for (int j = 1; j <= n; j++) {
+            if (j != i) {
+                ll m = a[j][i];
+                for (int k = i; k <= n << 1; k++)
+                    a[j][k] = (a[j][k] - m * a[i][k] % mod + mod) % mod;
+            }
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = n + 1; j <= n + n; j++)
+            printf("%lld ", a[i][j]);
+        printf("\n");
+    }
+}
+int main() {
+    scanf("%d", &n);
+    
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++)
+            scanf("%lld", &a[i][j]);
+        a[i][n + i] = 1; // 单位矩阵
+    }
+    gauss();
+    return 0;
+}
+\end{minted}
+\subsection{特征多项式}
+\par \noindent 给出 $n$ 和一个 $n\times n$ 的矩阵 A，在模 998244353 意义下求其特征多项式。
+
+\par \noindent 相似矩阵特征多项式相同。
+\begin{minted}{c++}
+#include <bits/stdc++.h> // P7776 【模板】特征多项式https://www.luogu.com.cn/problem/P7776
+
+using namespace std;
+using ll = long long;
+const int mod = 998244353;
+
+// #define inc(a, b) (((a) += (b)) >= mod ? (a) -= mod : 0)
+// #define dec(a, b) (((a) -= (b)) < 0 ? (a) += mod : 0)
+// #define mul(a, b) (ll(a) * (b) % mod)
+#define neg(x) ((x) ? (mod - x) : 0)
+
+int POW(int a, int b) {
+  int ret = 1;
+  for (; b; b >>= 1) {
+    if (b & 1) ret = (ll)ret * a % mod;
+    a = (ll)a * a % mod;
+  }
+  return ret;
+}
+namespace Matrix {
+
+    const int N = 500;
+    
+    template<class T>
+    vector<int> charPoly(T mat, int n) {
+        static int a[N + 5][N + 5], poly[N + 5][N + 5];
+    
+        for (int i = 1; i <= n; ++i) for (int j = 1; j <= n; ++j) a[i][j] = neg(mat[i][j]);
+    
+        for (int i = 1; i < n; ++i) {
+            int pivot = i + 1;
+            for (; pivot <= n && !a[pivot][i]; ++pivot);
+    
+            if (pivot > n) continue;
+    
+            if (pivot > i + 1) {
+                for (int j = i; j <= n; ++j)
+                    swap(a[i + 1][j], a[pivot][j]);
+                for (int j = 1; j <= n; ++j)
+                    swap(a[j][i + 1], a[j][pivot]);
+            }
+    
+            int inv = POW(a[i + 1][i], mod - 2);
+            for (int j = i + 2; j <= n; ++j)
+                if (a[j][i]) {
+                    int t = (ll)a[j][i] * inv % mod;
+                    for (int k = i; k <= n; ++k)
+                        a[j][k] = (a[j][k] + (ll)(mod - t) * a[i + 1][k]) % mod;
+                    for (int k = 1; k <= n; ++k)
+                        a[k][i + 1] = (a[k][i + 1] + (ll)t * a[k][j]) % mod;
+                }
+        }
+        poly[n + 1][0] = 1;
+    
+        for (int i = n; i; --i) {
+            poly[i][0] = 0;
+            for (int j = 1; j <= n + 1 - i; ++j) poly[i][j] = poly[i + 1][j - 1];
+            for (int j = i, t = 1; j <= n; ++j) {
+                int coe = (ll)t * a[i][j] % mod;
+                if ((j - i) & 1) coe = neg(coe);
+    
+                for (int k = 0; k <= n - j; ++k)
+                    poly[i][k] = (poly[i][k] + (ll)coe * poly[j + 1][k]) % mod;
+    
+                t = (ll)t * a[j + 1][j] % mod;
+            }
+        }
+        return vector<int>(poly[1], poly[1] + n + 1);
+    }
+}using Matrix::charPoly;
+
+const int N = 500;
+int n, a[N + 5][N + 5];
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j)
+            scanf("%d", a[i] + j);
+    auto ans = charPoly(a, n);
+    for (int i = 0; i <= n; ++i) printf("%d%c", ans[i], " \n"[i == n]);
+}
+\end{minted}

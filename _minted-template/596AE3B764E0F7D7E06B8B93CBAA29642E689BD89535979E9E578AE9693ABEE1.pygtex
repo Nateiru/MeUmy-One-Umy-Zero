@@ -1,0 +1,40 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/assoc\PYGZus{}container.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/tree\PYGZus{}policy.hpp\PYGZgt{}   // 用tree}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/hash\PYGZus{}policy.hpp\PYGZgt{}   // 用hash}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/trie\PYGZus{}policy.hpp\PYGZgt{}   // 用trie}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/priority\PYGZus{}queue.hpp\PYGZgt{}// 用priority\PYGZus{}queue}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{\PYGZus{}\PYGZus{}gnu\PYGZus{}pbds}\PYG{p}{;}
+\PYG{o}{\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}bits/extc++.h\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{\PYGZus{}\PYGZus{}gnu\PYGZus{}pbds}\PYG{p}{;}
+\PYG{c+c1}{//bits/extc++.h与bits/stdc++.h类似，bits/extc++.h是所有拓展库，bits/stdc++.h是所有标准库}
+\PYG{c+c1}{//=======================================================}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/assoc\PYGZus{}container.hpp\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}ext/pb\PYGZus{}ds/hash\PYGZus{}policy.hpp\PYGZgt{}}
+
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{\PYGZus{}\PYGZus{}gnu\PYGZus{}pbds}\PYG{p}{;}
+\PYG{k}{template}\PYG{o}{\PYGZlt{}}\PYG{k}{typename} \PYG{n}{T}\PYG{o}{\PYGZgt{}}
+\PYG{k}{using} \PYG{n}{ordered\PYGZus{}set} \PYG{o}{=} \PYG{n}{tree}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{p}{,}\PYG{n}{null\PYGZus{}type}\PYG{p}{,}\PYG{n}{less}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{n}{rb\PYGZus{}tree\PYGZus{}tag}\PYG{p}{,}\PYG{n}{tree\PYGZus{}order\PYGZus{}statistics\PYGZus{}node\PYGZus{}update}\PYG{o}{\PYGZgt{}}\PYG{p}{;}
+
+\PYG{c+c1}{// rb\PYGZus{}tree\PYGZus{}tag 和 splay\PYGZus{}tree\PYGZus{}tag 选择树的类型(红黑树和伸展树)}
+\PYG{n}{T} \PYG{c+c1}{// 自定义数据类型}
+\PYG{n}{null\PYGZus{}type}\PYG{c+c1}{//无映射（老版本g++为null\PYGZus{}mapped\PYGZus{}type）}
+\PYG{n}{less}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}}\PYG{c+c1}{//Node的排序方式从小到大排序}
+\PYG{n}{tree\PYGZus{}order\PYGZus{}statistics\PYGZus{}node\PYGZus{}update}\PYG{c+c1}{//参数表示如何更新保存节点信息 tree\PYGZus{}order\PYGZus{}statistics\PYGZus{}node\PYGZus{}update会额外获得order\PYGZus{}of\PYGZus{}key()和find\PYGZus{}by\PYGZus{}order()两个功能。}
+
+\PYG{n}{ordered\PYGZus{}set}\PYG{o}{\PYGZlt{}}\PYG{n}{Node}\PYG{o}{\PYGZgt{}} \PYG{n}{Tree}\PYG{p}{;}  \PYG{c+c1}{// Node 自定义struct 注意重载less}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{insert}\PYG{p}{(}\PYG{n}{Node}\PYG{p}{);}       \PYG{c+c1}{// 插入}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{erase}\PYG{p}{(}\PYG{n}{Node}\PYG{p}{);}        \PYG{c+c1}{// 删除}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{order\PYGZus{}of\PYGZus{}key}\PYG{p}{(}\PYG{n}{Node}\PYG{p}{);} \PYG{c+c1}{// 求Node的排名:当前数小的数的个数 +1}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{find\PYGZus{}by\PYGZus{}order}\PYG{p}{(}\PYG{n}{k}\PYG{p}{);}   \PYG{c+c1}{// 返回排名为k+1的iterator 即有k个Node比*it小}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{b}\PYG{p}{);}            \PYG{c+c1}{// 将b并入Tree，前提是两棵树类型一致并且二没有重复元素}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{split}\PYG{p}{(}\PYG{n}{v}\PYG{p}{,} \PYG{n}{b}\PYG{p}{);}        \PYG{c+c1}{// 分裂，key小于等于v的元素属于Tree，其余属于b}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{lower\PYGZus{}bound}\PYG{p}{(}\PYG{n}{Node}\PYG{p}{);}  \PYG{c+c1}{// 返回第一个大于等于x的元素的迭代器}
+\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{upper\PYGZus{}bound}\PYG{p}{(}\PYG{n}{Node}\PYG{p}{);}  \PYG{c+c1}{// 返回第一个大于x的元素的迭代器}
+
+\PYG{c+c1}{//以上的所有操作的时间复杂度均为O(logn)}
+\PYG{c+c1}{//注意，插入的元素会去重，如set}
+\PYG{n}{ordered\PYGZus{}set}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}::}\PYG{n}{point\PYGZus{}iterator} \PYG{n}{it}\PYG{o}{=}\PYG{n}{Tree}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{();}  \PYG{c+c1}{// 迭代器}
+\PYG{c+c1}{//显然迭代器可以++，\PYGZhy{}\PYGZhy{}运算}
+\end{Verbatim}

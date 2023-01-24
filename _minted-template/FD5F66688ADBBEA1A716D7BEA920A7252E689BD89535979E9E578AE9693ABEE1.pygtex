@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{using} \PYG{n}{ll} \PYG{o}{=} \PYG{k+kt}{long} \PYG{k+kt}{long}\PYG{p}{;}
+
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{N}  \PYG{o}{=} \PYG{l+m+mi}{500005}\PYG{p}{;}
+
+\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n+nf}{find}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}\PYG{k}{while}\PYG{p}{(}\PYG{n}{x} \PYG{o}{!=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])}\PYG{n}{x} \PYG{o}{=} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{x}\PYG{p}{];} \PYG{k}{return} \PYG{n}{x}\PYG{p}{;\PYGZcb{}}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{n}{t}\PYG{p}{[}\PYG{n}{N} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{c}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+\PYG{n}{ll} \PYG{n}{ans}\PYG{p}{;}
+\PYG{k+kt}{void} \PYG{n+nf}{ins}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{L}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{R}\PYG{p}{,} \PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{w}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{l} \PYG{o}{\PYGZgt{}=} \PYG{n}{L} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{r} \PYG{o}{\PYGZlt{}=} \PYG{n}{R}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{w}\PYG{p}{),} \PYG{k+kt}{void}\PYG{p}{();} \PYG{c+c1}{// 一些修改}
+    \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{n}{l} \PYG{o}{+} \PYG{n}{r} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{L} \PYG{o}{\PYGZlt{}=} \PYG{n}{mid}\PYG{p}{)} \PYG{n}{ins}\PYG{p}{(}\PYG{n}{u} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{mid}\PYG{p}{,} \PYG{n}{L}\PYG{p}{,} \PYG{n}{R}\PYG{p}{,} \PYG{n}{w}\PYG{p}{);}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{R} \PYG{o}{\PYGZgt{}} \PYG{n}{mid}\PYG{p}{)} \PYG{n}{ins}\PYG{p}{(}\PYG{n}{u} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1} \PYG{o}{|} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{mid} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{r}\PYG{p}{,} \PYG{n}{L}\PYG{p}{,} \PYG{n}{R}\PYG{p}{,} \PYG{n}{w}\PYG{p}{);}
+
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{void} \PYG{n+nf}{solve}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{o}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{dl}\PYG{p}{;} \PYG{c+c1}{// 撤销操作}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{n+nl}{v} \PYG{p}{:} \PYG{n}{t}\PYG{p}{[}\PYG{n}{o}\PYG{p}{])}
+    \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{p} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{first}\PYG{p}{),} \PYG{n}{q} \PYG{o}{=} \PYG{n}{find}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{second}\PYG{p}{);}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{p} \PYG{o}{==} \PYG{n}{q}\PYG{p}{)} \PYG{k}{continue}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{sz}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{q}\PYG{p}{])}
+            \PYG{n}{swap}\PYG{p}{(}\PYG{n}{p}\PYG{p}{,} \PYG{n}{q}\PYG{p}{);}
+        \PYG{n}{dl}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{p}\PYG{p}{),} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{q}\PYG{p}{]} \PYG{o}{+=} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{p}\PYG{p}{],} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{p}\PYG{p}{]} \PYG{o}{=} \PYG{n}{q}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{l} \PYG{o}{==} \PYG{n}{r}\PYG{p}{)}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{n+nl}{v} \PYG{p}{:} \PYG{n}{c}\PYG{p}{[}\PYG{n}{l}\PYG{p}{])} \PYG{c+c1}{// 考虑所颜色是 l 的边的连接的两个连通块}
+            \PYG{n}{ans} \PYG{o}{+=} \PYG{l+m+mi}{1ll} \PYG{o}{*} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{find}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{first}\PYG{p}{)]} \PYG{o}{*} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{find}\PYG{p}{(}\PYG{n}{v}\PYG{p}{.}\PYG{n}{second}\PYG{p}{)];}
+    \PYG{k}{else}
+    \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{mid} \PYG{o}{=} \PYG{p}{(}\PYG{n}{l} \PYG{o}{+} \PYG{n}{r}\PYG{p}{)} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{n}{solve}\PYG{p}{(}\PYG{n}{o} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{mid}\PYG{p}{),} \PYG{n}{solve}\PYG{p}{(}\PYG{n}{o} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{1} \PYG{o}{|} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{mid} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{r}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 撤销 此处可以用全局的stack代替 省空间防止爆战}
+    \PYG{n}{reverse}\PYG{p}{(}\PYG{n}{dl}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(),} \PYG{n}{dl}\PYG{p}{.}\PYG{n}{end}\PYG{p}{());}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{n+nl}{v} \PYG{p}{:} \PYG{n}{dl}\PYG{p}{)}
+        \PYG{n}{sz}\PYG{p}{[}\PYG{n}{fa}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]]} \PYG{o}{\PYGZhy{}=} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{v}\PYG{p}{],} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{n}{v}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{z}\PYG{p}{;} \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{y} \PYG{o}{\PYGZgt{}\PYGZgt{}}\PYG{n}{z}\PYG{p}{;}
+        \PYG{n}{c}\PYG{p}{[}\PYG{n}{z}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(\PYGZob{}}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{\PYGZcb{});}
+        \PYG{c+c1}{// 在考虑 z 颜色时断开所有 颜色是 z 的边}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{z} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{ins}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{z} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{\PYGZcb{});}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{z} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{)} \PYG{n}{ins}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{z} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{\PYGZcb{});}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{fa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{i}\PYG{p}{,} \PYG{n}{sz}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{solve}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{);}
+
+    \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{ans} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s+sc}{\PYGZsq{}\PYGZbs{}n\PYGZsq{}}\PYG{p}{;}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

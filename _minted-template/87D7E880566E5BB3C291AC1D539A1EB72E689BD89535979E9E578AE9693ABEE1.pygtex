@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{n}{bitset}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{1010}\PYG{o}{\PYGZgt{}} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{2010}\PYG{p}{];}  \PYG{c+c1}{// p[1\PYGZti{}n]：增广矩阵，0 位置为常数}
+\PYG{c+c1}{// n 为未知数个数，m 为方程个数，返回方程组的解（多解 / 无解返回一个空的 vector）}
+\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{bool}\PYG{o}{\PYGZgt{}} \PYG{n}{GaussElimination}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{m}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{c+c1}{// 循环消去第 i 个元}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{cur} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;}
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{cur} \PYG{o}{\PYGZlt{}=} \PYG{n}{m} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{o}{!}\PYG{n}{p}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{].}\PYG{n}{test}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))} \PYG{n}{cur}\PYG{o}{++}\PYG{p}{;}
+        \PYG{c+c1}{// 第 i 个元的所有系数均为 0，有多解}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{cur} \PYG{o}{\PYGZgt{}} \PYG{n}{m}\PYG{p}{)} \PYG{k}{return} \PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{bool}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{);}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{cur} \PYG{o}{!=} \PYG{n}{i}\PYG{p}{)} \PYG{n}{swap}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{n}{cur}\PYG{p}{],} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}=} \PYG{n}{m}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{!=} \PYG{n}{j} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{].}\PYG{n}{test}\PYG{p}{(}\PYG{n}{i}\PYG{p}{))} \PYG{n}{p}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZca{}=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{bool}\PYG{o}{\PYGZgt{}} \PYG{n}{ans}\PYG{p}{(}\PYG{n}{n} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{);}
+  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{n}{ans}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{test}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{);}
+  \PYG{k}{return} \PYG{n}{ans}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

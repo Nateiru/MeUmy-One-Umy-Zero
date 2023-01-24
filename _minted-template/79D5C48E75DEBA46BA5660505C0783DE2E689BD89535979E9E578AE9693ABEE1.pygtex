@@ -1,0 +1,141 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include}\PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{using} \PYG{n}{ll} \PYG{o}{=} \PYG{k+kt}{long} \PYG{k+kt}{long}\PYG{p}{;}
+
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{seed} \PYG{o}{=} \PYG{p}{[]()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{random\PYGZus{}device} \PYG{n}{rds}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n+nf}{rds}\PYG{p}{();}
+\PYG{p}{\PYGZcb{}();}
+\PYG{n}{mt19937} \PYG{n+nf}{rd}\PYG{p}{(}\PYG{n}{seed}\PYG{p}{);}
+\PYG{c+c1}{// 无旋Treap维护序列（不维护值域）}
+\PYG{c+c1}{// 不支持 newnode() 需要提前标号认为多颗Treap直接合并}
+
+\PYG{k}{struct} \PYG{n}{Treap} \PYG{p}{\PYGZob{}}
+    \PYG{k}{struct} \PYG{n}{T} \PYG{p}{\PYGZob{}}
+        \PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{key}\PYG{p}{;}      \PYG{c+c1}{// 随机值 满足堆的性质}
+        \PYG{k+kt}{int} \PYG{n}{ls}\PYG{p}{,} \PYG{n}{rs}\PYG{p}{,} \PYG{n}{fa}\PYG{p}{,} \PYG{n}{sz}\PYG{p}{;} \PYG{c+c1}{// 基本值 同时维护父亲方便找根}
+        \PYG{k+kt}{int} \PYG{n}{val}\PYG{p}{;}            \PYG{c+c1}{// 维护序列的值}
+        \PYG{k+kt}{bool} \PYG{n}{rev}\PYG{p}{;}           \PYG{c+c1}{// 翻转标记}
+        \PYG{n}{T}\PYG{p}{()} \PYG{o}{:} \PYG{n}{key}\PYG{p}{(}\PYG{n}{rd}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+            \PYG{n}{ls} \PYG{o}{=} \PYG{n}{rs} \PYG{o}{=} \PYG{n}{fa} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+            \PYG{n}{sz} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{n}{val} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+            \PYG{n}{rev} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{};}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{T}\PYG{o}{\PYGZgt{}} \PYG{n}{t}\PYG{p}{;}
+
+    \PYG{n}{Treap}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{)} \PYG{o}{:} \PYG{n}{t}\PYG{p}{(}\PYG{n}{n} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n}{pushup}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{+} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{fa} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{].}\PYG{n}{fa} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n}{pushdown}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rev}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{rev} \PYG{o}{\PYGZca{}=} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{].}\PYG{n}{rev} \PYG{o}{\PYGZca{}=} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{n}{swap}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{);}
+            \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rev} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 两棵树合并}
+    \PYG{k+kt}{int} \PYG{n}{merge}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{x} \PYG{o}{||} \PYG{o}{!}\PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{return} \PYG{n}{x} \PYG{o}{|} \PYG{n}{y}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k+kt}{int} \PYG{n}{u} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{key} \PYG{o}{\PYGZlt{}} \PYG{n}{t}\PYG{p}{[}\PYG{n}{y}\PYG{p}{].}\PYG{n}{key}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{x}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs} \PYG{o}{=} \PYG{n}{merge}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{y}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls} \PYG{o}{=} \PYG{n}{merge}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{u}\PYG{p}{);}
+        \PYG{k}{return} \PYG{n}{u}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 按子树个数分裂}
+    \PYG{k+kt}{void} \PYG{n}{split}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{k}\PYG{p}{,} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{x} \PYG{o}{=} \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+            \PYG{k}{return}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{u}\PYG{p}{);}
+        \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{cnt} \PYG{o}{\PYGZlt{}=} \PYG{n}{k}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{x} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}
+            \PYG{n}{split}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{,} \PYG{n}{k} \PYG{o}{\PYGZhy{}} \PYG{n}{cnt}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n}{y} \PYG{o}{=} \PYG{n}{u}\PYG{p}{;}
+            \PYG{n}{split}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{,} \PYG{n}{k}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{pushup}\PYG{p}{(}\PYG{n}{u}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 分裂出前 k 个数}
+    \PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{split}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{k}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{;}
+        \PYG{n}{split}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,} \PYG{n}{k}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{fa} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{y}\PYG{p}{].}\PYG{n}{fa} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{return} \PYG{n+nf}{make\PYGZus{}pair}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n}{reverse}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{rt}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{r}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{auto} \PYG{p}{[}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{]} \PYG{o}{=} \PYG{n}{split}\PYG{p}{(}\PYG{n}{rt}\PYG{p}{,} \PYG{n}{l} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{k}{auto} \PYG{p}{[}\PYG{n}{z}\PYG{p}{,} \PYG{n}{w}\PYG{p}{]} \PYG{o}{=} \PYG{n}{split}\PYG{p}{(}\PYG{n}{y}\PYG{p}{,} \PYG{n}{r} \PYG{o}{\PYGZhy{}} \PYG{n}{l} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{n}{t}\PYG{p}{[}\PYG{n}{z}\PYG{p}{].}\PYG{n}{rev} \PYG{o}{\PYGZca{}=} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{n}{rt} \PYG{o}{=} \PYG{n}{merge}\PYG{p}{(}\PYG{n}{merge}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{z}\PYG{p}{),} \PYG{n}{w}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n}{traverse}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//中序遍历}
+        \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{u}\PYG{p}{)} \PYG{k}{return}\PYG{p}{;}
+        \PYG{n}{pushdown}\PYG{p}{(}\PYG{n}{u}\PYG{p}{);}
+        \PYG{n}{traverse}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{);}
+        \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}d \PYGZdq{}}\PYG{p}{,} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{val}\PYG{p}{);}
+        \PYG{n}{traverse}\PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{rs}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{     * 没有pushdown 可以使用下面两个操作}
+\PYG{c+cm}{    **/}
+    \PYG{k+kt}{int} \PYG{n}{getroot}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{u}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{// 维护一个序列：u 节点前面树数的个数（不带pushdown）}
+    \PYG{k+kt}{int} \PYG{n}{getcnt}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{while} \PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{].}\PYG{n}{rs} \PYG{o}{==} \PYG{n}{u}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n}{cnt} \PYG{o}{+=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{].}\PYG{n}{ls}\PYG{p}{].}\PYG{n}{sz} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{n}{u} \PYG{o}{=} \PYG{n}{t}\PYG{p}{[}\PYG{n}{u}\PYG{p}{].}\PYG{n}{fa}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{cnt}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{};}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{ios}\PYG{o}{::}\PYG{n}{sync\PYGZus{}with\PYGZus{}stdio}\PYG{p}{(}\PYG{n+nb}{false}\PYG{p}{);}\PYG{n}{cin}\PYG{p}{.}\PYG{n}{tie}\PYG{p}{(}\PYG{k}{nullptr}\PYG{p}{),} \PYG{n}{cout}\PYG{p}{.}\PYG{n}{tie}\PYG{p}{(}\PYG{k}{nullptr}\PYG{p}{);}
+
+    \PYG{k+kt}{int} \PYG{n}{n}\PYG{p}{,} \PYG{n}{m}\PYG{p}{;}
+    \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{n} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{m}\PYG{p}{;}
+
+    \PYG{k+kt}{int} \PYG{n}{rt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{c+c1}{// 需要提前标号并赋予val认为多颗Treap直接合并}
+    \PYG{n}{Treap} \PYG{n}{tr}\PYG{p}{(}\PYG{n}{n} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{tr}\PYG{p}{.}\PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{val} \PYG{o}{=} \PYG{n}{i}\PYG{p}{;}
+        \PYG{n}{rt} \PYG{o}{=} \PYG{n}{tr}\PYG{p}{.}\PYG{n}{merge}\PYG{p}{(}\PYG{n}{rt}\PYG{p}{,} \PYG{n}{i}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{while}\PYG{p}{(}\PYG{n}{m}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{;}
+        \PYG{n}{cin} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{l} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{r}\PYG{p}{;}
+        \PYG{n}{tr}\PYG{p}{.}\PYG{n}{reverse}\PYG{p}{(}\PYG{n}{rt}\PYG{p}{,} \PYG{n}{l}\PYG{p}{,} \PYG{n}{r}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{tr}\PYG{p}{.}\PYG{n}{traverse}\PYG{p}{(}\PYG{n}{rt}\PYG{p}{);}
+
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

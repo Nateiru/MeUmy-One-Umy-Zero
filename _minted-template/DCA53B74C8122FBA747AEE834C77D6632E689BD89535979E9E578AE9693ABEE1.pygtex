@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kt}{int} \PYG{n+nf}{exgcd}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{b}\PYG{p}{,} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{b}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{y} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{return} \PYG{n}{a}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n}{d} \PYG{o}{=} \PYG{n}{exgcd}\PYG{p}{(}\PYG{n}{b}\PYG{p}{,} \PYG{n}{a} \PYG{o}{\PYGZpc{}} \PYG{n}{b}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
+    \PYG{n}{y} \PYG{o}{\PYGZhy{}=} \PYG{n}{a} \PYG{o}{/} \PYG{n}{b} \PYG{o}{*} \PYG{n}{x}\PYG{p}{;}
+    \PYG{k}{return} \PYG{n}{d}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

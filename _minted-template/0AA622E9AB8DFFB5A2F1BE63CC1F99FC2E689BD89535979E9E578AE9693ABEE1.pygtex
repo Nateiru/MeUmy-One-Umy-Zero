@@ -1,0 +1,90 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}bits/stdc++.h\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}define ll long long}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{k}{struct} \PYG{n}{L\PYGZus{}B} \PYG{p}{\PYGZob{}}
+    \PYG{n}{ll} \PYG{n}{d}\PYG{p}{[}\PYG{l+m+mi}{61}\PYG{p}{],} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{61}\PYG{p}{];}
+    \PYG{n}{ll} \PYG{n}{cnt}\PYG{p}{;}
+    \PYG{n}{L\PYGZus{}B}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{d}\PYG{p}{));}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{p}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{p}\PYG{p}{));}
+        \PYG{n}{cnt} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{bool} \PYG{n}{insert}\PYG{p}{(}\PYG{n}{ll} \PYG{n}{val}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//普通插入：不能保证除了主元上其他线性基元素该位置为1}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{val} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{l+m+mi}{1LL} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                    \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{val}\PYG{p}{;}
+                    \PYG{k}{break}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+                \PYG{n}{val} \PYG{o}{\PYGZca{}=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{val} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{bool} \PYG{n}{\PYGZus{}insert}\PYG{p}{(}\PYG{n}{ll} \PYG{n}{val}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//进阶插入：除主元其他线性基元素该位置为0}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{val} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{l+m+mi}{1LL} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+                \PYG{k}{if} \PYG{p}{(}\PYG{o}{!}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+
+                    \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+                        \PYG{k}{if} \PYG{p}{(}\PYG{n}{val} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{j} \PYG{o}{\PYGZam{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{val} \PYG{o}{\PYGZca{}=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+                    \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZgt{}} \PYG{n}{i}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+                        \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{i} \PYG{o}{\PYGZam{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{d}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZca{}=} \PYG{n}{val}\PYG{p}{;}
+                    \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{val}\PYG{p}{;}
+                    \PYG{k}{break}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+                \PYG{n}{val} \PYG{o}{\PYGZca{}=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{val} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{ll} \PYG{n}{query\PYGZus{}max}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//取若干个数 求异或最大值}
+        \PYG{n}{ll} \PYG{n}{ret} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{((}\PYG{n}{ret} \PYG{o}{\PYGZca{}} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{o}{\PYGZgt{}} \PYG{n}{ret}\PYG{p}{)}
+                \PYG{n}{ret} \PYG{o}{\PYGZca{}=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{ll} \PYG{n}{query\PYGZus{}min}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//取若干个数 求异或最小值}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{k}{return} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n}{rebuild}\PYG{p}{()} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//重构线性基}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{l+m+mi}{1LL} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{j}\PYG{p}{))}
+                    \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZca{}=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+                \PYG{n}{p}\PYG{p}{[}\PYG{n}{cnt}\PYG{o}{++}\PYG{p}{]} \PYG{o}{=} \PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{ll} \PYG{n}{kthquery}\PYG{p}{(}\PYG{n}{ll} \PYG{n}{k}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//查询第 k 大，之前需要rebuild}
+        \PYG{n}{ll} \PYG{n}{ret} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{k} \PYG{o}{\PYGZgt{}=} \PYG{p}{(}\PYG{l+m+mi}{1LL} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{cnt}\PYG{p}{))} \PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{k} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{l+m+mi}{1LL} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i}\PYG{p}{))}
+                \PYG{n}{ret} \PYG{o}{\PYGZca{}=} \PYG{n}{p}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+        \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}} \PYG{n}{lb}\PYG{p}{;}
+\PYG{n}{L\PYGZus{}B} \PYG{n+nf}{merge}\PYG{p}{(}\PYG{k}{const} \PYG{n}{L\PYGZus{}B} \PYG{o}{\PYGZam{}}\PYG{n}{n1}\PYG{p}{,} \PYG{k}{const} \PYG{n}{L\PYGZus{}B} \PYG{o}{\PYGZam{}}\PYG{n}{n2}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//将线性基 n2 插入线形基 n1}
+    \PYG{n}{L\PYGZus{}B} \PYG{n}{ret} \PYG{o}{=} \PYG{n}{n1}\PYG{p}{;}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{ll} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{60}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{n2}\PYG{p}{.}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+            \PYG{n}{ret}\PYG{p}{.}\PYG{n}{insert}\PYG{p}{(}\PYG{n}{n1}\PYG{p}{.}\PYG{n}{d}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+    \PYG{k}{return} \PYG{n}{ret}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n}{ll} \PYG{n}{n}\PYG{p}{,} \PYG{n}{tp}\PYG{p}{;}
+    \PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}lld\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{n}\PYG{p}{);}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}=} \PYG{n}{n}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{scanf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}lld\PYGZdq{}}\PYG{p}{,} \PYG{o}{\PYGZam{}}\PYG{n}{tp}\PYG{p}{);}
+        \PYG{n}{lb}\PYG{p}{.}\PYG{n}{insert}\PYG{p}{(}\PYG{n}{tp}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}lld\PYGZdq{}}\PYG{p}{,} \PYG{n}{lb}\PYG{p}{.}\PYG{n}{query\PYGZus{}max}\PYG{p}{());}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

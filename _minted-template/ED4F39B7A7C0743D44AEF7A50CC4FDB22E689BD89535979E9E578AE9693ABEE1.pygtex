@@ -1,0 +1,58 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{template} \PYG{o}{\PYGZlt{}}\PYG{k+kt}{int} \PYG{n}{N}\PYG{o}{\PYGZgt{}} \PYG{k}{struct} \PYG{n}{Dinic} \PYG{p}{\PYGZob{}}
+    \PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{INF} \PYG{o}{=} \PYG{l+m+mf}{1e9}\PYG{p}{;}
+    \PYG{k}{struct} \PYG{n}{E} \PYG{p}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{to}\PYG{p}{,} \PYG{n}{cap}\PYG{p}{,} \PYG{n}{rev}\PYG{p}{;}\PYG{c+c1}{// x\PYGZhy{}\PYGZgt{}y 目标点 to=y 流量cap 反向边G[to][rev]=x}
+    \PYG{p}{\PYGZcb{};}
+    \PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{E}\PYG{o}{\PYGZgt{}} \PYG{n}{G}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}
+    \PYG{k+kt}{int} \PYG{n}{lev}\PYG{p}{[}\PYG{n}{N}\PYG{p}{],} \PYG{n}{cur}\PYG{p}{[}\PYG{n}{N}\PYG{p}{];}\PYG{c+c1}{// 层数 当前弧优化}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n+nf}{add}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{y}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{c}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(\PYGZob{}} \PYG{n}{y}\PYG{p}{,} \PYG{n}{c}\PYG{p}{,} \PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{)}\PYG{n}{G}\PYG{p}{[}\PYG{n}{y}\PYG{p}{].}\PYG{n}{size}\PYG{p}{()} \PYG{p}{\PYGZcb{});}
+        \PYG{n}{G}\PYG{p}{[}\PYG{n}{y}\PYG{p}{].}\PYG{n}{push\PYGZus{}back}\PYG{p}{(\PYGZob{}} \PYG{n}{x}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{)}\PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{size}\PYG{p}{()} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1} \PYG{p}{\PYGZcb{});}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{void} \PYG{n+nf}{bfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{s}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{queue}\PYG{o}{\PYGZlt{}}\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}} \PYG{n}{q}\PYG{p}{;}
+        \PYG{n}{memset}\PYG{p}{(}\PYG{n}{lev}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{lev}\PYG{p}{);}
+
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{lev}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{s}\PYG{p}{);} \PYG{n}{q}\PYG{p}{.}\PYG{n}{size}\PYG{p}{();)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{x} \PYG{o}{=} \PYG{n}{q}\PYG{p}{.}\PYG{n}{front}\PYG{p}{();}
+            \PYG{n}{q}\PYG{p}{.}\PYG{n}{pop}\PYG{p}{();}
+
+            \PYG{k}{for} \PYG{p}{(}\PYG{k}{auto} \PYG{o}{\PYGZam{}}\PYG{n+nl}{e} \PYG{p}{:} \PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{])}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{e}\PYG{p}{.}\PYG{n}{cap} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{lev}\PYG{p}{[}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{c+c1}{// 层数未赋值 容量大于0}
+                    \PYG{n}{lev}\PYG{p}{[}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{]} \PYG{o}{=} \PYG{n}{lev}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{q}\PYG{p}{.}\PYG{n}{push}\PYG{p}{(}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{f}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{x} \PYG{o}{==} \PYG{n}{t}\PYG{p}{)}
+            \PYG{k}{return} \PYG{n}{f}\PYG{p}{;}
+        \PYG{c+c1}{// 当前弧优化}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{\PYGZam{}}\PYG{n}{i} \PYG{o}{=} \PYG{n}{cur}\PYG{p}{[}\PYG{n}{x}\PYG{p}{],} \PYG{n}{sz} \PYG{o}{=} \PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{].}\PYG{n}{size}\PYG{p}{(),} \PYG{n}{d}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{sz}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{auto} \PYG{o}{\PYGZam{}}\PYG{n}{e} \PYG{o}{=} \PYG{n}{G}\PYG{p}{[}\PYG{n}{x}\PYG{p}{][}\PYG{n}{i}\PYG{p}{];}
+
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{e}\PYG{p}{.}\PYG{n}{cap} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n}{lev}\PYG{p}{[}\PYG{n}{x}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{lev}\PYG{p}{[}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{])} \PYG{p}{\PYGZob{}}\PYG{c+c1}{// lev[e.to]==lev[x]+1}
+                \PYG{k}{if} \PYG{p}{((}\PYG{n}{d} \PYG{o}{=} \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{min}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{n}{e}\PYG{p}{.}\PYG{n}{cap}\PYG{p}{)))} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n}{e}\PYG{p}{.}\PYG{n}{cap} \PYG{o}{\PYGZhy{}=} \PYG{n}{d}\PYG{p}{,} \PYG{n}{G}\PYG{p}{[}\PYG{n}{e}\PYG{p}{.}\PYG{n}{to}\PYG{p}{][}\PYG{n}{e}\PYG{p}{.}\PYG{n}{rev}\PYG{p}{].}\PYG{n}{cap} \PYG{o}{+=} \PYG{n}{d}\PYG{p}{;}\PYG{c+c1}{// 正向边流量\PYGZhy{}d 反向边容量+d}
+                    \PYG{k}{return} \PYG{n}{d}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+
+        \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kt}{int64\PYGZus{}t} \PYG{n+nf}{maxflow}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{s}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int64\PYGZus{}t} \PYG{n}{flow} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{f}\PYG{p}{;;)} \PYG{p}{\PYGZob{}}
+            \PYG{n}{bfs}\PYG{p}{(}\PYG{n}{s}\PYG{p}{);}
+
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{lev}\PYG{p}{[}\PYG{n}{t}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{0}\PYG{p}{)}\PYG{c+c1}{// BFS未遍历到终点}
+                \PYG{k}{return} \PYG{n}{flow}\PYG{p}{;}
+
+            \PYG{n}{memset}\PYG{p}{(}\PYG{n}{cur}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{k}{sizeof} \PYG{n}{cur}\PYG{p}{);}\PYG{c+c1}{// 当前弧指向第一条边即G[x][0]}
+
+            \PYG{k}{while} \PYG{p}{((}\PYG{n}{f} \PYG{o}{=} \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{s}\PYG{p}{,} \PYG{n}{t}\PYG{p}{,} \PYG{n}{INF}\PYG{p}{))} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n}{flow} \PYG{o}{+=} \PYG{n}{f}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{};}
+\PYG{n}{Dinic}\PYG{o}{\PYGZlt{}}\PYG{l+m+mi}{10010}\PYG{o}{\PYGZgt{}} \PYG{n}{din}\PYG{p}{;}
+\end{Verbatim}

@@ -1,0 +1,164 @@
+\section{最近公共祖先}
+\par \noindent 树上多个点的LCA，就是DFS序最小的和DFS序最大的这两个点的LCA。
+\subsection{倍增法求 LCA}
+\begin{minted}{c++}
+int lca(int a,int b)
+{
+    if(dep[a]<dep[b]) swap(a,b);
+    for(int k=20;k>=0;k--)
+        if(dep[fa[a][k]]>=dep[b]) a=fa[a][k];
+    if(a==b) return a;
+    for(int k=20;k>=0;k--)
+        if(fa[a][k]!=fa[b][k]) a=fa[a][k],b=fa[b][k];
+    return fa[a][0];
+}
+\end{minted}
+
+\subsection{O(1)询问LCA}
+\par \noindent 基于 SPFA 的负环判定，使用 inqcnt[v] 记录节点 v 的入队次数，如果有一个点的 inqcnt[v] > n，说明存在负环。
+
+\par \noindent 或者记录最短路经过的边数，在不经过负环的情况下，最短路至多经过 n - 1 条边，因此如果经过了多于 n 条边，一定说明经过了负环
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+const int N=1000010;
+
+int h[N],e[N<<1],ne[N<<1],idx;
+void add(int a,int b){e[idx]=b,ne[idx]=h[a],h[a]=idx++;}
+int dfn[N],timstamp;
+int n,m,rt;
+int dep[N],rev[N],fa[N];
+void dfs(int u)
+{
+    dep[u]=dep[fa[u]]+1;
+    dfn[u]=++timstamp;
+    rev[timstamp]=u;
+    for(int i=h[u];i!=-1;i=ne[i])
+    {
+        int v=e[i];
+        if(v==fa[u]) continue;
+        fa[v]=u;
+        dfs(v);
+    }
+}
+int inline MIN(int x,int y){return dep[x]<dep[y]?x:y;}
+
+int st[N][21];
+int lg[N];
+int lca(int u,int v)
+{
+    if(u==v) return u;
+    u=dfn[u],v=dfn[v];
+    if(u>v) swap(u,v);
+    u++;
+    int k=lg[v-u+1];
+    return fa[MIN(st[u][k],st[v-(1<<k)+1][k])]; 
+}
+int main()
+{
+    ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    cin>>n>>m>>rt;
+    for(int i=1;i<=n;i++) h[i]=-1;
+    for(int i=1;i<n;i++)
+    {
+        int a,b;cin>>a>>b;
+        add(a,b),add(b,a);
+    }
+    dfs(rt);
+    for(int i=2;i<=n;i++) lg[i]=lg[i>>1]+1;
+    for(int i=1;i<=n;i++) st[i][0]=rev[i];
+    for(int k=1;k<=lg[n];k++) 
+        for(int i=1;i+(1<<k)-1<=n;i++) 
+            st[i][k]=MIN(st[i][k-1],st[i+(1<<k-1)][k-1]);
+
+    while(m--)
+    {
+        int x,y;cin>>x>>y;
+        cout<<lca(x,y)<<'\n';
+    }
+    return 0;
+}
+\end{minted}
+
+\subsection{【模板】树上 k 级祖先}
+\par \noindent 长链剖分的经典应用。
+
+\par \noindent 显然这个问题有 $\mathcal{O}(n \log n)-\mathcal{O}(\log n)$ 的树上倍增做法，然而还不够优秀。
+~\\
+\par \noindent 首先我们进行预处理:
+
+\begin{enumerate}
+\item 对树进行长链剖分，记录每个点所在链的顶点和深度， $\mathcal{O}(n)$ 。
+\item 树上倍增求出每个点的 $2^n$ 级祖先， $\mathcal{O}(n \log n)$ 。
+\item 对于每条链，如果其长度为 len，那么在顶点处记录顶点向上的 len 个祖先和向下的 len 个链上的儿 子， $\mathcal{O}(n)$ 。
+\item 对 $i \in[1, n]$ 求出在二进制下的最高位 $h_i$，$\mathcal{O}(n)$ 。
+   对于每次询问 $x$ 的 $k$ 级祖先:
+\item 利用倍增数组先将 $x$ 跳到 $x$ 的 $2^{h_k}$ 级祖先，设剩下还有 $k^{\prime}$ 级，显然 $k^{\prime}<2^{h_k}$ ，因此此时 $x$ 所在的长 链长度一定 $\geq 2^{h_k}>k^{\prime}$ 。
+\item 由于长链长度 $>k^{\prime}$ ， 因此可以先将 $x$ 跳到 $x$ 所在链的顶点，若之后剩下的级数为正，则利用向上的数 组求出答案，否则利用向下的数组求出答案。
+   这样时间复杂度为 $\mathcal{O}(n \log n)-\mathcal{O}(1)$ 的。
+\end{enumerate}
+\begin{minted}{c++}
+#include<bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+
+const int N = 5e5 + 7;
+int n, q, rt, lg[N], d[N], fa[N][21], son[N], dep[N], top[N], ans;
+vector<int> e[N], u[N], v[N];
+unsigned int s;
+ll Ans;
+
+inline unsigned int get(unsigned int x) {
+    return x ^= x << 13, x ^= x >> 17, x ^= x << 5, s = x; 
+}
+
+void dfs(int x) {
+    // dep[x] x子树的最大深度
+    // d[x] x的深度
+    dep[x] = d[x] = d[fa[x][0]] + 1;
+    for (auto y : e[x]) {
+        fa[y][0] = x;
+        for (int i = 0; fa[y][i]; i++) fa[y][i+1] = fa[fa[y][i]][i];
+        dfs(y);
+        if (dep[y] > dep[x]) dep[x] = dep[y], son[x] = y;
+    }
+}
+
+void dfs(int x, int p) {
+    top[x] = p; // 每个长链的顶点 dep[x] 若 x 是顶点 那么dep[x]-d[x]则是链的长度
+    if (x == p) {
+        for (int i = 0, o = x; i <= dep[x] - d[x]; i++)
+            u[x].push_back(o), o = fa[o][0];
+        for (int i = 0, o = x; i <= dep[x] - d[x]; i++)
+            v[x].push_back(o), o = son[o];
+    }
+    if (son[x]) dfs(son[x], p);
+    for (auto y : e[x]) if (y != son[x]) dfs(y, y);
+}
+
+inline int ask(int x, int k) {
+    if (!k) return x;
+    x = fa[x][lg[k]], k -= 1 << lg[k], k -= d[x] - d[top[x]], x = top[x];
+    return k >= 0 ? u[x][k] : v[x][-k];
+}
+
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+    cin >> n >> q >> s;
+    lg[0] = -1;
+    for (int i = 1; i <= n; i++)
+        cin>>fa[i][0], e[fa[i][0]].push_back(i), lg[i] = lg[i>>1] + 1;
+    rt = e[0][0], dfs(rt), dfs(rt, rt);
+    
+    for (int i = 1, x, k; i <= q; i++) {
+        x = (get(s) ^ ans) % n + 1;
+        k = (get(s) ^ ans) % d[x];
+        Ans ^= 1ll * i * (ans = ask(x, k));
+    }
+    cout << Ans << '\n';
+    return 0;
+}
+\end{minted}

@@ -1,0 +1,79 @@
+\section{树上启发式合并(DSU on Tree)}
+\begin{tcolorbox}
+\par \noindent 给定一棵包含 $n$ 个节点的树，每个节点有个权值 $a_i$，求：
+$$
+\sum_{i=1}^n \sum_{j=i+1}^n\left[a_i \oplus a_j=a_{\text {lca }(i, j)}\right](i \oplus j)
+$$
+\end{tcolorbox}
+\begin{minted}{c++}
+// CCPC2020 长春 - F. Strange Memory
+int sz[maxn], in[maxn], out[maxn], rev[maxn << 2];
+
+vector<int> G[maxn];
+
+void getsz(int u, int p)
+{
+    sz[u] = 1;
+    in[u] = ++timestamp;
+    rev[timestamp] = u;
+    for (auto v : G[u]) {
+        if (v == p) continue;
+        getsz(v, u);
+        sz[u] += sz[v];
+    }
+    out[u] = timestamp;
+}
+
+void dsu_on_tree(int u, int p, bool keep)
+{
+    int mx = -1, heavy = -1;
+    // 找到子树的重儿子 可以预处理
+    for (auto v : G[u])
+        if (v != p && sz[v] > mx)
+            mx = sz[v], heavy = v;
+
+    for (auto v : G[u])
+        if (v != p && v != heavy) dsu_on_tree(v, u, 0);
+        
+    if (heavy != -1) dsu_on_tree(heavy, u, 1);
+    for (auto v : G[u]) {
+        if (v == p || v == heavy)
+            continue;
+        for (int i = in[v]; i <= out[v]; i++) {
+            if (rev[i] == 0)
+                continue;
+            // 统计轻子节点的贡献
+            int bitwise = (a[u] ^ a[rev[i]]);
+            for (int j = 0; j < maxlog; j++) {
+                int bt = ((rev[i] >> j) & 1);
+                ans[j] += tot[bitwise][j][!bt];
+            }
+        }
+        // 把轻子节点加进影响中
+        for (int i = in[v]; i <= out[v]; i++) {
+            if (rev[i] == 0)
+                continue;
+            for (int j = 0; j < maxlog; j++) {
+                int bt = (rev[i] >> j) & 1;
+                tot[a[rev[i]]][j][bt]++;
+            }
+        }
+    }
+    // 统计自己的贡献，把自己加进影响中
+    for (int j = 0; j < maxlog; j++) {
+        int bt = (u >> j) & 1;
+        tot[a[u]][j][bt]++;
+    }
+    // 如果当前节点不是重儿子，则消除影响
+    if (!keep) {
+        for (int i = in[u]; i <= out[u]; i++) {
+            if (rev[i] == 0)
+                continue;
+            for (int j = 0; j < maxlog; j++) {
+                int bt = (rev[i] >> j) & 1;
+                tot[a[rev[i]]][j][bt]--;
+            }
+        }
+    }
+}
+\end{minted}

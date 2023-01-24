@@ -1,0 +1,78 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{namespace} \PYG{n}{BITWISE}\PYG{p}{\PYGZob{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n}{clz}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{x}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}clzll}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);\PYGZcb{}}\PYG{c+c1}{//这个函数是查询开头几个零}
+    \PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n}{ctz}\PYG{p}{(}\PYG{k+kt}{unsigned} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{x}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{\PYGZus{}\PYGZus{}builtin\PYGZus{}ctzll}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);\PYGZcb{}}\PYG{c+c1}{//这个函数是查询末尾几个零}
+\PYG{p}{\PYGZcb{}} \PYG{c+c1}{// namespace BITWISE}
+
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{BITWISE}\PYG{p}{;}
+
+\PYG{k}{typedef} \PYG{k+kt}{unsigned} \PYG{k+kt}{long} \PYG{k+kt}{long} \PYG{n}{ull}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{g} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{p}{;}
+\PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{mod} \PYG{o}{=} \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{g}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{n}{ull} \PYG{n}{BUFF}\PYG{p}{[}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{25}\PYG{p}{],} \PYG{o}{*}\PYG{n}{BT} \PYG{o}{=} \PYG{n}{BUFF} \PYG{o}{+} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{BUFF}\PYG{p}{)} \PYG{o}{/} \PYG{k}{sizeof}\PYG{p}{(}\PYG{n}{ull}\PYG{p}{);}\PYG{c+c1}{//预先开好内存池}
+\PYG{k+kr}{inline} \PYG{n}{ull} \PYG{o}{*}\PYG{n+nf}{alloc}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{sz}\PYG{p}{)\PYGZob{}}\PYG{k}{return} \PYG{n}{BT} \PYG{o}{\PYGZhy{}=} \PYG{n}{sz}\PYG{p}{;\PYGZcb{}}\PYG{c+c1}{//动态分配空间}
+\PYG{k}{struct} \PYG{n}{Trie}\PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{dep}\PYG{p}{;}\PYG{n}{ull} \PYG{o}{*}\PYG{n}{a}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{];}\PYG{c+c1}{//动态数组}
+    \PYG{n}{Trie}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{sz}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{//初始化}
+        \PYG{n}{dep} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{k}{for}\PYG{p}{(;;}\PYG{o}{++} \PYG{n}{dep}\PYG{p}{)\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{cnt} \PYG{o}{=} \PYG{p}{(}\PYG{n}{sz} \PYG{o}{+} \PYG{p}{(}\PYG{l+m+mi}{1ull} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{g} \PYG{o}{*} \PYG{n}{dep}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{g} \PYG{o}{*} \PYG{n}{dep}\PYG{p}{;}\PYG{c+c1}{//表示这一层有多少个点}
+            \PYG{n}{a}\PYG{p}{[}\PYG{n}{dep} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{alloc}\PYG{p}{(}\PYG{n}{cnt}\PYG{p}{);}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{cnt} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{return} \PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{c+c1}{//注意这里层数越小越深，这样方便我们位运算}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n}{ins}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dep}\PYG{p}{;}\PYG{o}{++} \PYG{n}{i}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{//自下而上遍历的}
+            \PYG{n}{ull} \PYG{n}{p} \PYG{o}{=} \PYG{l+m+mi}{1ull} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g} \PYG{o}{\PYGZam{}} \PYG{n}{mod}\PYG{p}{);} \PYG{c+c1}{//判断我们这个 x 在当前这一层要走哪一条边，并且直接左移好方便压位的处理}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{]} \PYG{o}{\PYGZam{}} \PYG{n}{p}\PYG{p}{)} \PYG{k}{return} \PYG{p}{;}\PYG{c+c1}{//剪枝，上面有就可以弹出了}
+            \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{]} \PYG{o}{|=} \PYG{n}{p}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{void} \PYG{n}{del}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dep}\PYG{p}{;}\PYG{o}{++} \PYG{n}{i}\PYG{p}{)}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{]} \PYG{o}{\PYGZam{}=} \PYG{o}{\PYGZti{}}\PYG{p}{(}\PYG{l+m+mi}{1ull} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g} \PYG{o}{\PYGZam{}} \PYG{n}{mod}\PYG{p}{)))} \PYG{k}{return} \PYG{p}{;}\PYG{c+c1}{//删除一个位置，同样是删完还有就不删了的剪枝}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n}{succ}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dep}\PYG{p}{;}\PYG{o}{++} \PYG{n}{i}\PYG{p}{)\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{cur} \PYG{o}{=} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{n}{mod}\PYG{p}{;}\PYG{n}{ull} \PYG{n}{v} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{];}\PYG{c+c1}{//当前是哪一条边，由于这里只需要知道是哪一条边所以我们不需要左移}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{v} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{cur} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{//如果存在前驱，也可以写成 v \PYGZgt{}\PYGZgt{} (cur + 1)，后者更好理解但前者似乎更快}
+                \PYG{k+kt}{int} \PYG{n}{res} \PYG{o}{=} \PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}
+                \PYG{n}{res} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{ctz}\PYG{p}{(}\PYG{n}{v} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{cur} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{))} \PYG{o}{+} \PYG{n}{cur} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}\PYG{c+c1}{//先把这一层的贡献加上，注意是不完整的}
+                \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}\PYG{o}{\PYGZti{}}\PYG{n}{j}\PYG{p}{;}\PYG{o}{\PYGZhy{}\PYGZhy{}} \PYG{n}{j}\PYG{p}{)} \PYG{n}{res} \PYG{o}{+=} \PYG{n}{ctz}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{res} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{j} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{])} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{j} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}\PYG{c+c1}{//剩下每一层都是完整的}
+                \PYG{k}{return} \PYG{n}{res}\PYG{p}{;}\PYG{c+c1}{//直接返回}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{c+c1}{//否则返回零}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kr}{inline} \PYG{k+kt}{int} \PYG{n}{pre}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{x}\PYG{p}{)\PYGZob{}}\PYG{c+c1}{//与上面同理，不赘述}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}\PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dep}\PYG{p}{;}\PYG{o}{++} \PYG{n}{i}\PYG{p}{)\PYGZob{}}
+            \PYG{k+kt}{int} \PYG{n}{cur} \PYG{o}{=} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{n}{mod}\PYG{p}{;}\PYG{n}{ull} \PYG{n}{v} \PYG{o}{=} \PYG{n}{a}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{];}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n}{v} \PYG{o}{\PYGZam{}} \PYG{p}{((}\PYG{l+m+mi}{1ull} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{cur}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{))\PYGZob{}}
+                \PYG{k+kt}{int} \PYG{n}{res} \PYG{o}{=} \PYG{n}{x} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}
+                \PYG{n}{res} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{mod} \PYG{o}{\PYGZhy{}} \PYG{n}{clz}\PYG{p}{(}\PYG{n}{v} \PYG{o}{\PYGZam{}} \PYG{p}{((}\PYG{l+m+mi}{1ull} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{cur}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)))} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{i} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}
+                \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;}\PYG{o}{\PYGZti{}}\PYG{n}{j}\PYG{p}{;}\PYG{o}{\PYGZhy{}\PYGZhy{}} \PYG{n}{j}\PYG{p}{)} \PYG{n}{res} \PYG{o}{+=} \PYG{p}{(}\PYG{n}{mod} \PYG{o}{\PYGZhy{}} \PYG{n}{clz}\PYG{p}{(}\PYG{n}{a}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{res} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{j} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{n}{g}\PYG{p}{]))} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{j} \PYG{o}{*} \PYG{n}{g}\PYG{p}{;}
+                \PYG{k}{return} \PYG{n}{res}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+\PYG{p}{\PYGZcb{};}
+\PYG{n}{Trie} \PYG{n+nf}{s}\PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{30}\PYG{p}{);}
+
+\PYG{k+kt}{void} \PYG{n+nf}{work}\PYG{p}{()\PYGZob{}}
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{    1.插入 x 数(若已有 x 则不进行此操作);}
+\PYG{c+cm}{    2.删除 x 数(若 x 不存在则不进行此操作);}
+\PYG{c+cm}{    3.求 x 的前趋(前趋定义为 小于 x,且最大的数,若不存在则答案为 0);}
+\PYG{c+cm}{    4.求 x 的后继(后继定义为 大于 x,且最小的数,若不存在则答案为 0);}
+\PYG{c+cm}{    **/}
+    \PYG{k+kt}{int} \PYG{n}{op}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{ans}\PYG{p}{;}
+
+      \PYG{k}{if}\PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{n}{s}\PYG{p}{.}\PYG{n}{ins}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{n}{s}\PYG{p}{.}\PYG{n}{del}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{else} \PYG{k}{if}\PYG{p}{(}\PYG{n}{op} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{n}{ans} \PYG{o}{=} \PYG{n}{s}\PYG{p}{.}\PYG{n}{pre}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{else} \PYG{n}{ans} \PYG{o}{=} \PYG{n}{s}\PYG{p}{.}\PYG{n}{succ}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
