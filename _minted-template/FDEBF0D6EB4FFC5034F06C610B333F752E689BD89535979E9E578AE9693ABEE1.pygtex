@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
-\PYG{n}{ans} \PYG{o}{=} \PYG{n}{max}\PYG{p}{(}\PYG{n}{ans}\PYG{p}{,} \PYG{p}{(}\PYG{n}{lcp}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,} \PYG{n}{j}\PYG{o}{+}\PYG{n}{i}\PYG{p}{)}\PYG{o}{+}\PYG{n}{lcp}\PYG{p}{(}\PYG{n}{N}\PYG{o}{\PYGZhy{}}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{N}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{j}\PYG{o}{+}\PYG{n}{i}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{+}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{/}\PYG{n}{i}\PYG{p}{);}
-\end{Verbatim}
